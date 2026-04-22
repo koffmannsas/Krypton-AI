@@ -1,0 +1,8 @@
+{
+  "name": "@krypton/ai",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@krypton/firebase": "*"
+  }
+}

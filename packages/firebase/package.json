@@ -1,0 +1,8 @@
+{
+  "name": "@krypton/firebase",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "firebase": "^10.8.0"
+  }
+}

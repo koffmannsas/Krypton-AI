@@ -1,0 +1,190 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the platform",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "client"] },
+        "companyId": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Company": {
+      "title": "Company",
+      "description": "A client company",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["name", "ownerId"]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "A company's subscription plan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "companyId": { "type": "string" },
+        "plan": {
+          "type": "string",
+          "enum": ["ACCESS", "TERRA", "MARS", "KRYPTON"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "past_due", "canceled"]
+        },
+        "currentPeriodEnd": { "type": "timestamp" }
+      },
+      "required": ["companyId", "plan", "status", "currentPeriodEnd"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "A payment record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "offer": { "type": "string" },
+        "method": { "type": "string", "enum": ["wave", "bank", "cash", "check"] },
+        "status": {
+          "type": "string",
+          "enum": ["succeeded", "failed", "pending"]
+        },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "amount", "offer", "method", "status"]
+    },
+    "AIAgent": {
+      "title": "AIAgent",
+      "description": "An AI agent assigned to a company",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "companyId": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["assistant", "marketing", "sales", "sav"]
+        },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "name": { "type": "string" }
+      },
+      "required": ["companyId", "type", "status", "name"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "A sales lead",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "entity": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "category": { "type": "string" },
+        "status": { "type": "string" },
+        "score": { "type": "number" },
+        "velocity": { "type": "number" },
+        "assignedTo": { "type": "string" },
+        "qualification": { "type": "string", "enum": ["hot", "warm", "cold"] },
+        "source": { "type": "string" },
+        "recommendedOffer": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["email", "score"]
+    },
+    "Opportunity": {
+      "title": "Opportunity",
+      "description": "A business opportunity detected by Fiko",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["upgrade", "activation_agents", "conversion_optimization"] },
+        "value": { "type": "number" },
+        "impact": { "type": "number" },
+        "status": { "type": "string", "enum": ["open", "clicked", "converted", "closed"] },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "type", "status", "value", "impact"]
+    },
+    "PricingPlan": {
+      "title": "PricingPlan",
+      "description": "A pricing plan for Krypton AI",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "included": { "type": "array", "items": { "type": "string" } },
+        "color": { "type": "string" },
+        "cta": { "type": "string" },
+        "story": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "name", "price", "included", "order"]
+    },
+    "PricingFeature": {
+      "title": "PricingFeature",
+      "description": "A feature comparison row",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "access": { "type": "string" },
+        "terra": { "type": "string" },
+        "mars": { "type": "string" },
+        "krypton": { "type": "string" },
+        "galaxy": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["name", "order"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "User" },
+      "description": "Users collection"
+    },
+    "companies/{companyId}": {
+      "schema": { "$ref": "Company" },
+      "description": "Companies collection"
+    },
+    "subscriptions/{subscriptionId}": {
+      "schema": { "$ref": "Subscription" },
+      "description": "Subscriptions collection"
+    },
+    "payments/{paymentId}": {
+      "schema": { "$ref": "Payment" },
+      "description": "Payments collection"
+    },
+    "ai_agents/{agentId}": {
+      "schema": { "$ref": "AIAgent" },
+      "description": "AI Agents collection"
+    },
+    "leads/{leadId}": {
+      "schema": { "$ref": "Lead" },
+      "description": "Leads collection"
+    },
+    "opportunities/{opportunityId}": {
+      "schema": { "$ref": "Opportunity" },
+      "description": "Opportunities collection"
+    },
+    "pricing_plans/{planId}": {
+      "schema": { "$ref": "PricingPlan" },
+      "description": "Pricing plans collection"
+    },
+    "pricing_features/{featureId}": {
+      "schema": { "$ref": "PricingFeature" },
+      "description": "Comparison features collection"
+    }
+  }
+}

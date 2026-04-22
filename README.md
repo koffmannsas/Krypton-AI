@@ -1,11 +1,40 @@
-<div align="center">
+# Krypton AI - SaaS Platform
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+This is a monorepo for the Krypton AI SaaS platform, built with Next.js 14 (App Router) and Firebase.
 
-  <h1>Built with AI Studio</h2>
+## Architecture
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+- `apps/landing`: The public landing page with pricing and checkout integration.
+- `apps/client`: The client dashboard for managing AI agents and subscriptions.
+- `apps/admin`: The admin dashboard for viewing revenue and client statistics.
+- `packages/ui`: Shared UI components.
+- `packages/firebase`: Shared Firebase configuration and auth helpers.
+- `packages/fiko`: Shared Fiko Pay API helpers.
+- `functions`: Firebase Cloud Functions for webhooks and cron jobs.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## Getting Started
 
-</div>
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Copy `.env.example` to `.env.local` in each app and fill in your Firebase credentials.
+
+3. Run the development servers:
+
+   ```bash
+   # Run landing page (port 3000)
+   npm run dev --workspace=apps/landing
+
+   # Run client dashboard (port 3001)
+   npm run dev --workspace=apps/client
+
+   # Run admin dashboard (port 3002)
+   npm run dev --workspace=apps/admin
+   ```
+
+## Deployment
+
+This monorepo is ready to be deployed on Vercel. You can deploy each app separately by specifying the root directory in the Vercel project settings.
