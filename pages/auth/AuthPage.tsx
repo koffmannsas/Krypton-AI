@@ -189,8 +189,8 @@ const AuthPage: React.FC<AuthPageProps> = ({
         className="w-full max-w-[500px] bg-[#0D0D12]/80 border border-white/10 p-10 rounded-sm"
       >
         <div className="mb-8 flex flex-col items-center text-center">
-          <div className="w-16 h-16 bg-[#E10600]/10 border border-[#E10600]/30 rounded-full flex items-center justify-center mb-6">
-            <Mail size={32} className="text-[#E10600]" />
+          <div className="w-16 h-16 bg-[#FF2718]/10 border border-[#FF2718]/30 rounded-full flex items-center justify-center mb-6">
+            <Mail size={32} className="text-[#FF2718]" />
           </div>
           <h1 className="text-2xl font-bold uppercase tracking-widest text-white">
             {mode === "login" ? "Connexion Client" : "Créer un compte"}
@@ -240,7 +240,7 @@ const AuthPage: React.FC<AuthPageProps> = ({
                     placeholder="Prénom"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className="w-1/2 p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#E10600] outline-none transition-colors rounded-sm"
+                    className="w-1/2 p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#FF2718] outline-none transition-colors rounded-sm"
                     required={mode === "signup"}
                   />
                   <input
@@ -248,7 +248,7 @@ const AuthPage: React.FC<AuthPageProps> = ({
                     placeholder="Nom"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="w-1/2 p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#E10600] outline-none transition-colors rounded-sm"
+                    className="w-1/2 p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#FF2718] outline-none transition-colors rounded-sm"
                     required={mode === "signup"}
                   />
                 </div>
@@ -257,7 +257,7 @@ const AuthPage: React.FC<AuthPageProps> = ({
                   placeholder="Téléphone"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#E10600] outline-none transition-colors rounded-sm"
+                  className="w-full p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#FF2718] outline-none transition-colors rounded-sm"
                   required={mode === "signup"}
                 />
               </motion.div>
@@ -269,7 +269,7 @@ const AuthPage: React.FC<AuthPageProps> = ({
             placeholder="Adresse email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#E10600] outline-none transition-colors rounded-sm"
+            className="w-full p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#FF2718] outline-none transition-colors rounded-sm"
             required
           />
 
@@ -279,7 +279,7 @@ const AuthPage: React.FC<AuthPageProps> = ({
               placeholder="Mot de passe"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#E10600] outline-none transition-colors rounded-sm pr-12"
+              className="w-full p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#FF2718] outline-none transition-colors rounded-sm pr-12"
               required
             />
             <button
@@ -305,7 +305,7 @@ const AuthPage: React.FC<AuthPageProps> = ({
                   placeholder="Confirmer le mot de passe"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#E10600] outline-none transition-colors rounded-sm pr-12"
+                  className="w-full p-4 bg-black/50 border border-white/10 text-white text-sm focus:border-[#FF2718] outline-none transition-colors rounded-sm pr-12"
                   required={mode === "signup"}
                 />
               </motion.div>
@@ -327,7 +327,7 @@ const AuthPage: React.FC<AuthPageProps> = ({
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#E10600] flex justify-center items-center gap-3 text-white py-4 font-black uppercase tracking-widest text-[11px] hover:bg-red-700 transition-colors rounded-sm shadow-lg shadow-[#E10600]/20 mt-4"
+            className="w-full bg-[#FF2718] flex justify-center items-center gap-3 text-white py-4 font-black uppercase tracking-widest text-[11px] hover:bg-red-700 transition-colors rounded-sm shadow-lg shadow-[#FF2718]/20 mt-4"
           >
             {isLoading ? <Loader2 className="animate-spin" size={16} /> : null}
             {mode === "login" ? "Se connecter" : "Créer mon compte"}

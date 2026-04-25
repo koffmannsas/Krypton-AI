@@ -49,9 +49,9 @@ export default function OpportunityCard({ opportunity, onAction, onDismiss }: Op
           desc: "Fiko a détecté une faille de croissance dans votre système.",
           cta: "Découvrir la stratégie",
           icon: Zap,
-          color: "text-[#E10600]",
-          bg: "bg-[#E10600]/10",
-          border: "border-[#E10600]/20"
+          color: "text-[#FF2718]",
+          bg: "bg-[#FF2718]/10",
+          border: "border-[#FF2718]/20"
         };
     }
   };

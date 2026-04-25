@@ -15,7 +15,7 @@ import {
 interface AccessOfferPageProps {
   onNavigate: (p: Page) => void;
   onOpenFiko: (gate: string) => void;
-  onOpenVocal: () => void;
+  onOpenVocal: (gate?: string) => void;
 }
 
 const Feature: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -69,7 +69,7 @@ const AccessOfferPage: React.FC<AccessOfferPageProps> = ({
                 Démarrer avec ACCESS <ArrowRight size={16} />
               </button>
               <button
-                onClick={onOpenVocal}
+                onClick={() => onOpenVocal("ACCESS")}
                 className="bg-white/5 border border-white/10 text-white px-10 py-6 rounded-sm font-black text-xs transition-all uppercase tracking-[0.4em] hover:bg-white/10 flex items-center justify-center gap-3"
               >
                 Parler à un conseiller
@@ -180,7 +180,7 @@ const AccessOfferPage: React.FC<AccessOfferPageProps> = ({
                   <th className="p-6 border-l border-white/10 text-purple-400">
                     ACCESS
                   </th>
-                  <th className="p-6 border-l border-white/10 text-[#E10600]">
+                  <th className="p-6 border-l border-white/10 text-[#FF2718]">
                     Offres IA
                   </th>
                 </tr>
@@ -284,7 +284,7 @@ const AccessOfferPage: React.FC<AccessOfferPageProps> = ({
             href="https://www.koffmann.group"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-black text-[#E10600] hover:underline"
+            className="font-black text-[#FF2718] hover:underline"
           >
             KCG
           </a>

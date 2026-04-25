@@ -101,14 +101,14 @@ const AdminAuthPage: React.FC<AdminAuthPageProps> = ({ onLoginSuccess, onNavigat
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-[500px] bg-[#0D0D12]/80 border border-[#E10600]/30 p-10 rounded-sm shadow-2xl shadow-[#E10600]/10"
+        className="w-full max-w-[500px] bg-[#0D0D12]/80 border border-[#FF2718]/30 p-10 rounded-sm shadow-2xl shadow-[#FF2718]/10"
       >
         <div className="mb-10 text-center flex flex-col items-center">
-          <div className="w-16 h-16 bg-[#E10600]/10 border border-[#E10600]/30 rounded-full flex items-center justify-center mb-6">
-            <Crown size={32} className="text-[#E10600]" />
+          <div className="w-16 h-16 bg-[#FF2718]/10 border border-[#FF2718]/30 rounded-full flex items-center justify-center mb-6">
+            <Crown size={32} className="text-[#FF2718]" />
           </div>
           <h1 className="text-2xl font-black uppercase tracking-widest text-white">
-            Krypton <span className="text-[#E10600]">Admin</span>
+            Krypton <span className="text-[#FF2718]">Admin</span>
           </h1>
           <p className="text-[10px] uppercase tracking-[0.3em] text-slate-500 mt-2">
             Accès Sécurisé
@@ -116,16 +116,16 @@ const AdminAuthPage: React.FC<AdminAuthPageProps> = ({ onLoginSuccess, onNavigat
         </div>
 
         {authError && (
-          <div className="mb-8 p-4 bg-red-950/30 border border-[#E10600]/50 rounded-sm text-sm text-red-200">
+          <div className="mb-8 p-4 bg-red-950/30 border border-[#FF2718]/50 rounded-sm text-sm text-red-200">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="text-[#E10600] shrink-0 mt-0.5" size={18} />
+              <AlertTriangle className="text-[#FF2718] shrink-0 mt-0.5" size={18} />
               <div className="flex-1">
                 <p className="font-semibold mb-1">Erreur de sécurité</p>
                 <p className="text-red-300/80 mb-3">{authError.message}</p>
                 
                 {authError.isDomainError && authError.domain && (
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-black/60 border border-[#E10600]/30 rounded-sm">
+                    <div className="flex items-center justify-between p-3 bg-black/60 border border-[#FF2718]/30 rounded-sm">
                       <code className="text-xs text-red-400 break-all">{authError.domain}</code>
                       <button 
                         onClick={() => handleCopyDomain(authError.domain!)}
@@ -140,7 +140,7 @@ const AdminAuthPage: React.FC<AdminAuthPageProps> = ({ onLoginSuccess, onNavigat
                       href={`https://console.firebase.google.com/project/${auth.app.options.projectId}/authentication/settings`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-xs font-semibold text-[#E10600] hover:text-red-400 transition-colors uppercase tracking-wider"
+                      className="inline-flex items-center gap-2 text-xs font-semibold text-[#FF2718] hover:text-red-400 transition-colors uppercase tracking-wider"
                     >
                       Ouvrir la console Firebase <ExternalLink size={12} />
                     </a>
@@ -154,7 +154,7 @@ const AdminAuthPage: React.FC<AdminAuthPageProps> = ({ onLoginSuccess, onNavigat
         <button
           onClick={handleGoogleSignIn}
           disabled={isLoading}
-          className="w-full bg-[#E10600] hover:bg-red-700 text-white py-4 flex justify-center items-center gap-3 font-black uppercase tracking-widest text-[11px] transition-all shadow-lg shadow-[#E10600]/20"
+          className="w-full bg-[#FF2718] hover:bg-red-700 text-white py-4 flex justify-center items-center gap-3 font-black uppercase tracking-widest text-[11px] transition-all shadow-lg shadow-[#FF2718]/20"
         >
           {isLoading ? <Loader2 className="animate-spin" size={16} /> : null}
           Connexion Google

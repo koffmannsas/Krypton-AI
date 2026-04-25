@@ -51,15 +51,15 @@ const SEOPage: React.FC<SEOPageProps> = ({ keyword, onNavigate }) => {
           className="mb-24"
         >
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-12 h-1px bg-[#E10600]"></div>
-            <span className="text-[#E10600] uppercase text-[10px] font-black tracking-[0.5em]">
+            <div className="w-12 h-1px bg-[#FF2718]"></div>
+            <span className="text-[#FF2718] uppercase text-[10px] font-black tracking-[0.5em]">
               Expertise IA & SEO
             </span>
           </div>
 
           <h1 className="text-5xl lg:text-8xl font-black uppercase tracking-tighter leading-tight mb-12">
             Spécialiste <br />
-            <span className="text-[#E10600] italic">"{displayKeyword}"</span>
+            <span className="text-[#FF2718] italic">"{displayKeyword}"</span>
           </h1>
 
           <p className="text-xl text-slate-400 font-light max-w-2xl leading-relaxed mb-16 italic">
@@ -68,7 +68,7 @@ const SEOPage: React.FC<SEOPageProps> = ({ keyword, onNavigate }) => {
 
           <button
             onClick={() => onNavigate(Page.AUTH)}
-            className="bg-[#E10600] text-white px-12 py-6 rounded-sm font-black text-sm uppercase tracking-[0.3em] flex items-center gap-4 hover:bg-white hover:text-black transition-all group active:scale-95"
+            className="bg-[#FF2718] text-white px-12 py-6 rounded-sm font-black text-sm uppercase tracking-[0.3em] flex items-center gap-4 hover:bg-white hover:text-black transition-all group active:scale-95"
           >
             Démarrer mon projet IA
             <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
@@ -78,17 +78,17 @@ const SEOPage: React.FC<SEOPageProps> = ({ keyword, onNavigate }) => {
         <div className="grid md:grid-cols-3 gap-10 mb-32">
           {[
             {
-              icon: <Zap className="text-[#E10600]" size={24} />,
+              icon: <Zap className="text-[#FF2718]" size={24} />,
               title: "Performance Maximale",
               desc: `Nos solutions autour du ${displayKeyword} sont conçues pour une efficacité immédiate et mesurable.`
             },
             {
-              icon: <ShieldCheck className="text-[#E10600]" size={24} />,
+              icon: <ShieldCheck className="text-[#FF2718]" size={24} />,
               title: "Sécurité Native",
               desc: "Chaque déploiement intègre des protocoles de sécurité avancés pour protéger vos actifs numériques."
             },
             {
-              icon: <Network className="text-[#E10600]" size={24} />,
+              icon: <Network className="text-[#FF2718]" size={24} />,
               title: "Connectivité Totale",
               desc: "Intégrez vos flux de travail existants dans un écosystème intelligent et réactif."
             }
@@ -120,7 +120,7 @@ const SEOPage: React.FC<SEOPageProps> = ({ keyword, onNavigate }) => {
               <button
                 key={i}
                 onClick={() => handleLinkClick(k)}
-                className="text-left py-4 px-6 border border-white/5 bg-white/[0.01] hover:bg-[#E10600]/10 hover:border-[#E10600]/30 transition-all group"
+                className="text-left py-4 px-6 border border-white/5 bg-white/[0.01] hover:bg-[#FF2718]/10 hover:border-[#FF2718]/30 transition-all group"
               >
                 <span className="text-[10px] text-slate-500 group-hover:text-white font-bold uppercase tracking-widest block mb-1">
                   En savoir plus
@@ -133,15 +133,15 @@ const SEOPage: React.FC<SEOPageProps> = ({ keyword, onNavigate }) => {
           </div>
         </div>
 
-        <div className="mt-32 p-16 border border-[#E10600]/20 bg-[#E10600]/5 relative overflow-hidden text-center">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#E10600]/10 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
+        <div className="mt-32 p-16 border border-[#FF2718]/20 bg-[#FF2718]/5 relative overflow-hidden text-center">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF2718]/10 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
             <h2 className="text-3xl font-black uppercase mb-8 relative z-10">Krypton AI : La référence en {displayKeyword}</h2>
             <p className="text-slate-400 text-sm leading-loose max-w-3xl mx-auto mb-10 relative z-10 italic">
                 Nous transformons les défis technologiques en opportunités de croissance. Que vous recherchiez une solution de <strong>{displayKeyword}</strong> ou une automatisation complète de vos processus, notre équipe d'experts IA vous accompagne de la stratégie au déploiement.
             </p>
             <button 
                 onClick={() => onNavigate(Page.AUTH)}
-                className="bg-white text-black px-10 py-5 rounded-sm font-black text-[10px] uppercase tracking-[0.3em] relative z-10 hover:bg-[#E10600] hover:text-white transition-all shadow-2xl"
+                className="bg-white text-black px-10 py-5 rounded-sm font-black text-[10px] uppercase tracking-[0.3em] relative z-10 hover:bg-[#FF2718] hover:text-white transition-all shadow-2xl"
             >
                 Obtenir une consultation gratuite
             </button>

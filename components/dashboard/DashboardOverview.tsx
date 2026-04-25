@@ -62,7 +62,7 @@ export default function DashboardOverview({
       {/* Top Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black uppercase tracking-tighter mb-2">Centre de <span className="text-[#E10600]">Commandement</span>.</h1>
+          <h1 className="text-4xl font-black uppercase tracking-tighter mb-2">Centre de <span className="text-[#FF2718]">Commandement</span>.</h1>
           <p className="text-slate-500 font-medium italic">Bonjour {user.firstName}, votre écosystème IA est opérationnel.</p>
         </div>
         
@@ -88,9 +88,9 @@ export default function DashboardOverview({
 
       {/* Main Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-[#111116] border border-white/5 p-6 rounded-3xl group hover:border-[#E10600]/30 transition-all">
+        <div className="bg-[#111116] border border-white/5 p-6 rounded-3xl group hover:border-[#FF2718]/30 transition-all">
           <div className="flex justify-between items-start mb-4">
-            <div className="p-3 bg-[#E10600]/10 rounded-2xl text-[#E10600]">
+            <div className="p-3 bg-[#FF2718]/10 rounded-2xl text-[#FF2718]">
               <Target size={24} />
             </div>
             <span className="text-[10px] font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded">+12%</span>
@@ -101,7 +101,7 @@ export default function DashboardOverview({
           </div>
         </div>
 
-        <div className="bg-[#111116] border border-white/5 p-6 rounded-3xl group hover:border-[#E10600]/30 transition-all cursor-pointer" onClick={() => onNavigate('leads')}>
+        <div className="bg-[#111116] border border-white/5 p-6 rounded-3xl group hover:border-[#FF2718]/30 transition-all cursor-pointer" onClick={() => onNavigate('leads')}>
           <div className="flex justify-between items-start mb-4">
             <div className="p-3 bg-blue-500/10 rounded-2xl text-blue-500">
               <Users size={24} />
@@ -112,7 +112,7 @@ export default function DashboardOverview({
           <h3 className="text-3xl font-black tracking-tight">{leadsCount}</h3>
         </div>
 
-        <div className="bg-[#111116] border border-white/5 p-6 rounded-3xl group hover:border-[#E10600]/30 transition-all cursor-pointer" onClick={() => onNavigate('site')}>
+        <div className="bg-[#111116] border border-white/5 p-6 rounded-3xl group hover:border-[#FF2718]/30 transition-all cursor-pointer" onClick={() => onNavigate('site')}>
           <div className="flex justify-between items-start mb-4">
             <div className="p-3 bg-fuchsia-500/10 rounded-2xl text-fuchsia-500">
               <Layers size={24} />
@@ -123,7 +123,7 @@ export default function DashboardOverview({
           <h3 className="text-3xl font-black tracking-tight uppercase truncate">{projectStatus}</h3>
         </div>
 
-        <div className="bg-[#111116] border border-white/5 p-6 rounded-3xl group hover:border-[#E10600]/30 transition-all cursor-pointer" onClick={() => onNavigate('upgrade')}>
+        <div className="bg-[#111116] border border-white/5 p-6 rounded-3xl group hover:border-[#FF2718]/30 transition-all cursor-pointer" onClick={() => onNavigate('upgrade')}>
           <div className="flex justify-between items-start mb-4">
             <div className="p-3 bg-orange-500/10 rounded-2xl text-orange-500">
               <Zap size={24} />
@@ -148,7 +148,7 @@ export default function DashboardOverview({
               </div>
               <div className="flex gap-2">
                 <div className="flex items-center gap-2">
-                  <div className="size-2 rounded-full bg-[#E10600]"></div>
+                  <div className="size-2 rounded-full bg-[#FF2718]"></div>
                   <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Génération</span>
                 </div>
               </div>
@@ -159,8 +159,8 @@ export default function DashboardOverview({
                 <AreaChart data={MOCK_DATA}>
                   <defs>
                     <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#E10600" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#E10600" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#FF2718" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#FF2718" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
@@ -185,7 +185,7 @@ export default function DashboardOverview({
                   <Area 
                     type="monotone" 
                     dataKey="leads" 
-                    stroke="#E10600" 
+                    stroke="#FF2718" 
                     strokeWidth={4}
                     fillOpacity={1} 
                     fill="url(#colorLeads)" 
@@ -209,12 +209,12 @@ export default function DashboardOverview({
                 </div>
                 <ChevronRight size={14} className="text-slate-600 group-hover:text-white" />
               </button>
-              <button onClick={() => onNavigate('upgrade')} className="w-full p-4 bg-[#E10600]/10 hover:bg-[#E10600]/20 border border-[#E10600]/20 rounded-2xl flex items-center justify-between group transition-all">
+              <button onClick={() => onNavigate('upgrade')} className="w-full p-4 bg-[#FF2718]/10 hover:bg-[#FF2718]/20 border border-[#FF2718]/20 rounded-2xl flex items-center justify-between group transition-all">
                 <div className="flex items-center gap-3">
-                  <Zap size={16} className="text-[#E10600]" />
+                  <Zap size={16} className="text-[#FF2718]" />
                   <span className="text-[10px] font-black uppercase tracking-widest text-white">Upgrade Plan</span>
                 </div>
-                <ChevronRight size={14} className="text-[#E10600]" />
+                <ChevronRight size={14} className="text-[#FF2718]" />
               </button>
               <button onClick={() => onNavigate('business')} className="w-full p-4 bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-between group transition-all">
                 <div className="flex items-center gap-3">

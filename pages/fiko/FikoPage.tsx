@@ -85,11 +85,11 @@ const FikoPage: React.FC<FikoPageProps> = ({
 
   const gateColors: Record<string, string> = {
     TERRA: "#10b981",
-    MARS: "#E10600",
+    MARS: "#FF2718",
     KRYPTON: "#3b82f6",
     GALAXY: "#a855f7",
   };
-  const activeColor = gateColors[recommendedGate] || "#E10600";
+  const activeColor = gateColors[recommendedGate] || "#FF2718";
 
   const scripts: Record<FikoStep, { text: string; actions: SmartAction[] }> = {
     [FikoStep.INITIALIZING]: {
@@ -311,7 +311,7 @@ const FikoPage: React.FC<FikoPageProps> = ({
               className={`flex items-center gap-3 px-6 py-2.5 border transition-all text-[9px] font-black uppercase tracking-widest ${
                 emailSent
                   ? "border-emerald-500/30 text-emerald-500 bg-emerald-500/5"
-                  : "border-[#E10600]/30 text-white hover:bg-[#E10600] hover:text-white"
+                  : "border-[#FF2718]/30 text-white hover:bg-[#FF2718] hover:text-white"
               } disabled:opacity-70`}
             >
               {isEmailSending ? (
@@ -329,7 +329,7 @@ const FikoPage: React.FC<FikoPageProps> = ({
             </button>
           )}
           <div
-            className={`px-4 py-1.5 border transition-all duration-500 ${isSpeaking ? "shadow-[0_0_15px_rgba(225,6,0,0.2)]" : "border-white/10 text-slate-500"}`}
+            className={`px-4 py-1.5 border transition-all duration-500 ${isSpeaking ? "shadow-[0_0_15px_rgba(255,39,24,0.2)]" : "border-white/10 text-slate-500"}`}
             style={{
               borderColor: isSpeaking ? activeColor : "rgba(255,255,255,0.1)",
               backgroundColor: isSpeaking ? `${activeColor}10` : "transparent",
@@ -342,7 +342,7 @@ const FikoPage: React.FC<FikoPageProps> = ({
           </div>
           <button
             onClick={() => setVoiceEnabled(!voiceEnabled)}
-            className={`size-12 rounded-full flex items-center justify-center border transition-all ${voiceEnabled ? "border-[#E10600] text-[#E10600]" : "border-white/10 text-slate-500"}`}
+            className={`size-12 rounded-full flex items-center justify-center border transition-all ${voiceEnabled ? "border-[#FF2718] text-[#FF2718]" : "border-white/10 text-slate-500"}`}
           >
             {voiceEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
           </button>
@@ -406,7 +406,7 @@ const FikoPage: React.FC<FikoPageProps> = ({
           <div className="flex flex-col gap-12">
             <div
               className="bg-[#1A1A1F]/80 p-12 lg:p-16 border-l-4 shadow-2xl min-h-[350px] flex flex-col justify-center transition-colors duration-700"
-              style={{ borderLeftColor: isSpeaking ? activeColor : "#E10600" }}
+              style={{ borderLeftColor: isSpeaking ? activeColor : "#FF2718" }}
             >
               <p className="text-2xl lg:text-4xl text-white font-light italic leading-tight">
                 {displayedText || "..."}
@@ -425,7 +425,7 @@ const FikoPage: React.FC<FikoPageProps> = ({
                   <button
                     key={i}
                     onClick={() => handleAction(action)}
-                    className="p-6 bg-white/5 border border-white/10 hover:bg-[#E10600]/10 text-center transition-all group active:scale-95"
+                    className="p-6 bg-white/5 border border-white/10 hover:bg-[#FF2718]/10 text-center transition-all group active:scale-95"
                     style={{ "--hover-border": activeColor } as any}
                   >
                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-white transition-colors">
@@ -472,7 +472,7 @@ const FikoPage: React.FC<FikoPageProps> = ({
             href="https://www.koffmann.group"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-black text-[#E10600] hover:underline"
+            className="font-black text-[#FF2718] hover:underline"
           >
             KCG
           </a>
@@ -489,7 +489,7 @@ const FikoPage: React.FC<FikoPageProps> = ({
           animation: fiko-active 6s ease-in-out infinite;
         }
         button:hover {
-          border-color: var(--hover-border, #E10600);
+          border-color: var(--hover-border, #FF2718);
         }
       `}</style>
     </div>

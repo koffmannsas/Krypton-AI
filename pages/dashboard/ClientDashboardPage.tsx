@@ -153,10 +153,10 @@ const ClientDashboardPage: React.FC<ClientDashboardPageProps> = ({
           <motion.div 
             animate={{ rotate: 360 }}
             transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-            className="size-24 border-2 border-white/5 border-t-[#E10600] rounded-full"
+            className="size-24 border-2 border-white/5 border-t-[#FF2718] rounded-full"
           />
           <div className="absolute inset-0 flex items-center justify-center">
-            <Rocket size={32} className="text-[#E10600]" />
+            <Rocket size={32} className="text-[#FF2718]" />
           </div>
         </div>
         <div className="text-center space-y-2">
@@ -231,7 +231,7 @@ const ClientDashboardPage: React.FC<ClientDashboardPageProps> = ({
       {/* MOBILE SIDEBAR TOGGLE */}
       <button 
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="fixed bottom-6 left-6 z-50 p-4 bg-[#E10600] rounded-full lg:hidden block shadow-xl shadow-red-500/20"
+        className="fixed bottom-6 left-6 z-50 p-4 bg-[#FF2718] rounded-full lg:hidden block shadow-xl shadow-red-500/20"
       >
         {isSidebarOpen ? <X /> : <Menu />}
       </button>
@@ -252,16 +252,16 @@ const ClientDashboardPage: React.FC<ClientDashboardPageProps> = ({
               <div className="w-[1px] h-4 bg-white/10 hidden md:block"></div>
               <div className="relative hidden md:block">
                 <Bell size={18} className="text-slate-500 hover:text-white transition-colors" />
-                <div className="absolute -top-1 -right-1 size-2 bg-[#E10600] rounded-full border-2 border-black"></div>
+                <div className="absolute -top-1 -right-1 size-2 bg-[#FF2718] rounded-full border-2 border-black"></div>
               </div>
             </div>
 
             <div className="flex items-center gap-4 md:pl-8 md:border-l border-white/10">
               <div className="text-right hidden md:block">
                 <p className="text-[11px] font-black uppercase tracking-widest leading-none">{user.firstName} {user.lastName}</p>
-                <p className="text-[9px] font-bold text-[#E10600] uppercase tracking-widest mt-1">Krypton Member</p>
+                <p className="text-[9px] font-bold text-[#FF2718] uppercase tracking-widest mt-1">Krypton Member</p>
               </div>
-              <div className="size-10 bg-[#E10600] rounded-full flex items-center justify-center font-black italic">
+              <div className="size-10 bg-[#FF2718] rounded-full flex items-center justify-center font-black italic">
                 {user.firstName[0]}
               </div>
             </div>
@@ -290,7 +290,7 @@ const ClientDashboardPage: React.FC<ClientDashboardPageProps> = ({
         
         <button 
           onClick={() => setShowOnboarding(true)}
-          className="size-16 bg-[#E10600] rounded-full shadow-[0_0_50px_rgba(225,6,0,0.3)] flex items-center justify-center group-hover:scale-110 transition-all border-4 border-white/10 relative overflow-hidden mt-4"
+          className="size-16 bg-[#FF2718] rounded-full shadow-[0_0_50px_rgba(255,39,24,0.3)] flex items-center justify-center group-hover:scale-110 transition-all border-4 border-white/10 relative overflow-hidden mt-4"
         >
           <div className="absolute inset-0 bg-white/20 -translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
           <Zap size={24} className="text-white relative z-10" />

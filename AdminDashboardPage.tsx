@@ -61,10 +61,10 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
   const [leads, setLeads] = useState<any[]>([]);
 
   const featureImportance = [
-    { name: "Pouvoir Décisionnel", val: 31, fill: "#E10600" },
-    { name: "Latence Réponse", val: 22, fill: "#E10600BB" },
-    { name: "Budget Confirmé", val: 18, fill: "#E1060099" },
-    { name: "Répétition Pricing", val: 14, fill: "#E1060077" },
+    { name: "Pouvoir Décisionnel", val: 31, fill: "#FF2718" },
+    { name: "Latence Réponse", val: 22, fill: "#FF2718BB" },
+    { name: "Budget Confirmé", val: 18, fill: "#FF271899" },
+    { name: "Répétition Pricing", val: 14, fill: "#FF271877" },
     { name: "Mention Comité", val: -9, fill: "#333" },
   ];
 
@@ -116,8 +116,8 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
   if (loading)
     return (
       <div className="min-h-screen bg-[#0B0B0F] flex flex-col items-center justify-center gap-8">
-        <Hexagon size={80} className="text-[#E10600] animate-spin" />
-        <p className="text-[10px] font-black uppercase tracking-[0.6em] text-[#E10600]">
+        <Hexagon size={80} className="text-[#FF2718] animate-spin" />
+        <p className="text-[10px] font-black uppercase tracking-[0.6em] text-[#FF2718]">
           INITIALISATION DU COCKPIT CEO...
         </p>
       </div>
@@ -215,7 +215,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
 
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={modelAccuracyData}>
-                <Line dataKey="accuracy" stroke="#E10600" />
+                <Line dataKey="accuracy" stroke="#FF2718" />
               </LineChart>
             </ResponsiveContainer>
           </div>

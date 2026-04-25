@@ -41,7 +41,7 @@ export default function LeadsPanel({ leads }: LeadsPanelProps) {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h2 className="text-3xl font-black uppercase tracking-tighter">Leads & <span className="text-[#E10600]">Conversion</span>.</h2>
+          <h2 className="text-3xl font-black uppercase tracking-tighter">Leads & <span className="text-[#FF2718]">Conversion</span>.</h2>
           <p className="text-slate-500 italic mt-1 uppercase text-[10px] tracking-widest font-bold">Base de données qualifiée en temps réel</p>
         </div>
         <div className="flex gap-3">
@@ -91,7 +91,7 @@ export default function LeadsPanel({ leads }: LeadsPanelProps) {
             <input 
               type="text" 
               placeholder="Rechercher un lead par email..." 
-              className="w-full bg-black/50 border border-white/5 py-3 pl-12 pr-4 rounded-xl text-xs outline-none focus:border-[#E10600]/30 transition-all font-medium"
+              className="w-full bg-black/50 border border-white/5 py-3 pl-12 pr-4 rounded-xl text-xs outline-none focus:border-[#FF2718]/30 transition-all font-medium"
             />
           </div>
           <div className="flex gap-2">
@@ -131,13 +131,13 @@ export default function LeadsPanel({ leads }: LeadsPanelProps) {
                   <td className="px-8 py-6">
                     <div className="flex items-center gap-3">
                       <div className="flex-1 w-24 h-1.5 bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full bg-[#E10600]" style={{ width: `${lead.score}%` }}></div>
+                        <div className="h-full bg-[#FF2718]" style={{ width: `${lead.score}%` }}></div>
                       </div>
                       <span className="text-xs font-black italic">{lead.score}%</span>
                     </div>
                   </td>
                   <td className="px-8 py-6 text-right">
-                    <button className="p-3 bg-white/5 hover:bg-[#E10600] text-slate-400 hover:text-white rounded-xl transition-all">
+                    <button className="p-3 bg-white/5 hover:bg-[#FF2718] text-slate-400 hover:text-white rounded-xl transition-all">
                       <Mail size={16} />
                     </button>
                   </td>

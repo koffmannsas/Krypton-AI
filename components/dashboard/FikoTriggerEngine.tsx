@@ -80,8 +80,8 @@ export default function FikoTriggerEngine({ user, opportunities, onAccept }: Fik
           exit={{ opacity: 0, y: 20, scale: 0.9 }}
           className="fixed bottom-6 right-6 w-[400px] z-[100] shadow-2xl"
         >
-          <div className="bg-[#111116] border border-[#E10600]/30 rounded-[32px] overflow-hidden relative">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#E10600] to-orange-500"></div>
+          <div className="bg-[#111116] border border-[#FF2718]/30 rounded-[32px] overflow-hidden relative">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#FF2718] to-orange-500"></div>
             
             <button 
               onClick={() => setActiveTrigger(null)}
@@ -93,14 +93,14 @@ export default function FikoTriggerEngine({ user, opportunities, onAccept }: Fik
             <div className="p-8">
               <div className="flex items-center gap-4 mb-6">
                 <div className="relative">
-                  <div className="size-12 rounded-2xl bg-[#E10600]/10 flex items-center justify-center text-[#E10600] border border-[#E10600]/20">
+                  <div className="size-12 rounded-2xl bg-[#FF2718]/10 flex items-center justify-center text-[#FF2718] border border-[#FF2718]/20">
                     <Bot size={24} />
                   </div>
                   <div className="absolute -bottom-1 -right-1 size-3 bg-green-500 rounded-full border-2 border-[#111116]"></div>
                 </div>
                 <div>
                   <h4 className="text-sm font-black uppercase tracking-widest text-white">Fiko Intelligence</h4>
-                  <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#E10600] opacity-80">Message Prioritaire</p>
+                  <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#FF2718] opacity-80">Message Prioritaire</p>
                 </div>
               </div>
 
@@ -120,7 +120,7 @@ export default function FikoTriggerEngine({ user, opportunities, onAccept }: Fik
 
               <button 
                 onClick={handleAction}
-                className="w-full py-4 bg-[#E10600] text-white rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-red-700 transition-all shadow-xl shadow-red-500/20 flex items-center justify-center gap-2 group"
+                className="w-full py-4 bg-[#FF2718] text-white rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-red-700 transition-all shadow-xl shadow-red-500/20 flex items-center justify-center gap-2 group"
               >
                 Passer à l'action <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </button>

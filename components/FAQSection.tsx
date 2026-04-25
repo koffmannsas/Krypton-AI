@@ -25,7 +25,7 @@ function FAQItem({ question, answer, isOpen, toggle }: { question: string, answe
         className="flex w-full justify-between items-center p-6 text-left"
       >
         <span className="font-['Oswald'] font-medium text-lg text-white">{question}</span>
-        {isOpen ? <Minus className="text-[#E10600] shrink-0" /> : <Plus className="text-white shrink-0" />}
+        {isOpen ? <Minus className="text-[#FF2718] shrink-0" /> : <Plus className="text-white shrink-0" />}
       </button>
       <AnimatePresence>
         {isOpen && (

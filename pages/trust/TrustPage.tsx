@@ -27,14 +27,14 @@ const TrustPage: React.FC<TrustPageProps> = ({ onNavigate }) => {
       {/* Infrastructure Hero */}
       <section className="relative py-32 mb-20 overflow-hidden">
         <div className="max-w-4xl relative z-10">
-          <div className="inline-flex items-center gap-4 px-5 py-2 bg-[#E10600]/10 border border-[#E10600]/30 text-[#E10600] text-[11px] font-black uppercase tracking-[0.4em] mb-12 rounded-full shadow-[0_0_30px_rgba(224,7,0,0.1)]">
+          <div className="inline-flex items-center gap-4 px-5 py-2 bg-[#FF2718]/10 border border-[#FF2718]/30 text-[#FF2718] text-[11px] font-black uppercase tracking-[0.4em] mb-12 rounded-full shadow-[0_0_30px_rgba(255,39,24,0.1)]">
             <Shield className="w-4 h-4" /> PROTOCOLE DE CONFIANCE VÉRIFIÉ
           </div>
           <h1 className="text-6xl md:text-9xl font-black leading-[0.8] tracking-tighter mb-12 uppercase">
             CONFIANCE <br />
-            <span className="text-[#E10600] italic">ABSOLUE.</span>
+            <span className="text-[#FF2718] italic">ABSOLUE.</span>
           </h1>
-          <p className="text-2xl text-slate-400 font-light leading-relaxed max-w-3xl border-l-2 border-[#E10600] pl-12 italic">
+          <p className="text-2xl text-slate-400 font-light leading-relaxed max-w-3xl border-l-2 border-[#FF2718] pl-12 italic">
             "Nous ne bâtissons pas seulement sur le Cloud. Nous créons une
             forteresse neurale où chaque bit de donnée est un atout stratégique
             protégé par l'intelligence la plus avancée du marché."
@@ -52,32 +52,32 @@ const TrustPage: React.FC<TrustPageProps> = ({ onNavigate }) => {
             label: "Uptime Réseau",
             val: "99.998%",
             desc: "Haute disponibilité mondiale.",
-            icon: <Server className="text-[#E10600]" />,
+            icon: <Server className="text-[#FF2718]" />,
           },
           {
             label: "Standard Chiffrement",
             val: "AES-512-N",
             desc: "Chiffrement neural asymétrique.",
-            icon: <Lock className="text-[#E10600]" />,
+            icon: <Lock className="text-[#FF2718]" />,
           },
           {
             label: "Latence Inférence",
             val: "<14ms",
             desc: "Traitement en temps réel.",
-            icon: <Zap className="text-[#E10600]" />,
+            icon: <Zap className="text-[#FF2718]" />,
           },
           {
             label: "Certifications",
             val: "SOC3 / ISO",
             desc: "Conformité bancaire & médicale.",
-            icon: <CheckCircle2 className="text-[#E10600]" />,
+            icon: <CheckCircle2 className="text-[#FF2718]" />,
           },
         ].map((item, i) => (
           <div
             key={i}
-            className="bg-[#1A1A1F] p-10 border border-white/5 relative group hover:border-[#E10600]/40 transition-all duration-500 shadow-xl"
+            className="bg-[#1A1A1F] p-10 border border-white/5 relative group hover:border-[#FF2718]/40 transition-all duration-500 shadow-xl"
           >
-            <div className="mb-8 size-14 bg-black border border-white/5 flex items-center justify-center rounded-sm group-hover:bg-[#E10600] group-hover:text-white transition-all">
+            <div className="mb-8 size-14 bg-black border border-white/5 flex items-center justify-center rounded-sm group-hover:bg-[#FF2718] group-hover:text-white transition-all">
               {item.icon}
             </div>
             <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest">
@@ -135,7 +135,7 @@ const TrustPage: React.FC<TrustPageProps> = ({ onNavigate }) => {
                 },
               ].map((f, i) => (
                 <div key={i} className="flex items-start gap-6 group">
-                  <div className="size-10 bg-[#E10600]/10 border border-[#E10600]/30 rounded-full flex items-center justify-center text-[#E10600] flex-shrink-0 group-hover:bg-[#E10600] group-hover:text-white transition-all">
+                  <div className="size-10 bg-[#FF2718]/10 border border-[#FF2718]/30 rounded-full flex items-center justify-center text-[#FF2718] flex-shrink-0 group-hover:bg-[#FF2718] group-hover:text-white transition-all">
                     {f.icon}
                   </div>
                   <div>
@@ -151,18 +151,18 @@ const TrustPage: React.FC<TrustPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          <div className="relative group p-1 bg-gradient-to-br from-[#E10600]/20 to-transparent rounded-sm overflow-hidden">
+          <div className="relative group p-1 bg-gradient-to-br from-[#FF2718]/20 to-transparent rounded-sm overflow-hidden">
             <div className="relative bg-[#0B0B0F] p-16 flex flex-col items-center justify-center min-h-[600px] border border-white/5">
               <div className="absolute inset-0 hex-bg opacity-10"></div>
 
               {/* Central Core Visual */}
               <div className="relative z-10 w-full flex flex-col items-center">
-                <div className="size-32 bg-gradient-to-br from-[#E10600] to-red-950 rounded-sm flex items-center justify-center shadow-[0_0_80px_rgba(225,6,0,0.4)] animate-pulse relative">
+                <div className="size-32 bg-gradient-to-br from-[#FF2718] to-red-950 rounded-sm flex items-center justify-center shadow-[0_0_80px_rgba(255,39,24,0.4)] animate-pulse relative">
                   <Cloud className="text-white w-14 h-14" />
-                  <div className="absolute -inset-4 border border-[#E10600]/30 rounded-sm animate-[ping_3s_infinite]"></div>
+                  <div className="absolute -inset-4 border border-[#FF2718]/30 rounded-sm animate-[ping_3s_infinite]"></div>
                 </div>
 
-                <div className="w-px h-16 bg-gradient-to-b from-[#E10600] to-transparent my-4"></div>
+                <div className="w-px h-16 bg-gradient-to-b from-[#FF2718] to-transparent my-4"></div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
                   {[
@@ -174,7 +174,7 @@ const TrustPage: React.FC<TrustPageProps> = ({ onNavigate }) => {
                       key={i}
                       className="p-6 border border-white/10 bg-white/[0.02] flex flex-col items-center gap-4 text-center group hover:bg-white/5 transition-all"
                     >
-                      <div className="text-[#E10600]">{node.icon}</div>
+                      <div className="text-[#FF2718]">{node.icon}</div>
                       <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 group-hover:text-white">
                         {node.label}
                       </span>
@@ -189,7 +189,7 @@ const TrustPage: React.FC<TrustPageProps> = ({ onNavigate }) => {
                 </div>
               </div>
 
-              <div className="absolute top-6 left-6 text-[9px] font-mono text-[#E10600] opacity-40">
+              <div className="absolute top-6 left-6 text-[9px] font-mono text-[#FF2718] opacity-40">
                 PROTO_ID: KRYPTON-TRUST-99
               </div>
             </div>
@@ -201,14 +201,14 @@ const TrustPage: React.FC<TrustPageProps> = ({ onNavigate }) => {
       <section className="py-40 text-center">
         <h2 className="text-6xl md:text-9xl font-black uppercase tracking-tighter mb-16 leading-[0.8] italic">
           BÂTIR SUR UN <br />
-          <span className="text-[#E10600]">ROC NUMÉRIQUE.</span>
+          <span className="text-[#FF2718]">ROC NUMÉRIQUE.</span>
         </h2>
         <p className="text-slate-500 text-lg uppercase tracking-[0.3em] font-black max-w-2xl mx-auto mb-20 leading-loose">
           Krypton AI est audité annuellement par des tiers indépendants pour
           garantir le respect des plus hauts standards de sécurité mondiaux.
         </p>
         <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
-          <button className="group bg-[#E10600] hover:bg-red-700 px-16 py-8 text-white font-black uppercase text-sm tracking-[0.3em] transition-all shadow-2xl shadow-red-500/20 flex items-center gap-6">
+          <button className="group bg-[#FF2718] hover:bg-red-700 px-16 py-8 text-white font-black uppercase text-sm tracking-[0.3em] transition-all shadow-2xl shadow-red-500/20 flex items-center gap-6">
             LANCER UN AUDIT IA{" "}
             <ArrowRight
               size={20}

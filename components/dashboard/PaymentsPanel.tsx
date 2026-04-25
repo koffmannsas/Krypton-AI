@@ -52,13 +52,13 @@ export default function PaymentsPanel({ user, payments }: PaymentsPanelProps) {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h2 className="text-3xl font-black uppercase tracking-tighter">Paiement & <span className="text-[#E10600]">Facturation</span>.</h2>
+          <h2 className="text-3xl font-black uppercase tracking-tighter">Paiement & <span className="text-[#FF2718]">Facturation</span>.</h2>
           <p className="text-slate-500 italic mt-1 uppercase text-[10px] tracking-widest font-bold">Gestion des transactions et accès services</p>
         </div>
         <div className="flex gap-4">
           <button 
             onClick={() => navigate('/billing/payment', { state: { plan: currentPlan, user } })}
-            className="px-6 py-4 bg-[#E10600] text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-red-700 transition-all shadow-xl shadow-red-500/20 flex items-center gap-3"
+            className="px-6 py-4 bg-[#FF2718] text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-red-700 transition-all shadow-xl shadow-red-500/20 flex items-center gap-3"
           >
             S'acquitter d'une facture <ChevronRight size={14} />
           </button>
@@ -90,7 +90,7 @@ export default function PaymentsPanel({ user, payments }: PaymentsPanelProps) {
             <p className="text-xs text-slate-400 font-medium italic">Payé via WAVE (Lien Direct)</p>
           </div>
           <div className="mt-8">
-            <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#E10600] hover:underline">
+            <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#FF2718] hover:underline">
               <Download size={14} /> Télécharger le reçu
             </button>
           </div>
@@ -118,7 +118,7 @@ export default function PaymentsPanel({ user, payments }: PaymentsPanelProps) {
       <div className="bg-[#111116] border border-white/5 rounded-3xl overflow-hidden">
         <div className="p-8 border-b border-white/5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-             <History size={20} className="text-[#E10600]" />
+             <History size={20} className="text-[#FF2718]" />
              <h3 className="text-lg font-black uppercase tracking-widest">Historique des Transactions</h3>
           </div>
           <div className="flex gap-2">
@@ -183,21 +183,21 @@ export default function PaymentsPanel({ user, payments }: PaymentsPanelProps) {
         </div>
       </div>
 
-      <div className="bg-yellow-500/5 border border-yellow-500/20 p-8 rounded-3xl flex items-center gap-6">
-        <AlertCircle size={32} className="text-yellow-500 shrink-0" />
-        <div className="flex-1">
-          <h4 className="text-lg font-black uppercase tracking-tight text-white">Prêt pour l'Activation Prioritaire ?</h4>
-          <p className="text-xs text-slate-400 font-medium italic leading-relaxed">
-            "Pour accélérer le déploiement de vos agents, privilégiez le paiement via WAVE ou virement instantané."
-          </p>
-        </div>
-        <button 
-          onClick={() => navigate('/billing/payment', { state: { plan: currentPlan, user } })}
-          className="px-6 py-3 bg-[#E10600] text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-red-700 transition-all"
-        >
-          Régulariser Maintenant
-        </button>
+    <div className="bg-yellow-500/5 border border-yellow-500/20 p-8 rounded-3xl flex items-center gap-6">
+      <AlertCircle size={32} className="text-yellow-500 shrink-0" />
+      <div className="flex-1">
+        <h4 className="text-lg font-black uppercase tracking-tight text-white">Prêt pour l'Activation Prioritaire ?</h4>
+        <p className="text-xs text-slate-400 font-medium italic leading-relaxed">
+          "Pour accélérer le déploiement de vos agents, privilégiez le paiement via WAVE ou virement instantané."
+        </p>
       </div>
+      <button 
+        onClick={() => navigate('/billing/payment', { state: { plan: currentPlan, user } })}
+        className="px-6 py-3 bg-[#FF2718] text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-red-700 transition-all"
+      >
+        Régulariser Maintenant
+      </button>
+    </div>
 
     </div>
   );

@@ -42,13 +42,13 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
       <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-20 relative z-10">
         <div>
           <div className="flex items-center gap-4 mb-4">
-            <div className="size-3 bg-[#E10600] rounded-full animate-pulse shadow-[0_0_10px_#E10600]"></div>
-            <span className="text-[10px] font-black uppercase tracking-[0.6em] text-[#E10600]">
+            <div className="size-3 bg-[#FF2718] rounded-full animate-pulse shadow-[0_0_10px_#FF2718]"></div>
+            <span className="text-[10px] font-black uppercase tracking-[0.6em] text-[#FF2718]">
               Intelligence Tactical Module // VivaLeads v1.0
             </span>
           </div>
           <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter italic">
-            VIVA<span className="text-[#E10600]">LEADS.</span>
+            VIVA<span className="text-[#FF2718]">LEADS.</span>
           </h1>
         </div>
 
@@ -62,7 +62,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-8 py-4 flex items-center gap-3 text-[9px] font-black uppercase tracking-widest transition-all ${activeTab === tab.id ? "bg-[#E10600] text-white shadow-xl" : "text-slate-500 hover:text-white hover:bg-white/5"}`}
+              className={`px-8 py-4 flex items-center gap-3 text-[9px] font-black uppercase tracking-widest transition-all ${activeTab === tab.id ? "bg-[#FF2718] text-white shadow-xl" : "text-slate-500 hover:text-white hover:bg-white/5"}`}
             >
               {tab.icon} {tab.label}
             </button>
@@ -92,7 +92,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                     label: "Campagnes Actives",
                     val: "04",
                     icon: <Play />,
-                    color: "text-[#E10600]",
+                    color: "text-[#FF2718]",
                   },
                   {
                     label: "Total Leads Indexés",
@@ -136,7 +136,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                       <Network size={12} /> PROXY_MESH: STABLE
                     </div>
                   </div>
-                  <div className="bg-black p-8 font-mono text-[11px] text-[#E10600]/80 h-80 overflow-y-auto border border-white/5 rounded-sm custom-scrollbar">
+                  <div className="bg-black p-8 font-mono text-[11px] text-[#FF2718]/80 h-80 overflow-y-auto border border-white/5 rounded-sm custom-scrollbar">
                     <p className="mb-2 opacity-50">
                       [SYSTEM] INITIALISATION VIVALEADS ENGINE...
                     </p>
@@ -154,9 +154,9 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                   </div>
                 </div>
 
-                <div className="bg-black border border-[#E10600]/20 p-12 rounded-sm space-y-10 flex flex-col justify-between">
+                <div className="bg-black border border-[#FF2718]/20 p-12 rounded-sm space-y-10 flex flex-col justify-between">
                   <div className="space-y-4">
-                    <div className="size-16 bg-[#E10600] rounded-sm flex items-center justify-center text-white shadow-2xl">
+                    <div className="size-16 bg-[#FF2718] rounded-sm flex items-center justify-center text-white shadow-2xl">
                       <Target size={32} />
                     </div>
                     <h4 className="text-2xl font-black uppercase tracking-tighter">
@@ -168,7 +168,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                       avant même que le prospect ne soit contacté."
                     </p>
                   </div>
-                  <button className="w-full py-5 bg-white text-black text-[9px] font-black uppercase tracking-[0.4em] hover:bg-[#E10600] hover:text-white transition-all">
+                  <button className="w-full py-5 bg-white text-black text-[9px] font-black uppercase tracking-[0.4em] hover:bg-[#FF2718] hover:text-white transition-all">
                     GÉNÉRER RAPPORT ROI
                   </button>
                 </div>
@@ -185,11 +185,11 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
               className="max-w-4xl mx-auto"
             >
               <div className="bg-[#141419] border border-white/10 p-16 space-y-16 rounded-sm shadow-2xl relative">
-                <div className="absolute top-0 left-0 w-1 h-full bg-[#E10600]"></div>
+                <div className="absolute top-0 left-0 w-1 h-full bg-[#FF2718]"></div>
                 <div className="space-y-4">
                   <h3 className="text-4xl font-black uppercase tracking-tighter">
                     INITIALISER <br />
-                    <span className="text-[#E10600]">JOBS SCRAPING.</span>
+                    <span className="text-[#FF2718]">JOBS SCRAPING.</span>
                   </h3>
                   <p className="text-[11px] font-black text-slate-500 uppercase tracking-[0.5em]">
                     Configuration du ciblage neural v1.3
@@ -203,7 +203,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                     </label>
                     <input
                       placeholder="EX: BTP, FINANCE, LUXE..."
-                      className="w-full bg-black border border-white/10 p-8 text-xl font-light italic text-white outline-none focus:border-[#E10600] transition-all"
+                      className="w-full bg-black border border-white/10 p-8 text-xl font-light italic text-white outline-none focus:border-[#FF2718] transition-all"
                     />
                   </div>
 
@@ -217,12 +217,12 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                           (s) => (
                             <div
                               key={s}
-                              className="flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-sm group hover:border-[#E10600]/30 transition-all cursor-pointer"
+                              className="flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-sm group hover:border-[#FF2718]/30 transition-all cursor-pointer"
                             >
                               <span className="text-[10px] font-black uppercase text-slate-400 group-hover:text-white">
                                 {s}
                               </span>
-                              <div className="size-4 rounded-sm border border-white/20 flex items-center justify-center group-hover:bg-[#E10600] transition-all">
+                              <div className="size-4 rounded-sm border border-white/20 flex items-center justify-center group-hover:bg-[#FF2718] transition-all">
                                 <Check size={10} className="text-white" />
                               </div>
                             </div>
@@ -242,12 +242,12 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                         ].map((s) => (
                           <div
                             key={s}
-                            className="flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-sm group hover:border-[#E10600]/30 transition-all cursor-pointer"
+                            className="flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-sm group hover:border-[#FF2718]/30 transition-all cursor-pointer"
                           >
                             <span className="text-[10px] font-black uppercase text-slate-400 group-hover:text-white">
                               {s}
                             </span>
-                            <div className="size-4 rounded-sm border border-white/20 flex items-center justify-center group-hover:bg-[#E10600] transition-all">
+                            <div className="size-4 rounded-sm border border-white/20 flex items-center justify-center group-hover:bg-[#FF2718] transition-all">
                               <Check size={10} className="text-white" />
                             </div>
                           </div>
@@ -274,7 +274,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                       setIsScraping(true);
                       setTimeout(() => setActiveTab("dashboard"), 2000);
                     }}
-                    className="bg-[#E10600] px-16 py-8 text-white font-black text-xs uppercase tracking-[0.5em] flex items-center gap-6 hover:bg-red-700 transition-all shadow-2xl active:scale-95"
+                    className="bg-[#FF2718] px-16 py-8 text-white font-black text-xs uppercase tracking-[0.5em] flex items-center gap-6 hover:bg-red-700 transition-all shadow-2xl active:scale-95"
                   >
                     {isScraping ? (
                       <Loader2 className="animate-spin" />
@@ -316,7 +316,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                   <button className="bg-white/5 border border-white/10 p-4 text-slate-500 hover:text-white transition-all">
                     <Filter size={18} />
                   </button>
-                  <button className="bg-white/5 border border-white/10 p-4 text-slate-500 hover:text-[#E10600] transition-all">
+                  <button className="bg-white/5 border border-white/10 p-4 text-slate-500 hover:text-[#FF2718] transition-all">
                     <Download size={18} />
                   </button>
                 </div>
@@ -341,7 +341,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                       >
                         <td className="px-10 py-10">
                           <div className="flex items-center gap-6">
-                            <div className="size-12 bg-black border border-white/10 flex items-center justify-center font-black text-lg text-white group-hover:border-[#E10600]/40 transition-all">
+                            <div className="size-12 bg-black border border-white/10 flex items-center justify-center font-black text-lg text-white group-hover:border-[#FF2718]/40 transition-all">
                               {l.companyName[0]}
                             </div>
                             <div>
@@ -361,7 +361,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                         </td>
                         <td className="px-10 py-10 text-center">
                           <div className="flex justify-center gap-4">
-                            <div className="size-8 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-slate-600 group-hover:text-[#E10600]">
+                            <div className="size-8 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-slate-600 group-hover:text-[#FF2718]">
                               <Mail size={12} />
                             </div>
                             <div className="size-8 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-slate-600 group-hover:text-emerald-500">
@@ -371,7 +371,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                         </td>
                         <td className="px-10 py-10 text-center">
                           <span
-                            className={`text-xl font-black ${l.score >= 80 ? "text-[#E10600]" : "text-white"}`}
+                            className={`text-xl font-black ${l.score >= 80 ? "text-[#FF2718]" : "text-white"}`}
                           >
                             {l.score}%
                           </span>
@@ -404,7 +404,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                   <div className="space-y-4">
                     <h3 className="text-4xl font-black uppercase tracking-tighter">
                       EMAIL <br />
-                      <span className="text-[#E10600]">BLAST IA.</span>
+                      <span className="text-[#FF2718]">BLAST IA.</span>
                     </h3>
                     <p className="text-[11px] font-black text-slate-500 uppercase tracking-[0.5em]">
                       Génération et Envoi de Séquences de Closing
@@ -413,7 +413,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
 
                   <div className="grid lg:grid-cols-2 gap-12">
                     <div className="space-y-8 p-10 bg-black/40 border border-white/5">
-                      <h4 className="text-xs font-black uppercase tracking-widest text-[#E10600]">
+                      <h4 className="text-xs font-black uppercase tracking-widest text-[#FF2718]">
                         Config. Séquence
                       </h4>
                       <div className="space-y-6">
@@ -441,14 +441,14 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
                           « FIKO peut générer 142 emails personnalisés basés sur
                           le secteur d'activité et la tech stack détectée. »
                         </p>
-                        <button className="w-full py-5 border border-[#E10600]/30 text-[#E10600] text-[9px] font-black uppercase tracking-[0.4em] hover:bg-[#E10600] hover:text-white transition-all">
+                        <button className="w-full py-5 border border-[#FF2718]/30 text-[#FF2718] text-[9px] font-black uppercase tracking-[0.4em] hover:bg-[#FF2718] hover:text-white transition-all">
                           PROMPT BUILDER (AUTOPILOT)
                         </button>
                       </div>
                     </div>
                   </div>
 
-                  <button className="w-full py-8 bg-[#E10600] text-white font-black text-xs uppercase tracking-[0.5em] shadow-2xl hover:bg-red-700 transition-all flex items-center justify-center gap-6">
+                  <button className="w-full py-8 bg-[#FF2718] text-white font-black text-xs uppercase tracking-[0.5em] shadow-2xl hover:bg-red-700 transition-all flex items-center justify-center gap-6">
                     DÉCLENCHER L'ENVOI MASSIF <ArrowRight size={20} />
                   </button>
                 </div>
@@ -459,7 +459,7 @@ const VivaLeadsPage: React.FC<VivaLeadsPageProps> = ({ onNavigate, user }) => {
       </main>
 
       {/* Background Decor */}
-      <div className="fixed bottom-20 right-[-10%] size-[800px] bg-[#E10600]/5 blur-[150px] rounded-full pointer-events-none"></div>
+      <div className="fixed bottom-20 right-[-10%] size-[800px] bg-[#FF2718]/5 blur-[150px] rounded-full pointer-events-none"></div>
     </div>
   );
 };

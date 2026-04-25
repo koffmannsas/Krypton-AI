@@ -18,10 +18,10 @@ interface GateAuthModalProps {
 }
 
 const OFFER_NAMES: Record<string, string> = {
-  TERRA: "SOLO",
-  MARS: "PILOT",
-  KRYPTON: "ELITE",
-  GALAXY: "EMPIRE",
+  TERRA: "TERRA",
+  MARS: "MARS",
+  KRYPTON: "KRYPTON",
+  GALAXY: "GALAXY",
 };
 
 const GateAuthModal: React.FC<GateAuthModalProps> = ({

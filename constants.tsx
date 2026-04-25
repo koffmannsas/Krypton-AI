@@ -227,10 +227,11 @@ export const NAV_LINKS = [
   { id: Page.VIVA_LEADS, label: "VIVA LEADS" },
   { id: Page.AGENTS, label: "Nos Agents" },
   { id: Page.PRICING, label: "Tarifs" },
+  { id: Page.BLOG, label: "Blog" },
 ];
 
 export const GATE_THEMES: Record<string, any> = {
-  MARS: { color: "#E10600", desc: "Accélération Incandescente" },
+  MARS: { color: "#FF2718", desc: "Accélération Incandescente" },
   TERRA: { color: "#10b981", desc: "Fondation Émeraude" },
   KRYPTON: { color: "#3b82f6", desc: "Puissance Électrique" },
 };
@@ -284,7 +285,7 @@ export const PLAN_DATA: Record<
   FIKO: { price: 500000, maintenance: 50000, color: "#3b82f6" },
   AGENT_IA: { price: 500000, maintenance: 50000, color: "#3b82f6" },
   VOICE_TERRA: { price: 700000, maintenance: 70000, color: "#10b981" },
-  VOICE_MARS: { price: 1900000, maintenance: 190000, color: "#E10600" },
+  VOICE_MARS: { price: 1900000, maintenance: 190000, color: "#FF2718" },
   VOICE_KRYPTON: { price: 3900000, maintenance: 390000, color: "#eab308" },
 };
 

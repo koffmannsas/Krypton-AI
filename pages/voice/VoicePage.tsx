@@ -373,23 +373,23 @@ DIRECTIVE CRITIQUE : Active le SHADOW MODE en temps réel. Analyse chaque signal
 
   return (
     <div className="relative h-[calc(100vh-80px)] overflow-hidden bg-[#0B0B0F] flex flex-col items-center justify-center">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#E10600]/5 to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#FF2718]/5 to-transparent pointer-events-none"></div>
       <div className="absolute inset-0 hex-bg opacity-10 pointer-events-none"></div>
 
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#E10600]/20 to-transparent"></div>
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF2718]/20 to-transparent"></div>
 
       <div className="absolute top-20 flex flex-col items-center gap-6 z-20">
         <div className="flex items-center gap-4 px-6 py-2 bg-[#1A1A1F]/80 border border-white/5 rounded-full backdrop-blur-2xl shadow-2xl">
           <div className="relative flex size-2">
             <div
-              className={`absolute inset-0 rounded-full ${isActive ? "bg-[#E10600] animate-ping" : "bg-slate-700"}`}
+              className={`absolute inset-0 rounded-full ${isActive ? "bg-[#FF2718] animate-ping" : "bg-slate-700"}`}
             ></div>
             <div
-              className={`relative size-2 rounded-full ${isActive ? "bg-[#E10600]" : "bg-slate-600"}`}
+              className={`relative size-2 rounded-full ${isActive ? "bg-[#FF2718]" : "bg-slate-600"}`}
             ></div>
           </div>
           <span
-            className={`text-[10px] font-black tracking-[0.4em] uppercase transition-all ${isActive ? "text-[#E10600]" : "text-slate-500"}`}
+            className={`text-[10px] font-black tracking-[0.4em] uppercase transition-all ${isActive ? "text-[#FF2718]" : "text-slate-500"}`}
           >
             {statusText}
           </span>
@@ -409,12 +409,12 @@ DIRECTIVE CRITIQUE : Active le SHADOW MODE en temps réel. Analyse chaque signal
           >
             <Hexagon
               size={600}
-              className="text-[#E10600]/5 animate-[spin_60s_linear_infinite]"
+              className="text-[#FF2718]/5 animate-[spin_60s_linear_infinite]"
               strokeWidth={0.5}
             />
             <Hexagon
               size={450}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#E10600]/10 animate-[spin_40s_linear_infinite_reverse]"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#FF2718]/10 animate-[spin_40s_linear_infinite_reverse]"
               strokeWidth={1}
             />
           </div>
@@ -426,7 +426,7 @@ DIRECTIVE CRITIQUE : Active le SHADOW MODE en temps réel. Analyse chaque signal
             <p className="text-xl lg:text-3xl font-light italic text-slate-300 leading-relaxed">
               « {transcription} »
             </p>
-            <div className="mt-4 h-0.5 w-24 bg-[#E10600] mx-auto opacity-40"></div>
+            <div className="mt-4 h-0.5 w-24 bg-[#FF2718] mx-auto opacity-40"></div>
           </div>
         )}
 
@@ -434,7 +434,7 @@ DIRECTIVE CRITIQUE : Active le SHADOW MODE en temps réel. Analyse chaque signal
           {bars.map((height, i) => (
             <div
               key={i}
-              className={`w-1.5 md:w-2.5 rounded-full transition-all duration-150 ${isActive ? "bg-gradient-to-t from-red-950 via-[#E10600] to-white shadow-[0_0_15px_rgba(225,6,0,0.4)]" : "bg-slate-800"}`}
+              className={`w-1.5 md:w-2.5 rounded-full transition-all duration-150 ${isActive ? "bg-gradient-to-t from-red-950 via-[#FF2718] to-white shadow-[0_0_15px_rgba(255,39,24,0.4)]" : "bg-slate-800"}`}
               style={{
                 height: `${height}%`,
                 opacity: isActive ? (height / 100) * 0.7 + 0.3 : 0.2,
@@ -446,7 +446,7 @@ DIRECTIVE CRITIQUE : Active le SHADOW MODE en temps réel. Analyse chaque signal
         {!isActive && !isConnecting && (
           <div className="text-center space-y-4 animate-in fade-in duration-1000">
             <h2 className="text-4xl lg:text-6xl font-black uppercase tracking-tighter">
-              VOCAL <span className="text-[#E10600]">SYNC.</span>
+              VOCAL <span className="text-[#FF2718]">SYNC.</span>
             </h2>
             <p className="text-slate-500 font-medium uppercase tracking-[0.4em] text-xs">
               COMMENCEZ LA CONVERSATION AVEC LE NOYAU FIKO™
@@ -466,8 +466,8 @@ DIRECTIVE CRITIQUE : Active le SHADOW MODE en temps réel. Analyse chaque signal
             onClick={isActive ? stopSession : startSession}
             className={`relative size-24 rounded-full flex items-center justify-center transition-all shadow-2xl active:scale-90 ${
               isActive
-                ? "bg-white text-[#E10600] hover:scale-105"
-                : "bg-[#E10600] text-white hover:bg-red-700 hover:scale-110 shadow-red-500/20"
+                ? "bg-white text-[#FF2718] hover:scale-105"
+                : "bg-[#FF2718] text-white hover:bg-red-700 hover:scale-110 shadow-red-500/20"
             }`}
           >
             {isConnecting ? (
@@ -478,7 +478,7 @@ DIRECTIVE CRITIQUE : Active le SHADOW MODE en temps réel. Analyse chaque signal
               <Mic size={32} />
             )}
             {isActive && (
-              <div className="absolute -inset-4 border border-[#E10600]/20 rounded-full animate-ping pointer-events-none"></div>
+              <div className="absolute -inset-4 border border-[#FF2718]/20 rounded-full animate-ping pointer-events-none"></div>
             )}
           </button>
 
@@ -490,7 +490,7 @@ DIRECTIVE CRITIQUE : Active le SHADOW MODE en temps réel. Analyse chaque signal
 
       {error && (
         <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] animate-in slide-in-from-top-4 duration-500">
-          <div className="bg-[#E10600] border border-white/20 p-5 rounded-sm flex items-center gap-5 shadow-2xl">
+          <div className="bg-[#FF2718] border border-white/20 p-5 rounded-sm flex items-center gap-5 shadow-2xl">
             <AlertTriangle className="text-white" size={24} />
             <div className="flex flex-col gap-2">
               <p className="text-[10px] font-black uppercase tracking-widest text-white">

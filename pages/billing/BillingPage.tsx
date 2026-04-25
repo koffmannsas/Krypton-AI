@@ -125,12 +125,12 @@ const BillingPage: React.FC<BillingPageProps> = ({ onNavigate, user }) => {
           animate={{ opacity: 1, y: 0 }}
           className="space-y-6"
         >
-          <div className="inline-flex items-center gap-3 px-6 py-2 border border-[#E10600] bg-[#E10600]/5 text-[#E10600] text-[10px] font-black uppercase tracking-[0.5em]">
+          <div className="inline-flex items-center gap-3 px-6 py-2 border border-[#FF2718] bg-[#FF2718]/5 text-[#FF2718] text-[10px] font-black uppercase tracking-[0.5em]">
             KRYPTON BILLING ENGINE V1.0 - LIVE
           </div>
           <h1 className="text-6xl lg:text-8xl font-black tracking-tighter uppercase leading-none">
             Monitoring <br />
-            <span className="text-[#E10600] italic">Financier.</span>
+            <span className="text-[#FF2718] italic">Financier.</span>
           </h1>
         </motion.div>
 
@@ -213,7 +213,7 @@ const BillingPage: React.FC<BillingPageProps> = ({ onNavigate, user }) => {
                         <div className="w-32">
                           <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-[#E10600]"
+                              className="h-full bg-[#FF2718]"
                               style={{
                                 width: `${Math.min(100, (client.voice_minutes_used / client.voice_minutes_limit) * 100)}%`,
                               }}

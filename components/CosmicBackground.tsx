@@ -43,8 +43,8 @@ export default function CosmicBackground() {
         if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
 
         const glowFactor = activeCardId ? 1.5 : 1;
-        ctx.fillStyle = `rgba(168, 85, 247, ${p.opacity * glowFactor})`;
-        ctx.shadowColor = `rgba(168, 85, 247, ${p.opacity})`;
+        ctx.fillStyle = `rgba(255, 39, 24, ${p.opacity * glowFactor})`;
+        ctx.shadowColor = `rgba(255, 39, 24, ${p.opacity})`;
         ctx.shadowBlur = activeCardId ? 10 : 2;
 
         ctx.beginPath();

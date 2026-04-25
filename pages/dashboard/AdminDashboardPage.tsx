@@ -30,6 +30,7 @@ import {
   AlertTriangle,
   Database
 } from "lucide-react";
+import TopicalAuthorityDashboard from "../seo/TopicalAuthorityDashboard";
 import { db } from "../../firebase";
 import { collection, query, orderBy, onSnapshot, limit } from "firebase/firestore";
 
@@ -45,7 +46,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
   onLogout,
 }) => {
   const [activeModule, setActiveModule] = useState<
-    "command" | "leads" | "payments" | "monitoring"
+    "command" | "leads" | "payments" | "monitoring" | "seo_strategy"
   >("command");
   const [infra] = useState<InfrastructureHealth>(MOCK_INFRA_HEALTH);
   const [loading, setLoading] = useState(true);
@@ -101,8 +102,8 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
   if (loading)
     return (
       <div className="min-h-screen bg-[#0B0B0F] flex flex-col items-center justify-center gap-10">
-        <Hexagon size={100} className="text-[#E10600] animate-spin" strokeWidth={1} />
-        <p className="text-[10px] font-black uppercase tracking-[0.8em] text-[#E10600]">KRYPTON HQ SYNC...</p>
+        <Hexagon size={100} className="text-[#FF2718] animate-spin" strokeWidth={1} />
+        <p className="text-[10px] font-black uppercase tracking-[0.8em] text-[#FF2718]">KRYPTON HQ SYNC...</p>
       </div>
     );
 
@@ -116,7 +117,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
             <Crown size={24} />
           </div>
           <div>
-            <p className="font-black uppercase tracking-tighter text-2xl leading-none">KRYPTON <span className="text-[#E10600]">HQ</span></p>
+            <p className="font-black uppercase tracking-tighter text-2xl leading-none">KRYPTON <span className="text-[#FF2718]">HQ</span></p>
             <p className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] mt-1">SUPER ADMIN v11.0</p>
           </div>
         </div>
@@ -126,12 +127,13 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
             { id: "command", label: "Dashboard", icon: <LayoutDashboard size={20} /> },
             { id: "leads", label: "Leads de Fiko", icon: <Bot size={20} /> },
             { id: "payments", label: "Revenus & Paiements", icon: <DollarSign size={20} /> },
+            { id: "seo_strategy", label: "SEO Authority", icon: <Target size={20} /> },
             { id: "monitoring", label: "Infrastructure", icon: <Activity size={20} /> },
           ].map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveModule(item.id as any)}
-              className={`w-full flex items-center gap-6 px-6 py-5 rounded-sm transition-all ${activeModule === item.id ? "bg-[#E10600] text-white" : "text-slate-500 hover:bg-white/5"}`}
+              className={`w-full flex items-center gap-6 px-6 py-5 rounded-sm transition-all ${activeModule === item.id ? "bg-[#FF2718] text-white" : "text-slate-500 hover:bg-white/5"}`}
             >
               {item.icon}
               <span className="text-[11px] font-bold uppercase tracking-widest">{item.label}</span>
@@ -168,7 +170,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
           <AnimatePresence mode="wait">
             {activeModule === "command" && (
               <motion.div key="command" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-12">
-                <h2 className="text-7xl font-black uppercase tracking-tighter italic">COMMAND <span className="text-[#E10600] not-italic underline">CENTER.</span></h2>
+                <h2 className="text-7xl font-black uppercase tracking-tighter italic">COMMAND <span className="text-[#FF2718] not-italic underline">CENTER.</span></h2>
                 
                 <div className="grid lg:grid-cols-4 gap-8">
                   {[
@@ -187,8 +189,8 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
 
                 <div className="grid lg:grid-cols-2 gap-8">
                   <div className="bg-[#0A0A0E] border border-white/5 rounded-sm p-8">
-                    <div className="flex justify-between items-center mb-10">
-                      <h4 className="text-xs font-black uppercase tracking-widest text-[#E10600]">Derniers Leads Qualifiés</h4>
+                    <div className="justify-between items-center mb-10 flex">
+                      <h4 className="text-xs font-black uppercase tracking-widest text-[#FF2718]">Derniers Leads Qualifiés</h4>
                       <button onClick={() => setActiveModule("leads")} className="text-[10px] text-white/40 uppercase font-black hover:text-white">Tout voir</button>
                     </div>
                     <div className="space-y-4">
@@ -218,7 +220,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
             {activeModule === "leads" && (
               <motion.div key="leads" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-12">
                 <div className="flex justify-between items-end">
-                  <h2 className="text-5xl font-black uppercase tracking-tighter italic">FIKO <span className="text-[#E10600]">LEADS HUB.</span></h2>
+                  <h2 className="text-5xl font-black uppercase tracking-tighter italic">FIKO <span className="text-[#FF2718]">LEADS HUB.</span></h2>
                 </div>
 
                 <div className="bg-[#141419] border border-white/5 rounded-sm overflow-hidden">
@@ -301,10 +303,16 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({
                 </div>
               </motion.div>
             )}
+
+            {activeModule === "seo_strategy" && (
+               <motion.div key="seo" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <TopicalAuthorityDashboard />
+               </motion.div>
+            )}
             
             {activeModule === "monitoring" && (
               <div className="space-y-12">
-                 <h2 className="text-5xl font-black uppercase tracking-tighter italic">INFRA <span className="text-[#E10600]">MONITOR.</span></h2>
+                 <h2 className="text-5xl font-black uppercase tracking-tighter italic">INFRA <span className="text-[#FF2718]">MONITOR.</span></h2>
                  <div className="bg-[#141419] p-10 border border-white/5 rounded-sm">
                    <p className="text-slate-500 uppercase text-[10px] font-black mb-8">Node Inférence Global</p>
                    <div className="h-64 flex items-end gap-2 px-4 py-8 bg-black/20 rounded border border-white/5">

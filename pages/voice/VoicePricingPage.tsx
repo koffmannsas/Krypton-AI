@@ -62,7 +62,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
         "Blocage à 600 min. Upgrade auto packs. Maintenance IA post-6 mois : 10%/mois.",
       target:
         "Entreprises structurées, immobilier, écoles, cliniques, e-commerce.",
-      color: "#E10600",
+      color: "#FF2718",
       icon: <Brain />,
     },
     {
@@ -94,7 +94,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
   return (
     <div className="relative bg-[#0B0B0F] overflow-hidden min-h-screen pb-40">
       <div className="absolute inset-0 hex-bg opacity-[0.03] pointer-events-none"></div>
-      <div className="absolute top-0 left-0 w-[1200px] h-[1200px] bg-[#E10600]/5 blur-[250px] rounded-full -translate-y-1/2 -translate-x-1/3 pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-[1200px] h-[1200px] bg-[#FF2718]/5 blur-[250px] rounded-full -translate-y-1/2 -translate-x-1/3 pointer-events-none"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 pt-40 pb-20 relative z-10">
         <motion.div
@@ -103,12 +103,12 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
           transition={{ duration: 0.7 }}
           className="text-center mb-24 space-y-6"
         >
-          <div className="inline-flex items-center gap-3 px-6 py-2 border border-[#E10600] bg-[#E10600]/5 text-[#E10600] text-[10px] font-black uppercase tracking-[0.5em]">
+          <div className="inline-flex items-center gap-3 px-6 py-2 border border-[#FF2718] bg-[#FF2718]/5 text-[#FF2718] text-[10px] font-black uppercase tracking-[0.5em]">
             GRILLE OFFICIELLE 2026
           </div>
           <h1 className="text-6xl lg:text-[100px] font-black tracking-tighter uppercase leading-[0.85] text-white">
             KRYPTON AI <br />
-            <span className="text-[#E10600] italic">VOICE.</span>
+            <span className="text-[#FF2718] italic">VOICE.</span>
           </h1>
           <p className="text-slate-400 max-w-2xl mx-auto font-medium text-xl uppercase tracking-[0.3em] leading-relaxed italic">
             L'infrastructure vocale intelligente qui transforme chaque appel en
@@ -195,7 +195,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
         {/* Minute Packs & Positioning */}
         <div className="grid lg:grid-cols-5 gap-8">
           <div className="lg:col-span-2 bg-[#1A1A1F] p-12 border border-white/5 rounded-sm space-y-8">
-            <h4 className="text-base font-black uppercase tracking-[0.3em] text-[#E10600]">
+            <h4 className="text-base font-black uppercase tracking-[0.3em] text-[#FF2718]">
               Packs Minutes Officiels
             </h4>
             <table className="w-full text-left">
@@ -224,19 +224,19 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
             </table>
           </div>
 
-          <div className="lg:col-span-3 bg-black border border-[#E10600]/30 p-12 rounded-sm space-y-8 flex flex-col justify-center text-center shadow-[0_0_80px_rgba(225,6,0,0.15)]">
+          <div className="lg:col-span-3 bg-black border border-[#FF2718]/30 p-12 rounded-sm space-y-8 flex flex-col justify-center text-center shadow-[0_0_80px_rgba(255,39,24,0.15)]">
             <h4 className="text-base font-black uppercase tracking-[0.3em] text-white">
               Positionnement Officiel
             </h4>
             <p className="text-3xl text-slate-400 font-light italic leading-relaxed">
               Krypton AI Voice n’est pas "un chatbot vocal". <br />
               C’est une{" "}
-              <span className="text-white font-medium not-italic underline decoration-[#E10600]">
+              <span className="text-white font-medium not-italic underline decoration-[#FF2718]">
                 infrastructure vocale intelligente
               </span>{" "}
               d’entreprise.
             </p>
-            <p className="text-sm font-black uppercase tracking-widest text-[#E10600]">
+            <p className="text-sm font-black uppercase tracking-widest text-[#FF2718]">
               Le premier standard vocal IA intelligent d’Afrique francophone.
             </p>
           </div>

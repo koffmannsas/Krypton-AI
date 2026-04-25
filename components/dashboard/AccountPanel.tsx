@@ -31,7 +31,7 @@ export default function AccountPanel({ user }: AccountPanelProps) {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h2 className="text-3xl font-black uppercase tracking-tighter">Mon <span className="text-[#E10600]">Compte</span>.</h2>
+          <h2 className="text-3xl font-black uppercase tracking-tighter">Mon <span className="text-[#FF2718]">Compte</span>.</h2>
           <p className="text-slate-500 italic mt-1 uppercase text-[10px] tracking-widest font-bold">Informations personnelles et professionnelles</p>
         </div>
         <div className="flex gap-4">
@@ -48,7 +48,7 @@ export default function AccountPanel({ user }: AccountPanelProps) {
         {/* Left Col: Avatar & Security */}
         <div className="space-y-6">
           <div className="bg-[#111116] border border-white/5 rounded-[40px] p-10 text-center relative overflow-hidden group">
-            <div className="size-32 rounded-full bg-gradient-to-tr from-[#E10600] to-orange-500 mx-auto mb-6 p-1 relative">
+            <div className="size-32 rounded-full bg-gradient-to-tr from-[#FF2718] to-orange-500 mx-auto mb-6 p-1 relative">
               <div className="size-full bg-[#111116] rounded-full flex items-center justify-center overflow-hidden">
                 <span className="text-4xl font-black italic">{user.firstName[0]}{user.lastName[0]}</span>
               </div>
@@ -58,7 +58,7 @@ export default function AccountPanel({ user }: AccountPanelProps) {
             </div>
             
             <h3 className="text-xl font-bold uppercase tracking-tight">{user.firstName} {user.lastName}</h3>
-            <p className="text-[10px] font-black uppercase tracking-widest text-[#E10600] mt-1 italic">Krypton Member since 2026</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-[#FF2718] mt-1 italic">Krypton Member since 2026</p>
             
             <div className="mt-8 pt-8 border-t border-white/5 flex items-center justify-center gap-8">
               <div className="text-center">
@@ -124,7 +124,7 @@ export default function AccountPanel({ user }: AccountPanelProps) {
                     <input 
                       type="text" 
                       defaultValue={item.value}
-                      className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-sm font-bold text-white outline-none focus:border-[#E10600]/30"
+                      className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-sm font-bold text-white outline-none focus:border-[#FF2718]/30"
                     />
                   ) : (
                     <p className="text-sm font-black text-white italic tracking-wide">{item.value}</p>
@@ -143,7 +143,7 @@ export default function AccountPanel({ user }: AccountPanelProps) {
             <button className="relative z-10 px-6 py-3 bg-white text-black text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-200 transition-all">
               Explorer
             </button>
-            <div className="absolute top-0 right-0 h-full w-40 bg-[#E10600]/5 blur-3xl -skew-x-12 translate-x-20 transition-transform group-hover:translate-x-10"></div>
+            <div className="absolute top-0 right-0 h-full w-40 bg-[#FF2718]/5 blur-3xl -skew-x-12 translate-x-20 transition-transform group-hover:translate-x-10"></div>
           </div>
         </div>
       </div>

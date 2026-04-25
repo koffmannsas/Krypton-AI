@@ -18,11 +18,13 @@ import { usePricing } from "../../hooks/usePricing";
 interface PricingPageProps {
   onNavigate: (p: Page) => void;
   onOpenFiko: (gate?: string) => void;
+  onOpenVocal: (gate?: string) => void;
 }
 
 const PricingPage: React.FC<PricingPageProps> = ({
   onNavigate,
   onOpenFiko,
+  onOpenVocal,
 }) => {
   const { plans, features: comparisonFeatures, loading } = usePricing();
   const { activeCardId } = useCosmic();
@@ -92,11 +94,17 @@ const PricingPage: React.FC<PricingPageProps> = ({
   const activeRect = activeCardId ? cardRects[activeCardId] : null;
 
   const handleCtaClick = (planId: string) => {
-    if (planId === "ACCESS") onNavigate(Page.ACCESS_OFFER);
-    else if (planId === "TERRA") onNavigate(Page.TERRA_OFFER);
-    else if (planId === "MARS") onNavigate(Page.MARS_OFFER);
-    else if (planId === "KRYPTON") onNavigate(Page.KRYPTON_OFFER);
-    else if (planId === "GALAXY") onNavigate(Page.GALAXY_OFFER);
+    const normalized = planId.toUpperCase().trim();
+    if (normalized === "ACCESS") onNavigate(Page.ACCESS_OFFER);
+    else if (normalized === "TERRA") onNavigate(Page.TERRA_OFFER);
+    else if (normalized === "MARS") onNavigate(Page.MARS_OFFER);
+    else if (normalized === "KRYPTON") onNavigate(Page.KRYPTON_OFFER);
+    else if (normalized === "GALAXY") onNavigate(Page.GALAXY_OFFER);
+    else {
+      console.log("Unknown plan ID:", planId);
+      // Fallback behavior
+      onOpenFiko(normalized);
+    }
   };
 
   const renderCellValue = (value: string) => {
@@ -109,7 +117,7 @@ const PricingPage: React.FC<PricingPageProps> = ({
 
   return (
     <div className="relative bg-[#0B0B0F] overflow-hidden min-h-screen pb-40">
-      <div className="absolute top-0 left-0 w-[1200px] h-[1200px] bg-[#E10600]/5 blur-[250px] rounded-full -translate-y-1/2 -translate-x-1/3 pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-[1200px] h-[1200px] bg-[#FF2718]/5 blur-[250px] rounded-full -translate-y-1/2 -translate-x-1/3 pointer-events-none"></div>
 
       <div className="max-w-[1800px] mx-auto px-6 pt-40 pb-20 relative z-10">
         <motion.div
@@ -118,12 +126,12 @@ const PricingPage: React.FC<PricingPageProps> = ({
           transition={{ duration: 0.7 }}
           className="text-center mb-24 space-y-6"
         >
-          <div className="inline-flex items-center gap-3 px-6 py-2 border border-[#E10600] bg-[#E10600]/5 text-[#E10600] text-[10px] font-black uppercase tracking-[0.5em]">
+          <div className="inline-flex items-center gap-3 px-6 py-2 border border-[#FF2718] bg-[#FF2718]/5 text-[#FF2718] text-[10px] font-black uppercase tracking-[0.5em]">
             SYSTÈME PLANÉTAIRE KRYPTON
           </div>
           <h1 className="text-6xl lg:text-[100px] font-black tracking-tighter uppercase leading-[0.85] text-white">
             CHOISISSEZ VOTRE <br />
-            <span className="text-[#E10600] italic">PORTE D'ACCÈS.</span>
+            <span className="text-[#FF2718] italic">PORTE D'ACCÈS.</span>
           </h1>
           <p className="text-slate-400 max-w-3xl mx-auto font-medium text-xl uppercase tracking-[0.3em] leading-relaxed italic">
             ✨ CHAQUE PORTE CACHE UN TRÉSOR. Survolez pour activer le vortex.
@@ -186,7 +194,7 @@ const PricingPage: React.FC<PricingPageProps> = ({
           <div className="text-center mb-24">
             <h2 className="text-5xl lg:text-7xl font-black tracking-tighter uppercase text-white">
               Comparez les{" "}
-              <span className="text-[#E10600] italic">solutions</span>
+              <span className="text-[#FF2718] italic">solutions</span>
             </h2>
             <p className="mt-6 text-xl text-slate-500 font-medium uppercase tracking-[0.3em]">
               Choisissez le niveau de performance adapté à votre ambition.
@@ -224,7 +232,7 @@ const PricingPage: React.FC<PricingPageProps> = ({
                 {comparisonFeatures.map((feature, i) => (
                   <tr
                     key={i}
-                    className={`border-t border-white/5 ${feature.name.includes("Agent IA") ? "bg-[#E10600]/5" : ""}`}
+                    className={`border-t border-white/5 ${feature.name.includes("Agent IA") ? "bg-[#FF2718]/5" : ""}`}
                   >
                     <td className="p-5 text-xs font-bold uppercase tracking-wider text-slate-400">
                       {feature.name}
@@ -273,13 +281,13 @@ const PricingPage: React.FC<PricingPageProps> = ({
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
-                onClick={() => onOpenFiko("ACCESS")}
+                onClick={() => onNavigate(Page.ACCESS_OFFER)}
                 className="px-8 py-5 bg-purple-600 text-white text-[9px] font-black uppercase tracking-[0.3em] hover:bg-purple-700 transition-colors"
               >
                 Démarrer avec ACCESS
               </button>
               <button
-                onClick={() => onOpenFiko()}
+                onClick={() => onOpenVocal("MARS")}
                 className="px-8 py-5 bg-white/5 border border-white/10 text-white text-[9px] font-black uppercase tracking-[0.3em] hover:bg-white/10 transition-colors"
               >
                 Parler à un conseiller

@@ -81,7 +81,7 @@ const DEFAULT_PLANS: Plan[] = [
       "320% ROI (Performance)",
       "+45% Parts marché GAIN",
     ],
-    color: "#E10600",
+    color: "#FF2718",
     cta: "<<LANCER MA CONQUÊTE>>",
     story: "Chaque matin, vous découvrez que votre armée IA a conquis de nouveaux territoires pendant la nuit. Votre tableau de bord devient votre centre de commandement interstellaire.",
     order: 3
@@ -178,7 +178,10 @@ export function usePricing() {
 
     const qPlans = query(collection(db, 'pricing_plans'), orderBy('order'));
     const unsubscribePlans = onSnapshot(qPlans, (snapshot) => {
-      const fetchedPlans = snapshot.docs.map(d => d.data() as Plan);
+      const fetchedPlans = snapshot.docs.map(d => {
+        const data = d.data() as Plan;
+        return { ...data, id: data.id || d.id };
+      });
       if (fetchedPlans.length > 0) setPlans(fetchedPlans);
       setLoading(false);
     });

@@ -1,16 +1,25 @@
 import React, { useState, useCallback, useEffect } from "react";
 import {
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  useParams,
+  Navigate,
+} from "react-router-dom";
+import {
   Page,
-  FikoFlowStep,
   UserProfile,
   UserRole,
   Agent,
   ProspectInfo,
 } from "./types";
-import { MASTER_AGENTS } from "./constants";
+import { ROUTES } from "./routes.config";
 import { soundEngine } from "./utils/SoundEngine";
 import { visitorMemory } from "./utils/VisitorMemory";
+import { MASTER_AGENTS } from "./constants";
 
+import SEO from "./components/SEO";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomePage from "./pages/home/HomePage";
@@ -28,8 +37,14 @@ import AdminAuthPage from "./pages/auth/AdminAuthPage";
 import WhitepaperPage from "./pages/whitepaper/WhitepaperPage";
 import FikoLandingPage from "./pages/fiko/FikoLandingPage";
 import FikoPage from "./pages/fiko/FikoPage";
+import BlogGridPage from "./pages/blog/BlogGridPage";
+import BlogPostPage from "./pages/blog/BlogPostPage";
+import { BLOG_POSTS } from "./data/blogPosts";
+import TopicalPillarPage from "./pages/seo/TopicalPillarPage";
+import ProgrammaticPage from "./pages/seo/ProgrammaticPage";
 import VivaLeadsPage from "./pages/viva/VivaLeadsPage";
 import BillingPage from "./pages/billing/BillingPage";
+import FikoAddonOfferPage from "./pages/offers/FikoAddonOfferPage";
 import PaymentPage from "./pages/billing/PaymentPage";
 import AccessOfferPage from "./pages/offers/AccessOfferPage";
 import GateOfferPage from "./pages/offers/GateOfferPage";
@@ -37,7 +52,6 @@ import GateOfferPage from "./pages/offers/GateOfferPage";
 import FikoHexaWidget from "./components/FikoHexaWidget";
 import AIChatOverlay from "./components/AIChatOverlay";
 import VocalSalesOverlay from "./components/VocalSalesOverlay";
-import FikoCaptureModal from "./components/FikoCaptureModal";
 import OrderModal from "./components/OrderModal";
 import GateTransition from "./components/GateTransition";
 import GateAuthModal from "./components/GateAuthModal";
@@ -45,9 +59,11 @@ import GateAuthModal from "./components/GateAuthModal";
 import { CosmicProvider } from "./contexts/CosmicContext";
 import CosmicBackground from "./components/CosmicBackground";
 
-import { Hexagon, Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX } from "lucide-react";
 
 const App: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const hostname = window.location.hostname;
   const urlParams = new URLSearchParams(window.location.search);
 
@@ -58,16 +74,40 @@ const App: React.FC = () => {
 
   const [user, setUser] = useState<UserProfile | null>(null);
   const [prospect, setProspect] = useState<ProspectInfo | null>(null);
-  const [currentPage, setCurrentPage] = useState<Page>(Page.HOME);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   const [fikoChat, setFikoChat] = useState({ open: false, agent: null as Agent | null });
-  const [fikoVocal, setFikoVocal] = useState({ open: false });
+  const [fikoVocal, setFikoVocal] = useState<{ open: boolean; initialPorte?: string }>({ open: false });
 
   const [activeGateTransition, setActiveGateTransition] = useState<string | null>(null);
   const [showGateAuth, setShowGateAuth] = useState<string | null>(null);
   const [orderModal, setOrderModal] = useState({ open: false, porte: "" });
   const [selectedGate, setSelectedGate] = useState<string>("MARS");
+
+  const [paymentState, setPaymentState] = useState<{ plan: any; user: UserProfile } | null>(null);
+
+  // Legacy Query Redirection (Atomic 301-like)
+  useEffect(() => {
+    const p = urlParams.get("p");
+    if (p) {
+      const pageMapping: Record<string, Page> = {
+        tarifs: Page.PRICING,
+        agents: Page.AGENTS,
+        fiko: Page.FIKO,
+        viva: Page.VIVA_LEADS,
+        voice: Page.VOICE,
+        crm: Page.CRM,
+        scraper: Page.SCRAPER,
+        trust: Page.TRUST,
+        seo: Page.SEO,
+        whitepaper: Page.WHITEPAPER,
+      };
+      const targetPage = pageMapping[p.toLowerCase()];
+      if (targetPage && ROUTES[targetPage]) {
+        navigate(ROUTES[targetPage].path, { replace: true });
+      }
+    }
+  }, [navigate, urlParams]);
 
   useEffect(() => {
     soundEngine.setEnabled(soundEnabled);
@@ -75,7 +115,7 @@ const App: React.FC = () => {
     if (memoryIdentity) setProspect(memoryIdentity);
   }, [soundEnabled]);
 
-  // 🔥 AUTH FIXED
+  // Auth logic
   useEffect(() => {
     let unsubscribe: any;
 
@@ -91,37 +131,27 @@ const App: React.FC = () => {
               if (userDoc.exists()) {
                 const profile = userDoc.data() as UserProfile;
 
-                if (
-                  isAdminApp &&
-                  profile.role !== UserRole.ADMIN &&
-                  profile.role !== UserRole.SUPER_ADMIN
-                ) {
+                if (isAdminApp && profile.role !== UserRole.ADMIN && profile.role !== UserRole.SUPER_ADMIN) {
                   await auth.signOut();
                   return;
                 }
 
-                if (
-                  isClientApp &&
-                  (profile.role === UserRole.ADMIN ||
-                    profile.role === UserRole.SUPER_ADMIN)
-                ) {
+                if (isClientApp && (profile.role === UserRole.ADMIN || profile.role === UserRole.SUPER_ADMIN)) {
                   await auth.signOut();
                   return;
                 }
 
                 setUser(profile);
 
-                // FORCE the redirection
-                setCurrentPage(prev => {
-                  if (prev === Page.HOME || prev === Page.AUTH || prev === Page.SIGNUP) {
-                    return (profile.role === UserRole.ADMIN || profile.role === UserRole.SUPER_ADMIN)
-                      ? Page.ADMIN_DASHBOARD
-                      : Page.CLIENT_DASHBOARD;
-                  }
-                  return prev;
-                });
-              } else {
-                 console.warn("User document not found in onAuthStateChanged");
+                // Auto-redirect on login if on landing/auth pages
+                const publicPaths = [ROUTES[Page.HOME].path, ROUTES[Page.AUTH].path, ROUTES[Page.SIGNUP].path];
+                if (publicPaths.includes(location.pathname)) {
+                   if (profile.role === UserRole.ADMIN || profile.role === UserRole.SUPER_ADMIN) {
+                     navigate(ROUTES[Page.ADMIN_DASHBOARD].path);
+                   } else {
+                     navigate(ROUTES[Page.CLIENT_DASHBOARD].path);
+                   }
+                }
               }
             } catch (err) {
               console.error("USER ERROR:", err);
@@ -137,119 +167,162 @@ const App: React.FC = () => {
 
     initAuth();
     return () => unsubscribe && unsubscribe();
-  }, [isAdminApp, isClientApp]);
+  }, [isAdminApp, isClientApp, location.pathname, navigate]);
 
-  const [paymentState, setPaymentState] = useState<{ plan: any, user: UserProfile } | null>(null);
+  const navigateTo = useCallback(
+    (page: Page, state?: any) => {
+      if (page === Page.PAYMENT && state) {
+        setPaymentState(state);
+      }
+      const route = ROUTES[page];
+      if (route) {
+        navigate(route.path);
+      }
+    },
+    [navigate]
+  );
 
-  const navigateTo = useCallback((page: Page, state?: any) => {
-    console.log("Navigating to:", page);
-    if (page === Page.PAYMENT && state) {
-      setPaymentState(state);
-    }
-    setCurrentPage(page);
-    window.scrollTo(0, 0);
-  }, []);
-
-  const handleLoginSuccess = useCallback((profile: UserProfile) => {
-    setUser(profile);
-    if (profile.role === UserRole.SUPER_ADMIN || profile.role === UserRole.ADMIN) {
-      navigateTo(Page.ADMIN_DASHBOARD);
-    } else {
-      navigateTo(Page.CLIENT_DASHBOARD);
-    }
-  }, [navigateTo]);
+  const handleLoginSuccess = useCallback(
+    (profile: UserProfile) => {
+      setUser(profile);
+      if (profile.role === UserRole.SUPER_ADMIN || profile.role === UserRole.ADMIN) {
+        navigate(ROUTES[Page.ADMIN_DASHBOARD].path);
+      } else {
+        navigate(ROUTES[Page.CLIENT_DASHBOARD].path);
+      }
+    },
+    [navigate]
+  );
 
   const handleLogout = useCallback(async () => {
     const { auth } = await import("./firebase");
     await auth.signOut();
     setUser(null);
-    navigateTo(Page.HOME);
-  }, [navigateTo]);
+    navigate(ROUTES[Page.HOME].path);
+  }, [navigate]);
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case Page.HOME:
-        return <HomePage onNavigate={navigateTo} onOpenFiko={() => setFikoVocal({ open: true })} />;
-      case Page.AUTH:
-        return <AuthPage onLoginSuccess={handleLoginSuccess} onNavigate={navigateTo} initialMode="login" />;
-      case Page.SIGNUP:
-        return <AuthPage onLoginSuccess={handleLoginSuccess} onNavigate={navigateTo} initialMode="signup" />;
-      case Page.CLIENT_DASHBOARD:
-        return <ClientDashboardPage user={user} onNavigate={navigateTo} onLogout={handleLogout} gate={selectedGate} />;
-      case Page.ADMIN_DASHBOARD:
-        return <AdminDashboardPage user={user} onNavigate={navigateTo} onLogout={handleLogout} />;
-      case Page.AGENTS:
-        return (
-          <AgentsPage 
-            onNavigate={navigateTo} 
-            onOpenFiko={() => setFikoVocal({ open: true })} 
-            onOpenChat={(agent) => setFikoChat({ open: true, agent })}
-          />
-        );
-      case Page.VOICE:
-        return <VoicePage onNavigate={navigateTo} />;
-      case Page.CRM:
-        return <CRMPage onNavigate={navigateTo} />;
-      case Page.SCRAPER:
-        return <ScraperPage onNavigate={navigateTo} />;
-      case Page.TRUST:
-        return <TrustPage onNavigate={navigateTo} />;
-      case Page.PRICING:
-        return <PricingPage onNavigate={navigateTo} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate || "" })} />;
-      case Page.SEO:
-        return <SEOPage onNavigate={navigateTo} keyword="intelligence-artificielle" />;
-      case Page.ADMIN_AUTH:
-        return <AdminAuthPage onLoginSuccess={handleLoginSuccess} onNavigate={navigateTo} />;
-      case Page.WHITEPAPER:
-        return <WhitepaperPage onNavigate={navigateTo} />;
-      case Page.FIKO:
-        return (
-          <FikoLandingPage 
-            onNavigate={navigateTo} 
-            onOpenVocal={() => setFikoVocal({ open: true })} 
-            onOpenChat={() => setFikoChat({ open: true, agent: MASTER_AGENTS[0] })}
-            onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })}
-          />
-        );
-      case Page.FIKO_AUDIT:
-        return <FikoPage onNavigate={navigateTo} prospect={prospect || undefined} onOpenGate={(gate) => navigateTo(Page.PRICING)} />;
-      case Page.VIVA_LEADS:
-        return <VivaLeadsPage onNavigate={navigateTo} user={user} />;
-      case Page.BILLING:
-        return <BillingPage onNavigate={navigateTo} user={user} />;
-      case Page.PAYMENT:
-        return paymentState ? <PaymentPage plan={paymentState.plan} user={paymentState.user} /> : <HomePage onNavigate={navigateTo} onOpenFiko={() => setFikoVocal({ open: true })} />;
-      case Page.ACCESS_OFFER:
-        return <AccessOfferPage onNavigate={navigateTo} onOpenVocal={() => setFikoVocal({ open: true })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} />;
-      case Page.TERRA_OFFER:
-        return <GateOfferPage gate="TERRA" onNavigate={navigateTo} onOpenVocal={() => setFikoVocal({ open: true })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} />;
-      case Page.MARS_OFFER:
-        return <GateOfferPage gate="MARS" onNavigate={navigateTo} onOpenVocal={() => setFikoVocal({ open: true })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} />;
-      case Page.KRYPTON_OFFER:
-        return <GateOfferPage gate="KRYPTON" onNavigate={navigateTo} onOpenVocal={() => setFikoVocal({ open: true })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} />;
-      case Page.GALAXY_OFFER:
-        return <GateOfferPage gate="GALAXY" onNavigate={navigateTo} onOpenVocal={() => setFikoVocal({ open: true })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} />;
-      default:
-        return <HomePage onNavigate={navigateTo} onOpenFiko={() => setFikoVocal({ open: true })} />;
-    }
+  const isClientDashboard = location.pathname === ROUTES[Page.CLIENT_DASHBOARD].path;
+  const isAdminDashboard = location.pathname === ROUTES[Page.ADMIN_DASHBOARD].path;
+  const isAnyDashboard = isClientDashboard || isAdminDashboard;
+
+  // Find active page from path for Navbar highlights
+  const activePageEnum = Object.values(ROUTES).find(r => r.path === location.pathname)?.enum || Page.HOME;
+
+  const PageWrapper = ({ children, config }: { children: React.ReactNode; config: typeof ROUTES[Page.HOME] }) => (
+    <>
+      <SEO title={config.title} description={config.description} canonical={config.path} />
+      {children}
+    </>
+  );
+
+  const CategoryPageWrapper = () => {
+    const { slug } = useParams();
+    const config = ROUTES[Page.CATEGORY];
+    const displayKeyword = slug?.replace(/-/g, " ") || "";
+    const title = config.title.replace("%s", displayKeyword);
+    const description = config.description.replace("%s", displayKeyword);
+    
+    return (
+      <>
+        <SEO title={title} description={description} canonical={`/recherche/${slug}`} />
+        <SEOPage onNavigate={navigateTo} keyword={displayKeyword} />
+      </>
+    );
   };
 
-  const isClientDashboard = currentPage === Page.CLIENT_DASHBOARD;
+  const BlogPostWrapper = ({ onNavigate }: { onNavigate: (p: Page) => void }) => {
+    const { slug } = useParams();
+    const post = BLOG_POSTS.find(p => p.slug === slug);
+    const title = post ? post.title : 'Article Introuvable | Krypton AI';
+    const description = post ? post.excerpt : 'Cet article n\'existe plus ou a été déplacé.';
+
+    return (
+      <>
+        <SEO title={title} description={description} canonical={`/blog/${slug}`} />
+        <BlogPostPage onNavigate={onNavigate} />
+      </>
+    );
+  };
+
+  const ProgrammaticPageWrapper = () => {
+    const { slug } = useParams<{ slug: string }>();
+    return <ProgrammaticPage onNavigate={navigateTo} />;
+  };
 
   return (
     <CosmicProvider>
       <div className="min-h-screen bg-black text-white flex flex-col relative">
         <CosmicBackground />
 
-        {!isClientDashboard && <Navbar activePage={currentPage} onNavigate={navigateTo} user={user} onLogout={handleLogout} />}
+        {!isAnyDashboard && (
+          <Navbar
+            user={user}
+            onLogout={handleLogout}
+          />
+        )}
 
-        <main className={`flex-grow ${isClientDashboard ? 'pb-0' : ''}`}>{renderPage()}</main>
+        <main className={`flex-grow ${isAnyDashboard ? "pb-0" : ""}`}>
+          <Routes>
+            <Route path={ROUTES[Page.HOME].path} element={<PageWrapper config={ROUTES[Page.HOME]}><HomePage onNavigate={navigateTo} onOpenFiko={(gate) => setFikoVocal({ open: true, initialPorte: gate })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.AUTH].path} element={<PageWrapper config={ROUTES[Page.AUTH]}><AuthPage onLoginSuccess={handleLoginSuccess} onNavigate={navigateTo} initialMode="login" /></PageWrapper>} />
+            <Route path={ROUTES[Page.SIGNUP].path} element={<PageWrapper config={ROUTES[Page.SIGNUP]}><AuthPage onLoginSuccess={handleLoginSuccess} onNavigate={navigateTo} initialMode="signup" /></PageWrapper>} />
+            <Route path={ROUTES[Page.AGENTS].path} element={<PageWrapper config={ROUTES[Page.AGENTS]}><AgentsPage onNavigate={navigateTo} onOpenFiko={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenChat={(agent) => setFikoChat({ open: true, agent })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.PRICING].path} element={<PageWrapper config={ROUTES[Page.PRICING]}><PricingPage onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate || "" })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.VOICE].path} element={<PageWrapper config={ROUTES[Page.VOICE]}><VoicePage onNavigate={navigateTo} /></PageWrapper>} />
+            <Route path={ROUTES[Page.CRM].path} element={<PageWrapper config={ROUTES[Page.CRM]}><CRMPage onNavigate={navigateTo} /></PageWrapper>} />
+            <Route path={ROUTES[Page.SCRAPER].path} element={<PageWrapper config={ROUTES[Page.SCRAPER]}><ScraperPage onNavigate={navigateTo} /></PageWrapper>} />
+            <Route path={ROUTES[Page.TRUST].path} element={<PageWrapper config={ROUTES[Page.TRUST]}><TrustPage onNavigate={navigateTo} /></PageWrapper>} />
+            <Route path={ROUTES[Page.SEO].path} element={<PageWrapper config={ROUTES[Page.SEO]}><SEOPage onNavigate={navigateTo} keyword="intelligence-artificielle" /></PageWrapper>} />
+            <Route path="/recherche/:slug" element={<CategoryPageWrapper />} />
+            <Route path={ROUTES[Page.BLOG].path} element={<PageWrapper config={ROUTES[Page.BLOG]}><BlogGridPage onNavigate={navigateTo} /></PageWrapper>} />
+            <Route path="/blog/:slug" element={<BlogPostWrapper onNavigate={navigateTo} />} />
 
-        {!isClientDashboard ? (
-          <Footer onNavigate={navigateTo} />
+            {/* Topical Pillars */}
+            <Route path={ROUTES[Page.PILLAR_SITE_WEB].path} element={<PageWrapper config={ROUTES[Page.PILLAR_SITE_WEB]}><TopicalPillarPage topicId="site-web-ia" onNavigate={navigateTo} /></PageWrapper>} />
+            <Route path={ROUTES[Page.PILLAR_AGENTS_IA].path} element={<PageWrapper config={ROUTES[Page.PILLAR_AGENTS_IA]}><TopicalPillarPage topicId="agents-ia" onNavigate={navigateTo} /></PageWrapper>} />
+            <Route path={ROUTES[Page.PILLAR_ACQUISITION].path} element={<PageWrapper config={ROUTES[Page.PILLAR_ACQUISITION]}><TopicalPillarPage topicId="acquisition-leads" onNavigate={navigateTo} /></PageWrapper>} />
+            <Route path={ROUTES[Page.CRM].path} element={<PageWrapper config={ROUTES[Page.CRM]}><TopicalPillarPage topicId="crm-intelligent" onNavigate={navigateTo} /></PageWrapper>} />
+            
+            {/* Programmatic SEO Routes */}
+            <Route path="/:slug" element={<ProgrammaticPageWrapper />} />
+
+            <Route path={ROUTES[Page.WHITEPAPER].path} element={<PageWrapper config={ROUTES[Page.WHITEPAPER]}><WhitepaperPage onNavigate={navigateTo} /></PageWrapper>} />
+            <Route path={ROUTES[Page.FIKO].path} element={<PageWrapper config={ROUTES[Page.FIKO]}><FikoLandingPage onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenChat={() => setFikoChat({ open: true, agent: MASTER_AGENTS[0] })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.FIKO_AUDIT].path} element={<PageWrapper config={ROUTES[Page.FIKO_AUDIT]}><FikoPage onNavigate={navigateTo} prospect={prospect || undefined} onOpenGate={() => navigateTo(Page.PRICING)} /></PageWrapper>} />
+            <Route path={ROUTES[Page.VIVA_LEADS].path} element={<PageWrapper config={ROUTES[Page.VIVA_LEADS]}><VivaLeadsPage onNavigate={navigateTo} user={user} /></PageWrapper>} />
+            <Route path={ROUTES[Page.BILLING].path} element={<PageWrapper config={ROUTES[Page.BILLING]}><BillingPage onNavigate={navigateTo} user={user} /></PageWrapper>} />
+            <Route path={ROUTES[Page.PAYMENT].path} element={<PageWrapper config={ROUTES[Page.PAYMENT]}>{paymentState ? <PaymentPage plan={paymentState.plan} user={paymentState.user} /> : <Navigate to="/" />}</PageWrapper>} />
+            
+            {/* Admin Routes */}
+            <Route path={ROUTES[Page.ADMIN_AUTH].path} element={<PageWrapper config={ROUTES[Page.ADMIN_AUTH]}><AdminAuthPage onLoginSuccess={handleLoginSuccess} onNavigate={navigateTo} /></PageWrapper>} />
+            <Route path={ROUTES[Page.ADMIN_DASHBOARD].path} element={<PageWrapper config={ROUTES[Page.ADMIN_DASHBOARD]}>{user?.role === UserRole.ADMIN || user?.role === UserRole.SUPER_ADMIN ? <AdminDashboardPage user={user} onNavigate={navigateTo} onLogout={handleLogout} /> : <Navigate to="/admin/auth" />}</PageWrapper>} />
+            
+            {/* Offer Routes */}
+            <Route path={ROUTES[Page.ACCESS_OFFER].path} element={<PageWrapper config={ROUTES[Page.ACCESS_OFFER]}><AccessOfferPage onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.TERRA_OFFER].path} element={<PageWrapper config={ROUTES[Page.TERRA_OFFER]}><GateOfferPage gate="TERRA" onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.MARS_OFFER].path} element={<PageWrapper config={ROUTES[Page.MARS_OFFER]}><GateOfferPage gate="MARS" onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.KRYPTON_OFFER].path} element={<PageWrapper config={ROUTES[Page.KRYPTON_OFFER]}><GateOfferPage gate="KRYPTON" onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.GALAXY_OFFER].path} element={<PageWrapper config={ROUTES[Page.GALAXY_OFFER]}><GateOfferPage gate="GALAXY" onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} /></PageWrapper>} />
+            
+            {/* Fiko Addons */}
+            <Route path={ROUTES[Page.FIKO_SOLO_OFFER].path} element={<PageWrapper config={ROUTES[Page.FIKO_SOLO_OFFER]}><FikoAddonOfferPage addon="SOLO" onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.FIKO_PILOT_OFFER].path} element={<PageWrapper config={ROUTES[Page.FIKO_PILOT_OFFER]}><FikoAddonOfferPage addon="PILOT" onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.FIKO_ELITE_OFFER].path} element={<PageWrapper config={ROUTES[Page.FIKO_ELITE_OFFER]}><FikoAddonOfferPage addon="ELITE" onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} /></PageWrapper>} />
+            <Route path={ROUTES[Page.FIKO_EMPIRE_OFFER].path} element={<PageWrapper config={ROUTES[Page.FIKO_EMPIRE_OFFER]}><FikoAddonOfferPage addon="EMPIRE" onNavigate={navigateTo} onOpenVocal={(gate) => setFikoVocal({ open: true, initialPorte: gate })} onOpenFiko={(gate) => setOrderModal({ open: true, porte: gate })} /></PageWrapper>} />
+            
+            {/* Client Dashboard */}
+            <Route path={ROUTES[Page.CLIENT_DASHBOARD].path} element={<PageWrapper config={ROUTES[Page.CLIENT_DASHBOARD]}>{user ? <ClientDashboardPage user={user} onNavigate={navigateTo} onLogout={handleLogout} gate={selectedGate} /> : <Navigate to="/connexion" />}</PageWrapper>} />
+            
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </main>
+
+        {!isAnyDashboard ? (
+          <Footer />
         ) : (
-          <div className="sticky bottom-0 z-50 w-full bg-[#0A0A0C] border-t border-[#E10600]/20 py-4 flex items-center justify-center backdrop-blur-xl">
-            <h1 className="text-xs font-black uppercase tracking-[0.4em] text-[#E10600] m-0 drop-shadow-[0_0_8px_rgba(225,6,0,0.3)]">
+          <div className="sticky bottom-0 z-50 w-full bg-[#0A0A0C] border-t border-[#FF2718]/20 py-4 flex items-center justify-center backdrop-blur-xl">
+            <h1 className="text-xs font-black uppercase tracking-[0.4em] text-[#FF2718] m-0 drop-shadow-[0_0_8px_rgba(255,39,24,0.3)]">
               KOFFMANN GROUP
             </h1>
           </div>
@@ -257,12 +330,12 @@ const App: React.FC = () => {
 
         <button
           onClick={() => setSoundEnabled(!soundEnabled)}
-          className="fixed bottom-6 right-6"
+          className="fixed bottom-6 right-6 z-50"
         >
-          {soundEnabled ? <Volume2 /> : <VolumeX />}
+          {soundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
         </button>
 
-        {currentPage === Page.HOME && (
+        {location.pathname === ROUTES[Page.HOME].path && (
           <FikoHexaWidget onClick={() => setFikoVocal({ open: true })} />
         )}
 
@@ -271,7 +344,44 @@ const App: React.FC = () => {
             agent={MASTER_AGENTS[0]}
             prospectName={prospect?.firstName || "Visiteur"}
             onClose={() => setFikoVocal({ open: false })}
-            onOpenCheckout={(porte) => setOrderModal({ open: true, porte })}
+            onOpenCheckout={(porte) => {
+              setFikoVocal({ open: false });
+              setOrderModal({ open: true, porte });
+            }}
+            initialPorte={fikoVocal.initialPorte}
+          />
+        )}
+
+        {orderModal.open && (
+          <OrderModal
+            onClose={() => setOrderModal({ open: false, porte: "" })}
+            porte={orderModal.porte}
+            onComplete={(p) => {
+              setOrderModal({ open: false, porte: "" });
+              setShowGateAuth(p);
+            }}
+          />
+        )}
+
+        {showGateAuth && (
+          <GateAuthModal
+            onClose={() => setShowGateAuth(null)}
+            gate={showGateAuth}
+            onSuccess={() => {
+              const currentGate = showGateAuth;
+              setShowGateAuth(null);
+              setActiveGateTransition(currentGate);
+            }}
+          />
+        )}
+
+        {activeGateTransition !== null && (
+          <GateTransition
+            gate={activeGateTransition}
+            onComplete={() => {
+              setActiveGateTransition(null);
+              navigate(ROUTES[Page.CLIENT_DASHBOARD].path);
+            }}
           />
         )}
       </div>

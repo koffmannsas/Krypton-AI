@@ -26,10 +26,10 @@ interface OrderModalProps {
 }
 
 const OFFER_NAMES: Record<string, string> = {
-  TERRA: "SOLO",
-  MARS: "PILOT",
-  KRYPTON: "ELITE",
-  GALAXY: "EMPIRE",
+  TERRA: "TERRA",
+  MARS: "MARS",
+  KRYPTON: "KRYPTON",
+  GALAXY: "GALAXY",
 };
 
 const OrderModal: React.FC<OrderModalProps> = ({
@@ -110,17 +110,17 @@ const OrderModal: React.FC<OrderModalProps> = ({
   if (showRecovery) {
     return (
       <div className="fixed inset-0 z-[130] bg-[#0B0B0F]/95 backdrop-blur-2xl flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
-        <div className="max-w-2xl w-full bg-[#1A1A1F] border border-[#E10600]/30 p-12 lg:p-20 rounded-sm shadow-[0_0_150px_rgba(225,6,0,0.4)] relative overflow-hidden">
+        <div className="max-w-2xl w-full bg-[#1A1A1F] border border-[#FF2718]/30 p-12 lg:p-20 rounded-sm shadow-[0_0_150px_rgba(255,39,24,0.4)] relative overflow-hidden">
           <div className="absolute top-0 right-0 p-10 opacity-[0.03] pointer-events-none">
             <Bot size={200} />
           </div>
 
           <div className="flex items-center gap-6 mb-12">
-            <div className="size-16 bg-[#E10600] rounded-sm flex items-center justify-center shadow-2xl">
+            <div className="size-16 bg-[#FF2718] rounded-sm flex items-center justify-center shadow-2xl">
               <Bot className="text-white" size={32} />
             </div>
             <div>
-              <p className="text-[#E10600] text-[10px] font-black uppercase tracking-[0.4em] mb-2">
+              <p className="text-[#FF2718] text-[10px] font-black uppercase tracking-[0.4em] mb-2">
                 ASSISTANT DE CLOSING FIKO™
               </p>
               <h4 className="text-2xl font-black uppercase tracking-tight text-white">
@@ -140,10 +140,10 @@ const OrderModal: React.FC<OrderModalProps> = ({
                 <div className="grid gap-4">
                   <button
                     onClick={() => setRecoveryOption("clarify")}
-                    className="flex items-center justify-between p-6 bg-white/5 border border-white/10 hover:border-[#E10600] hover:bg-[#E10600]/5 transition-all group"
+                    className="flex items-center justify-between p-6 bg-white/5 border border-white/10 hover:border-[#FF2718] hover:bg-[#FF2718]/5 transition-all group"
                   >
                     <div className="flex items-center gap-4">
-                      <HelpCircle size={20} className="text-[#E10600]" />
+                      <HelpCircle size={20} className="text-[#FF2718]" />
                       <span className="text-xs font-black uppercase tracking-widest">
                         Clarifier un point rapidement
                       </span>
@@ -155,10 +155,10 @@ const OrderModal: React.FC<OrderModalProps> = ({
                   </button>
                   <button
                     onClick={handleContinueLater}
-                    className="flex items-center justify-between p-6 bg-white/5 border border-white/10 hover:border-[#E10600] hover:bg-[#E10600]/5 transition-all group"
+                    className="flex items-center justify-between p-6 bg-white/5 border border-white/10 hover:border-[#FF2718] hover:bg-[#FF2718]/5 transition-all group"
                   >
                     <div className="flex items-center gap-4">
-                      <Clock size={20} className="text-[#E10600]" />
+                      <Clock size={20} className="text-[#FF2718]" />
                       <span className="text-xs font-black uppercase tracking-widest">
                         Continuer plus tard
                       </span>
@@ -170,10 +170,10 @@ const OrderModal: React.FC<OrderModalProps> = ({
                   </button>
                   <button
                     onClick={handleRecapRequest}
-                    className="flex items-center justify-between p-6 bg-white/5 border border-white/10 hover:border-[#E10600] hover:bg-[#E10600]/5 transition-all group"
+                    className="flex items-center justify-between p-6 bg-white/5 border border-white/10 hover:border-[#FF2718] hover:bg-[#FF2718]/5 transition-all group"
                   >
                     <div className="flex items-center gap-4">
-                      <FileText size={20} className="text-[#E10600]" />
+                      <FileText size={20} className="text-[#FF2718]" />
                       <span className="text-xs font-black uppercase tracking-widest">
                         Recevoir le récapitulatif
                       </span>
@@ -206,7 +206,7 @@ const OrderModal: React.FC<OrderModalProps> = ({
       onClick={resetInactivityTimer}
       onKeyDown={resetInactivityTimer}
     >
-      <div className="bg-[#0B0B0F] border border-white/10 w-full max-w-5xl rounded-sm shadow-[0_0_150px_rgba(225,6,0,0.3)] overflow-hidden relative flex flex-col lg:flex-row">
+      <div className="bg-[#0B0B0F] border border-white/10 w-full max-w-5xl rounded-sm shadow-[0_0_150px_rgba(255,39,24,0.3)] overflow-hidden relative flex flex-col lg:flex-row">
         <button
           onClick={onClose}
           className="absolute top-6 right-6 z-50 size-12 flex items-center justify-center text-slate-500 hover:text-white transition-all bg-white/5 hover:bg-white/10 rounded-full group"
@@ -216,7 +216,7 @@ const OrderModal: React.FC<OrderModalProps> = ({
 
         <div className="lg:w-1/3 bg-[#1A1A1F] p-12 border-r border-white/5 space-y-12">
           <div className="space-y-4">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#E10600]">
+            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#FF2718]">
               ESPACE FINALISATION
             </h2>
             <h3 className="text-4xl font-black uppercase tracking-tighter text-white">
@@ -226,8 +226,8 @@ const OrderModal: React.FC<OrderModalProps> = ({
           </div>
 
           <div className="space-y-8">
-            <div className="p-8 border border-[#E10600]/30 bg-[#E10600]/5 space-y-4">
-              <p className="text-[9px] font-black text-[#E10600] uppercase tracking-widest">
+            <div className="p-8 border border-[#FF2718]/30 bg-[#FF2718]/5 space-y-4">
+              <p className="text-[9px] font-black text-[#FF2718] uppercase tracking-widest">
                 OFFRE SÉLECTIONNÉE
               </p>
               <p className="text-2xl font-black text-white">
@@ -295,7 +295,7 @@ const OrderModal: React.FC<OrderModalProps> = ({
               <div className="grid md:grid-cols-2 gap-6">
                 <button
                   onClick={() => setStep(2)}
-                  className="p-8 border border-[#E10600] bg-[#E10600]/5 text-left group hover:bg-[#E10600] hover:text-white transition-all"
+                  className="p-8 border border-[#FF2718] bg-[#FF2718]/5 text-left group hover:bg-[#FF2718] hover:text-white transition-all"
                 >
                   <Building2 size={32} className="mb-6" />
                   <p className="text-xs font-black uppercase tracking-widest">
@@ -340,11 +340,11 @@ const OrderModal: React.FC<OrderModalProps> = ({
               </div>
 
               <div className="space-y-6">
-                <p className="text-[10px] font-black text-[#E10600] uppercase tracking-[0.4em]">
+                <p className="text-[10px] font-black text-[#FF2718] uppercase tracking-[0.4em]">
                   ENVOYER LA PREUVE DE VIREMENT
                 </p>
                 <div className="flex gap-4">
-                  <button className="flex-grow bg-white/5 border border-dashed border-white/20 py-10 flex flex-col items-center justify-center gap-4 hover:border-[#E10600] transition-all text-slate-500">
+                  <button className="flex-grow bg-white/5 border border-dashed border-white/20 py-10 flex flex-col items-center justify-center gap-4 hover:border-[#FF2718] transition-all text-slate-500">
                     <Upload size={24} />{" "}
                     <span className="text-[9px] font-black tracking-widest uppercase">
                       Téléverser Reçu
@@ -352,7 +352,7 @@ const OrderModal: React.FC<OrderModalProps> = ({
                   </button>
                   <button
                     onClick={() => setStep(3)}
-                    className="bg-[#E10600] px-12 text-white font-black text-xs uppercase tracking-[0.4em] flex items-center justify-center gap-4 hover:bg-red-700 transition-all"
+                    className="bg-[#FF2718] px-12 text-white font-black text-xs uppercase tracking-[0.4em] flex items-center justify-center gap-4 hover:bg-red-700 transition-all"
                   >
                     VALIDER <Send size={20} />
                   </button>

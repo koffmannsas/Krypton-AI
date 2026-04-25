@@ -60,20 +60,20 @@ const FikoCaptureModal: React.FC<FikoCaptureModalProps> = ({
         initial={{ opacity: 0, scale: 0.95, y: 40 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 40 }}
-        className="relative w-full max-w-[420px] bg-[#0D0D12]/90 border border-white/10 rounded-sm shadow-[0_0_100px_rgba(225,6,0,0.15)] overflow-hidden backdrop-blur-3xl"
+        className="relative w-full max-w-[420px] bg-[#0D0D12]/90 border border-white/10 rounded-sm shadow-[0_0_100px_rgba(255,39,24,0.15)] overflow-hidden backdrop-blur-3xl"
       >
         {/* Ligne de Scan Laser active */}
-        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-[#E10600] to-transparent animate-scanline z-20"></div>
+        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-[#FF2718] to-transparent animate-scanline z-20"></div>
         <div className="absolute inset-0 hex-bg opacity-[0.03] pointer-events-none"></div>
 
         {/* Header Minimaliste */}
         <div className="p-6 md:p-8 pb-4 flex justify-between items-start relative z-10">
           <div className="flex items-center gap-4">
-            <div className="size-10 bg-[#E10600]/10 border border-[#E10600]/30 flex items-center justify-center text-[#E10600] rounded-sm shadow-[0_0_20px_rgba(225,6,0,0.1)]">
+            <div className="size-10 bg-[#FF2718]/10 border border-[#FF2718]/30 flex items-center justify-center text-[#FF2718] rounded-sm shadow-[0_0_20px_rgba(255,39,24,0.1)]">
               <Fingerprint size={22} className="animate-pulse" />
             </div>
             <div>
-              <p className="text-[#E10600] text-[8px] font-black uppercase tracking-[0.4em]">
+              <p className="text-[#FF2718] text-[8px] font-black uppercase tracking-[0.4em]">
                 Auth Protocol v1.3
               </p>
               <h3 className="text-xl font-black uppercase tracking-tighter text-white">
@@ -91,7 +91,7 @@ const FikoCaptureModal: React.FC<FikoCaptureModalProps> = ({
 
         {/* Formulaire Tactile */}
         <div className="px-6 md:px-8 pb-10 space-y-8 relative z-10">
-          <p className="text-slate-400 text-[11px] font-medium italic leading-relaxed border-l border-[#E10600]/40 pl-4 uppercase tracking-widest">
+          <p className="text-slate-400 text-[11px] font-medium italic leading-relaxed border-l border-[#FF2718]/40 pl-4 uppercase tracking-widest">
             Synchronisation de votre profil pour activer ma mémoire
             cross-device.
           </p>
@@ -100,7 +100,7 @@ const FikoCaptureModal: React.FC<FikoCaptureModalProps> = ({
             {/* Champ Prénom */}
             <div className="relative group">
               <div
-                className={`absolute left-0 bottom-0 h-[1px] bg-[#E10600] transition-all duration-500 z-10 ${focusedField === "firstName" ? "w-full opacity-100" : "w-0 opacity-0"}`}
+                className={`absolute left-0 bottom-0 h-[1px] bg-[#FF2718] transition-all duration-500 z-10 ${focusedField === "firstName" ? "w-full opacity-100" : "w-0 opacity-0"}`}
               ></div>
               <div
                 className={`flex items-center gap-4 px-4 py-4 bg-white/[0.02] border-b border-white/5 transition-all ${focusedField === "firstName" ? "bg-white/[0.05]" : "group-hover:bg-white/[0.03]"}`}
@@ -109,7 +109,7 @@ const FikoCaptureModal: React.FC<FikoCaptureModalProps> = ({
                   size={16}
                   className={
                     focusedField === "firstName"
-                      ? "text-[#E10600]"
+                      ? "text-[#FF2718]"
                       : "text-slate-600"
                   }
                 />
@@ -132,7 +132,7 @@ const FikoCaptureModal: React.FC<FikoCaptureModalProps> = ({
             {/* Champ Email */}
             <div className="relative group">
               <div
-                className={`absolute left-0 bottom-0 h-[1px] bg-[#E10600] transition-all duration-500 z-10 ${focusedField === "email" ? "w-full opacity-100" : "w-0 opacity-0"}`}
+                className={`absolute left-0 bottom-0 h-[1px] bg-[#FF2718] transition-all duration-500 z-10 ${focusedField === "email" ? "w-full opacity-100" : "w-0 opacity-0"}`}
               ></div>
               <div
                 className={`flex items-center gap-4 px-4 py-4 bg-white/[0.02] border-b border-white/5 transition-all ${focusedField === "email" ? "bg-white/[0.05]" : "group-hover:bg-white/[0.03]"}`}
@@ -141,7 +141,7 @@ const FikoCaptureModal: React.FC<FikoCaptureModalProps> = ({
                   size={16}
                   className={
                     focusedField === "email"
-                      ? "text-[#E10600]"
+                      ? "text-[#FF2718]"
                       : "text-slate-600"
                   }
                 />
@@ -163,7 +163,7 @@ const FikoCaptureModal: React.FC<FikoCaptureModalProps> = ({
             {/* Champ Téléphone */}
             <div className="relative group">
               <div
-                className={`absolute left-0 bottom-0 h-[1px] bg-[#E10600] transition-all duration-500 z-10 ${focusedField === "phone" ? "w-full opacity-100" : "w-0 opacity-0"}`}
+                className={`absolute left-0 bottom-0 h-[1px] bg-[#FF2718] transition-all duration-500 z-10 ${focusedField === "phone" ? "w-full opacity-100" : "w-0 opacity-0"}`}
               ></div>
               <div
                 className={`flex items-center gap-4 px-4 py-4 bg-white/[0.02] border-b border-white/5 transition-all ${focusedField === "phone" ? "bg-white/[0.05]" : "group-hover:bg-white/[0.03]"}`}
@@ -172,7 +172,7 @@ const FikoCaptureModal: React.FC<FikoCaptureModalProps> = ({
                   size={16}
                   className={
                     focusedField === "phone"
-                      ? "text-[#E10600]"
+                      ? "text-[#FF2718]"
                       : "text-slate-600"
                   }
                 />
@@ -203,7 +203,7 @@ const FikoCaptureModal: React.FC<FikoCaptureModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full relative group overflow-hidden bg-[#E10600] py-6 shadow-2xl shadow-red-500/20 disabled:opacity-50 transition-transform active:scale-[0.98]"
+              className="w-full relative group overflow-hidden bg-[#FF2718] py-6 shadow-2xl shadow-red-500/20 disabled:opacity-50 transition-transform active:scale-[0.98]"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
               <span className="relative z-10 flex items-center justify-center gap-5 text-[10px] font-black uppercase tracking-[0.4em] text-white">

@@ -30,31 +30,31 @@ export default function PricingPanel({ currentPlanId }: PricingPanelProps) {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h2 className="text-3xl font-black uppercase tracking-tighter">Offres & <span className="text-[#E10600]">Évolution</span>.</h2>
+          <h2 className="text-3xl font-black uppercase tracking-tighter">Offres & <span className="text-[#FF2718]">Évolution</span>.</h2>
           <p className="text-slate-500 italic mt-1 uppercase text-[10px] tracking-widest font-bold">Augmentez la puissance de votre écosystème</p>
         </div>
         
-        <div className="flex items-center gap-4 bg-[#E10600]/10 border border-[#E10600]/20 p-4 rounded-2xl">
+        <div className="flex items-center gap-4 bg-[#FF2718]/10 border border-[#FF2718]/20 p-4 rounded-2xl">
           <div className="text-right">
-            <p className="text-[10px] text-[#E10600] font-black uppercase tracking-widest mb-1">Plan Actuel</p>
+            <p className="text-[10px] text-[#FF2718] font-black uppercase tracking-widest mb-1">Plan Actuel</p>
             <p className="text-sm font-black text-white italic">PORTA {currentPlanId}</p>
           </div>
-          <div className="p-3 bg-[#E10600]/20 text-[#E10600] rounded-xl">
+          <div className="p-3 bg-[#FF2718]/20 text-[#FF2718] rounded-xl">
             <ShieldCheck size={20} />
           </div>
         </div>
       </div>
 
-      <div className="bg-[#111116] border border-[#E10600]/30 rounded-3xl p-8 flex items-center gap-8 relative overflow-hidden group">
+      <div className="bg-[#111116] border border-[#FF2718]/30 rounded-3xl p-8 flex items-center gap-8 relative overflow-hidden group">
         <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform">
           <Bot size={120} />
         </div>
-        <div className="size-20 rounded-2xl bg-[#E10600]/10 flex items-center justify-center text-[#E10600] shrink-0 border border-[#E10600]/20 shadow-[0_0_20px_rgba(225,6,0,0.1)]">
+        <div className="size-20 rounded-2xl bg-[#FF2718]/10 flex items-center justify-center text-[#FF2718] shrink-0 border border-[#FF2718]/20 shadow-[0_0_20px_rgba(255,39,24,0.1)]">
           <Sparkles size={32} className="animate-pulse" />
         </div>
         <div>
           <h3 className="text-lg font-black uppercase tracking-widest text-white mb-2 flex items-center gap-2">
-            Recommandation de <span className="text-[#E10600]">Fiko</span>
+            Recommandation de <span className="text-[#FF2718]">Fiko</span>
           </h3>
           <p className="text-sm text-slate-400 italic max-w-2xl leading-relaxed">
             "Basé sur votre croissance actuelle de 12% ce mois-ci, le passage au pack <span className="text-white font-bold">ELITE</span> est recommandé pour débloquer l'agent Marketing et saturer votre tunnel de conversion."
@@ -69,10 +69,10 @@ export default function PricingPanel({ currentPlanId }: PricingPanelProps) {
 
           return (
             <div key={plan.id} className={`bg-[#111116] rounded-[40px] p-10 border transition-all relative ${
-              isCurrent ? "border-green-500/30" : isRecommended ? "border-[#E10600]/50 shadow-[0_0_50px_rgba(225,6,0,0.1)]" : "border-white/5 opacity-80"
+              isCurrent ? "border-green-500/30" : isRecommended ? "border-[#FF2718]/50 shadow-[0_0_50px_rgba(255,39,24,0.1)]" : "border-white/5 opacity-80"
             }`}>
               {isRecommended && !isCurrent && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 bg-[#E10600] text-white text-[9px] font-black uppercase tracking-widest rounded-full shadow-xl">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 bg-[#FF2718] text-white text-[9px] font-black uppercase tracking-widest rounded-full shadow-xl">
                   Conseillé par l'IA
                 </div>
               )}
@@ -98,7 +98,7 @@ export default function PricingPanel({ currentPlanId }: PricingPanelProps) {
                   {plan.included.map((feature, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <div className="mt-1 size-5 rounded-full bg-white/5 flex items-center justify-center shrink-0">
-                        <Check size={10} className={isRecommended ? "text-[#E10600]" : "text-slate-400"} />
+                        <Check size={10} className={isRecommended ? "text-[#FF2718]" : "text-slate-400"} />
                       </div>
                       <span className="text-xs font-medium text-slate-300 leading-tight">{feature}</span>
                     </li>
@@ -111,7 +111,7 @@ export default function PricingPanel({ currentPlanId }: PricingPanelProps) {
                     isCurrent 
                     ? "bg-green-500/10 border border-green-500/20 text-green-500 opacity-50 cursor-default" 
                     : isRecommended 
-                      ? "bg-[#E10600] text-white hover:bg-red-700 shadow-xl shadow-red-500/20" 
+                      ? "bg-[#FF2718] text-white hover:bg-red-700 shadow-xl shadow-red-500/20" 
                       : "bg-white/5 border border-white/5 text-white hover:bg-white/10"
                   }`}
                 >

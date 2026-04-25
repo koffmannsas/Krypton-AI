@@ -35,10 +35,10 @@ export default function DashboardSidebar({ activeTab, setActiveTab, onLogout }: 
     <aside className="w-72 bg-[#0A0A0C] border-r border-white/5 flex flex-col h-screen fixed left-0 top-0 z-40">
       <div className="p-8 border-b border-white/5">
         <div className="flex items-center gap-3">
-          <div className="size-8 bg-[#E10600] rounded-lg flex items-center justify-center">
+          <div className="size-8 bg-[#FF2718] rounded-lg flex items-center justify-center">
             <Zap size={18} className="text-white" />
           </div>
-          <span className="font-black uppercase tracking-[0.2em] text-sm">Krypton <span className="text-[#E10600]">HQ</span></span>
+          <span className="font-black uppercase tracking-[0.2em] text-sm">Krypton <span className="text-[#FF2718]">HQ</span></span>
         </div>
       </div>
 
@@ -49,17 +49,17 @@ export default function DashboardSidebar({ activeTab, setActiveTab, onLogout }: 
             onClick={() => setActiveTab(item.id)}
             className={`w-full flex items-center justify-between p-4 rounded-xl transition-all group ${
               activeTab === item.id 
-              ? "bg-[#E10600]/10 border border-[#E10600]/20 text-white" 
+              ? "bg-[#FF2718]/10 border border-[#FF2718]/20 text-white" 
               : "text-slate-500 hover:bg-white/5 hover:text-white"
             }`}
           >
             <div className="flex items-center gap-4">
-              <item.icon size={18} className={activeTab === item.id ? "text-[#E10600]" : ""} />
+              <item.icon size={18} className={activeTab === item.id ? "text-[#FF2718]" : ""} />
               <span className="text-[11px] font-black uppercase tracking-widest">{item.label}</span>
             </div>
             {activeTab === item.id && (
               <motion.div layoutId="active-indicator">
-                <ChevronRight size={14} className="text-[#E10600]" />
+                <ChevronRight size={14} className="text-[#FF2718]" />
               </motion.div>
             )}
           </button>

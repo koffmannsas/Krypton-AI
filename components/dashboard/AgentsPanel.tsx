@@ -13,7 +13,7 @@ import {
 import { motion } from "framer-motion";
 
 const AGENTS = [
-  { id: 'sales', name: 'Agent Commercial (Fiko)', category: 'Sales CLOSER', icon:ShoppingBag, color: 'text-[#E10600]', active: true, perf: '92%' },
+  { id: 'sales', name: 'Agent Commercial (Fiko)', category: 'Sales CLOSER', icon:ShoppingBag, color: 'text-[#FF2718]', active: true, perf: '92%' },
   { id: 'support', name: 'Agent Support', category: 'Customer Care', icon:MessageSquare, color: 'text-blue-400', active: true, perf: '98%' },
   { id: 'leadgen', name: 'Agent Lead Gen', category: 'Prospecting', icon:Search, color: 'text-green-400', active: false, perf: '--' },
   { id: 'marketing', name: 'Agent Marketing', category: 'Campaigns', icon:Zap, color: 'text-orange-400', active: false, perf: '--' },

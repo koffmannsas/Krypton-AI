@@ -27,7 +27,7 @@ export default function BusinessPanel({ user }: BusinessPanelProps) {
     <div className="space-y-8 pb-10">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-black uppercase tracking-tighter">Mon <span className="text-[#E10600]">Business</span>.</h2>
+          <h2 className="text-3xl font-black uppercase tracking-tighter">Mon <span className="text-[#FF2718]">Business</span>.</h2>
           <p className="text-slate-500 italic mt-1 uppercase text-[10px] tracking-widest font-bold">Analyse stratégique de votre écosystème</p>
         </div>
         <button className="px-6 py-3 border border-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/5 transition-all">
@@ -49,7 +49,7 @@ export default function BusinessPanel({ user }: BusinessPanelProps) {
         {/* Strategy Roadmap */}
         <div className="bg-[#111116] border border-white/5 rounded-3xl p-8">
           <h3 className="text-lg font-black uppercase tracking-widest mb-8 flex items-center gap-3">
-            <TrendingUp size={20} className="text-[#E10600]" /> Roadmap Stratégique
+            <TrendingUp size={20} className="text-[#FF2718]" /> Roadmap Stratégique
           </h3>
           
           <div className="space-y-6">
@@ -65,7 +65,7 @@ export default function BusinessPanel({ user }: BusinessPanelProps) {
                     step.status === "completed" 
                     ? "bg-green-500/10 border-green-500/20 text-green-500" 
                     : step.status === "active" 
-                      ? "bg-[#E10600]/10 border-[#E10600]/20 text-[#E10600] animate-pulse"
+                      ? "bg-[#FF2718]/10 border-[#FF2718]/20 text-[#FF2718] animate-pulse"
                       : "bg-white/5 border-white/10 text-slate-600"
                   }`}>
                     {step.status === "completed" ? <CheckCircle size={18} /> : <span className="text-[11px] font-black">{step.id}</span>}
@@ -87,7 +87,7 @@ export default function BusinessPanel({ user }: BusinessPanelProps) {
 
         {/* Intelligence Report */}
         <div className="space-y-6">
-          <div className="bg-[#E10600] rounded-3xl p-8 text-white relative overflow-hidden group">
+          <div className="bg-[#FF2718] rounded-3xl p-8 text-white relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-8 opacity-20 group-hover:scale-110 transition-transform">
               <Shield size={100} />
             </div>
@@ -101,7 +101,7 @@ export default function BusinessPanel({ user }: BusinessPanelProps) {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-            <h3 className="text-xs font-black uppercase tracking-widest text-[#E10600] mb-4">Opportunité de Croissance</h3>
+            <h3 className="text-xs font-black uppercase tracking-widest text-[#FF2718] mb-4">Opportunité de Croissance</h3>
             <p className="text-sm text-slate-300 font-medium leading-relaxed italic">
               "Basé sur votre flux de leads actuel, une transition vers le pack ELITE permettrait d'augmenter votre chiffre d'affaires de 28% d'ici les 30 prochains jours."
             </p>

@@ -136,7 +136,7 @@ export default function GalacticCard({
               {story}
             </p>
           </div>
-          <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mt-4 animate-pulse text-[#E10600]">
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mt-4 animate-pulse text-[#FF2718]">
             {isTouchDevice
               ? "Touchez pour activer →"
               : "Survolez pour activer →"}

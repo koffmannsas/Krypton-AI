@@ -7,7 +7,7 @@ interface GateOfferPageProps {
   gate: "TERRA" | "MARS" | "KRYPTON" | "GALAXY";
   onNavigate: (p: Page) => void;
   onOpenFiko: (gate: string) => void;
-  onOpenVocal: () => void;
+  onOpenVocal: (gate?: string) => void;
 }
 
 const Feature: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -45,7 +45,7 @@ const gateData = {
       "PORTE MARS est notre solution d'accélération pour PME qui savent que la croissance ne dépend plus de l'effort humain seul.",
     price: "1 900 000 FCFA",
     color: "red",
-    hex: "#E10600",
+    hex: "#FF2718",
     features: [
       "Tout inclus Terra",
       "5-10 Pages Stratégiques",
@@ -108,13 +108,6 @@ const gateData = {
   },
 };
 
-const OFFER_NAMES: Record<string, string> = {
-  TERRA: "SOLO",
-  MARS: "PILOT",
-  KRYPTON: "ELITE",
-  GALAXY: "EMPIRE",
-};
-
 const GateOfferPage: React.FC<GateOfferPageProps> = ({
   gate,
   onNavigate,
@@ -122,10 +115,10 @@ const GateOfferPage: React.FC<GateOfferPageProps> = ({
   onOpenVocal,
 }) => {
   const data = gateData[gate];
-  const displayName = OFFER_NAMES[gate] || gate;
+  const displayName = gate;
 
   return (
-    <div className="bg-[#0B0B0F] text-white selection:bg-[#E10600] selection:text-white">
+    <div className="bg-[#0B0B0F] text-white selection:bg-[#FF2718] selection:text-white">
       <div className="absolute inset-0 hex-bg opacity-[0.03] pointer-events-none"></div>
       <div
         className="absolute top-0 left-0 w-[800px] h-[800px] blur-[200px] rounded-full -translate-y-1/2 -translate-x-1/2 pointer-events-none"
@@ -174,7 +167,7 @@ const GateOfferPage: React.FC<GateOfferPageProps> = ({
                 Activer {displayName} <ArrowRight size={16} />
               </button>
               <button
-                onClick={onOpenVocal}
+                onClick={() => onOpenVocal(gate)}
                 className="bg-white/5 border border-white/10 text-white px-10 py-6 rounded-sm font-black text-xs transition-all uppercase tracking-[0.4em] hover:bg-white/10 flex items-center justify-center gap-3"
               >
                 Parler à un conseiller
@@ -267,7 +260,7 @@ const GateOfferPage: React.FC<GateOfferPageProps> = ({
             href="https://www.koffmann.group"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-black text-[#E10600] hover:underline"
+            className="font-black text-[#FF2718] hover:underline"
           >
             KCG
           </a>

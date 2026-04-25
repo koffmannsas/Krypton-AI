@@ -1,3 +1,46 @@
+export interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  author: string;
+  readTime: string;
+  image: string;
+  keywords: string[];
+  cluster: string;
+}
+
+export interface Topic {
+  id: string;
+  topic: string;
+  pillar: boolean;
+  keywords: string[];
+  clusters: string[]; // List of titles/queries that should be covered
+}
+
+export interface TopicCoverage {
+  coverage: number;
+  missing: string[];
+  score: number;
+}
+
+export interface BacklinkTask {
+  id: string;
+  platform: string;
+  targetUrl: string;
+  status: 'pending' | 'published' | 'failed';
+  variantTitle: string;
+  createdAt: string;
+}
+
+export interface DomainAuthority {
+  score: number;
+  totalBacklinks: number;
+  referringDomains: number;
+  history: { date: string; score: number }[];
+}
+
 export enum Page {
   HOME = "home",
   AGENTS = "agents",
@@ -21,8 +64,17 @@ export enum Page {
   MARS_OFFER = "mars_offer",
   KRYPTON_OFFER = "krypton_offer",
   GALAXY_OFFER = "galaxy_offer",
+  FIKO_SOLO_OFFER = "fiko_solo_offer",
+  FIKO_PILOT_OFFER = "fiko_pilot_offer",
+  FIKO_ELITE_OFFER = "fiko_elite_offer",
+  FIKO_EMPIRE_OFFER = "fiko_empire_offer",
   SEO = "seo",
   PAYMENT = "payment",
+  CATEGORY = "category",
+  BLOG = "blog",
+  PILLAR_SITE_WEB = "pillar_site_web",
+  PILLAR_AGENTS_IA = "pillar_agents_ia",
+  PILLAR_ACQUISITION = "pillar_acquisition",
 }
 
 /* Added missing FikoFlowStep enum */

@@ -22,7 +22,7 @@ export default function FikoHexaWidget({ onClick }: FikoHexaWidgetProps) {
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
           className="absolute inset-0"
         >
-          <Hexagon size={80} className="text-[#E10600]" strokeWidth={1} />
+          <Hexagon size={80} className="text-[#FF2718]" strokeWidth={1} />
         </motion.div>
         <Bot size={32} className="text-white relative z-10" />
       </div>

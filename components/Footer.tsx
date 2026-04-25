@@ -1,28 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Bolt, Globe, Mail, Bot } from "lucide-react";
 import { Page } from "../types";
+import { ROUTES } from "../routes.config";
 import { SEO_CLUSTERS, slugify } from "../constants";
 
-interface FooterProps {
-  onNavigate: (p: Page, slug?: string) => void;
-}
-
-const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+const Footer: React.FC = () => {
   return (
     <footer className="py-24 px-6 border-t border-white/5 bg-[#0B0B0F]">
       <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 mb-24">
         <div className="flex flex-col gap-8">
-          <button
-            onClick={() => onNavigate(Page.HOME)}
+          <Link
+            to={ROUTES[Page.HOME].path}
             className="flex items-center gap-3 w-fit group"
           >
-            <div className="w-8 h-8 bg-[#E10600] flex items-center justify-center rounded-sm group-hover:rotate-12 transition-transform">
+            <div className="w-8 h-8 bg-[#FF2718] flex items-center justify-center rounded-sm group-hover:rotate-12 transition-transform">
               <Bolt className="text-white w-5 h-5" />
             </div>
             <h2 className="text-2xl font-black tracking-tighter uppercase">
               Krypton AI
             </h2>
-          </button>
+          </Link>
           <p className="text-slate-500 text-[10px] leading-loose uppercase tracking-[0.2em] font-black italic">
             Krypton AI accompagne les entreprises ambitieuses dans leur
             développement en ligne avec des solutions puissantes, efficaces et
@@ -31,15 +29,15 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </p>
           <div className="flex gap-6">
             <Globe
-              className="text-slate-600 hover:text-[#E10600] cursor-pointer transition-colors"
+              className="text-slate-600 hover:text-[#FF2718] cursor-pointer transition-colors"
               size={20}
             />
             <Mail
-              className="text-slate-600 hover:text-[#E10600] cursor-pointer transition-colors"
+              className="text-slate-600 hover:text-[#FF2718] cursor-pointer transition-colors"
               size={20}
             />
             <Bot
-              className="text-slate-600 hover:text-[#E10600] cursor-pointer transition-colors"
+              className="text-slate-600 hover:text-[#FF2718] cursor-pointer transition-colors"
               size={20}
             />
           </div>
@@ -52,7 +50,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <ul className="flex flex-col gap-5 text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold">
             <li>
               <a
-                className="hover:text-[#E10600] transition-colors"
+                className="hover:text-[#FF2718] transition-colors"
                 href="https://koffmann.group"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -61,20 +59,20 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </a>
             </li>
             <li>
-              <button
-                onClick={() => onNavigate(Page.WHITEPAPER)}
-                className="hover:text-[#E10600] transition-colors text-left"
+              <Link
+                to={ROUTES[Page.WHITEPAPER].path}
+                className="hover:text-[#FF2718] transition-colors text-left"
               >
                 Documentation IA
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                onClick={() => onNavigate(Page.WHITEPAPER)}
-                className="hover:text-[#E10600] transition-colors text-left"
+              <Link
+                to={ROUTES[Page.WHITEPAPER].path}
+                className="hover:text-[#FF2718] transition-colors text-left"
               >
                 Whitepaper Final
-              </button>
+              </Link>
             </li>
           </ul>
         </div>
@@ -89,11 +87,11 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </p>
           <div className="flex gap-2 max-w-md">
             <input
-              className="bg-[#1A1A1F] border border-white/5 rounded-sm text-[10px] w-full focus:ring-[#E10600] focus:border-[#E10600] px-5 py-4 placeholder:text-slate-800 outline-none text-white font-bold"
+              className="bg-[#1A1A1F] border border-white/5 rounded-sm text-[10px] w-full focus:ring-[#FF2718] focus:border-[#FF2718] px-5 py-4 placeholder:text-slate-800 outline-none text-white font-bold"
               placeholder="VOTRE EMAIL PROFESSIONNEL"
               type="email"
             />
-            <button className="bg-[#E10600] px-8 py-4 rounded-sm text-white hover:bg-red-700 transition-all shadow-lg shadow-red-500/10">
+            <button className="bg-[#FF2718] px-8 py-4 rounded-sm text-white hover:bg-red-700 transition-all shadow-lg shadow-red-500/10">
               <Bolt size={18} />
             </button>
           </div>
@@ -109,12 +107,12 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="flex flex-col gap-4 text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold">
               {cluster.keywords.map((kw, j) => (
                 <li key={j}>
-                  <button
-                    onClick={() => onNavigate(Page.SEO, slugify(kw))}
-                    className="hover:text-[#E10600] transition-colors text-left"
+                  <Link
+                    to={`/recherche/${slugify(kw)}`}
+                    className="hover:text-[#FF2718] transition-colors text-left"
                   >
                     {kw}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -140,7 +138,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             href="https://www.koffmann.group"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-black text-[#E10600] hover:underline"
+            className="font-black text-[#FF2718] hover:underline"
           >
             KCG
           </a>

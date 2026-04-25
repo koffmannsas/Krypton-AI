@@ -33,14 +33,14 @@ const CRMPage: React.FC<CRMPageProps> = ({ onNavigate }) => {
     if (score >= 85)
       return {
         label: "ACCÉLÉRATION_FLASH",
-        color: "text-white bg-[#E10600]",
-        border: "border-[#E10600]",
+        color: "text-white bg-[#FF2718]",
+        border: "border-[#FF2718]",
       };
     if (score >= 75)
       return {
         label: "CLOSING_ML",
-        color: "text-[#E10600]",
-        border: "border-[#E10600]/30",
+        color: "text-[#FF2718]",
+        border: "border-[#FF2718]/30",
       };
     if (score >= 60)
       return {
@@ -77,7 +77,7 @@ const CRMPage: React.FC<CRMPageProps> = ({ onNavigate }) => {
   const getLTVStyles = (ltv: LTVClass | undefined) => {
     switch (ltv) {
       case LTVClass.PLATINUM:
-        return "text-[#E10600] border-[#E10600]/30 bg-[#E10600]/5";
+        return "text-[#FF2718] border-[#FF2718]/30 bg-[#FF2718]/5";
       case LTVClass.GOLD:
         return "text-orange-400 border-orange-400/30 bg-orange-400/5";
       default:
@@ -90,21 +90,21 @@ const CRMPage: React.FC<CRMPageProps> = ({ onNavigate }) => {
       <div className="flex flex-col lg:flex-row justify-between items-end mb-12 gap-6">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="size-2 bg-[#E10600] rounded-full animate-pulse"></div>
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#E10600]">
+            <div className="size-2 bg-[#FF2718] rounded-full animate-pulse"></div>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#FF2718]">
               ML Prediction Active (Vertex AI)
             </p>
           </div>
           <h1 className="text-5xl lg:text-7xl font-black uppercase tracking-tighter leading-none">
             Cœur Neural <br />
-            <span className="text-[#E10600]">CRM.</span>
+            <span className="text-[#FF2718]">CRM.</span>
           </h1>
         </div>
         <div className="flex gap-4">
           <button className="px-8 py-5 border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white/5 transition-all text-slate-500">
             Analyse de Cohorte
           </button>
-          <button className="bg-[#E10600] hover:bg-red-700 text-white px-10 py-5 text-[10px] font-black uppercase tracking-widest rounded-sm shadow-xl shadow-red-500/20 transition-all flex items-center gap-4">
+          <button className="bg-[#FF2718] hover:bg-red-700 text-white px-10 py-5 text-[10px] font-black uppercase tracking-widest rounded-sm shadow-xl shadow-red-500/20 transition-all flex items-center gap-4">
             <TrendingUp size={16} /> Export CEO Insights
           </button>
         </div>
@@ -116,13 +116,13 @@ const CRMPage: React.FC<CRMPageProps> = ({ onNavigate }) => {
             label: "Indice Priorité ML",
             val: "84.2",
             delta: "+12%",
-            icon: <Target className="text-[#E10600]" />,
+            icon: <Target className="text-[#FF2718]" />,
           },
           {
             label: "Confiance Closing",
             val: "94%",
             delta: "Vertex 4.2",
-            icon: <Brain className="text-[#E10600]" />,
+            icon: <Brain className="text-[#FF2718]" />,
           },
           {
             label: "Leads Platinum",
@@ -139,7 +139,7 @@ const CRMPage: React.FC<CRMPageProps> = ({ onNavigate }) => {
         ].map((stat, i) => (
           <div
             key={i}
-            className="bg-[#1A1A1F] p-8 border border-white/5 rounded-sm relative group hover:border-[#E10600]/30 transition-all shadow-xl"
+            className="bg-[#1A1A1F] p-8 border border-white/5 rounded-sm relative group hover:border-[#FF2718]/30 transition-all shadow-xl"
           >
             <div className="flex justify-between items-start mb-6">
               <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
@@ -158,7 +158,7 @@ const CRMPage: React.FC<CRMPageProps> = ({ onNavigate }) => {
       <div className="bg-[#1A1A1F] border border-white/5 rounded-sm overflow-hidden shadow-2xl relative">
         <div className="p-10 border-b border-white/5 flex justify-between items-center bg-black/20">
           <div className="flex items-center gap-4">
-            <Clock size={20} className="text-[#E10600]" />
+            <Clock size={20} className="text-[#FF2718]" />
             <h3 className="text-xs font-black uppercase tracking-[0.4em]">
               Flux Decisionnel ML v4.2
             </h3>
@@ -199,14 +199,14 @@ const CRMPage: React.FC<CRMPageProps> = ({ onNavigate }) => {
                       }}
                     >
                       {selectedLeadIds.includes(lead.id) ? (
-                        <CheckSquare className="text-[#E10600]" size={18} />
+                        <CheckSquare className="text-[#FF2718]" size={18} />
                       ) : (
                         <Square className="text-slate-700" size={18} />
                       )}
                     </td>
                     <td className="px-10 py-8">
                       <div className="flex items-center gap-5">
-                        <div className="size-12 bg-black border border-white/10 flex items-center justify-center font-black text-sm text-[#E10600] group-hover:border-[#E10600]/40 transition-all">
+                        <div className="size-12 bg-black border border-white/10 flex items-center justify-center font-black text-sm text-[#FF2718] group-hover:border-[#FF2718]/40 transition-all">
                           {lead.entity[0]}
                         </div>
                         <div>
@@ -236,7 +236,7 @@ const CRMPage: React.FC<CRMPageProps> = ({ onNavigate }) => {
                     <td className="px-10 py-8 text-center">
                       <div className="flex flex-col items-center gap-1">
                         <span
-                          className={`text-lg font-black tracking-tighter ${lead.priorityScore! >= 80 ? "text-[#E10600]" : "text-white"}`}
+                          className={`text-lg font-black tracking-tighter ${lead.priorityScore! >= 80 ? "text-[#FF2718]" : "text-white"}`}
                         >
                           {lead.priorityScore}
                         </span>
