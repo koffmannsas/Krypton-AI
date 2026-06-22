@@ -1,0 +1,500 @@
+:root {
+    --cine-bg-deep: #020205;
+    --cine-accent: #00ff88;
+    --cine-accent-glow: rgba(0, 255, 136, 0.3);
+    --cine-gold: #d4a843;
+    --cine-gold-bright: #f0d060;
+    --cine-text-primary: #f0f0f5;
+    --cine-text-secondary: #b0b0c8;
+    --cine-overlay-dark: rgba(2, 2, 5, 0.7);
+    --cine-overlay-gradient: linear-gradient(180deg, rgba(2,2,5,0.3) 0%, rgba(2,2,5,0.6) 50%, rgba(2,2,5,0.95) 100%);
+    --cine-overlay-radial: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(2,2,5,0.8) 100%);
+}
+
+/* ============================================
+    HERO CINÉMATIQUE - CONTAINER PRINCIPAL
+    ============================================ */
+.hero-cinematic {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    background: var(--cine-bg-deep);
+}
+
+/* ============================================
+    SLIDER - SLIDES
+    ============================================ */
+.cinematic-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.cinematic-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: scale(1.15);
+    transition: opacity 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform, opacity;
+    pointer-events: none;
+}
+
+.cinematic-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.cinematic-slide.exit {
+    opacity: 0;
+    transform: scale(1.08);
+    transition: opacity 1s cubic-bezier(0.55, 0.085, 0.68, 0.53),
+                transform 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+/* ============================================
+    IMAGE DE FOND PAR SLIDE
+    ============================================ */
+.slide-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.5) saturate(1.1);
+    transition: filter 2s ease;
+}
+
+.cinematic-slide.active .slide-bg {
+    filter: brightness(0.6) saturate(1.2);
+}
+
+/* Images de fond */
+.slide-bg-1 { background-image: url('https://images.unsplash.com/photo-1518546305927-5a4bbfe3a78a?w=1920&q=85'); }
+.slide-bg-2 { background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1920&q=85'); }
+.slide-bg-3 { background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1920&q=85'); }
+.slide-bg-4 { background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1920&q=85'); }
+.slide-bg-5 { background-image: url('https://images.unsplash.com/photo-1531746790090-52b3f4b9ed04?w=1920&q=85'); }
+
+/* ============================================
+    OVERLAYS - Dégradés
+    ============================================ */
+.slide-overlay-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--cine-overlay-radial);
+    z-index: 1;
+}
+
+.slide-overlay-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background: var(--cine-overlay-gradient);
+    z-index: 1;
+}
+
+/* ============================================
+    PARTICULES LUMINEUSES
+    ============================================ */
+.cinematic-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.floating-particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: floatCinematic linear infinite;
+    opacity: 0;
+    filter: blur(0.5px);
+}
+
+@keyframes floatCinematic {
+    0% {
+        transform: translateY(110vh) translateX(0) scale(0);
+        opacity: 0;
+    }
+    5% { opacity: 0.9; }
+    15% { opacity: 0.7; }
+    30% { opacity: 0.3; }
+    60% { opacity: 0.6; }
+    85% { opacity: 0.2; }
+    100% {
+        transform: translateY(-20vh) translateX(60px) scale(1.8);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+    LIGNES HORIZONTALES CINÉMATIQUES
+    ============================================ */
+.cinematic-scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.015) 2px,
+            rgba(0, 0, 0, 0.015) 4px);
+}
+
+/* ============================================
+    LETTERBOX BARS (Haut et Bas)
+    ============================================ */
+.letterbox-top,
+.letterbox-bottom {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: #000;
+    z-index: 10;
+    transition: height 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.letterbox-top { top: 0; }
+.letterbox-bottom { bottom: 0; }
+
+.hero-cinematic:hover .letterbox-top,
+.hero-cinematic:hover .letterbox-bottom {
+    height: 40px;
+}
+
+/* ============================================
+    CONTENU TEXTUEL - CENTRÉ
+    ============================================ */
+.slide-content {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 90%;
+    max-width: 900px;
+}
+
+.slide-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--cine-accent);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+}
+
+.slide-eyebrow::before,
+.slide-eyebrow::after {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--cine-accent);
+    opacity: 0.6;
+}
+
+.slide-title {
+    font-family: 'Playfair Display', 'Inter', serif;
+    font-size: clamp(2.5rem, 5.5vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    color: #ffffff;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.6);
+}
+
+.slide-title .highlight {
+    background: linear-gradient(135deg, var(--cine-accent) 0%, #00ffcc 50%, #00dd77 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+
+.slide-title .highlight-gold {
+    background: linear-gradient(135deg, #d4a843 0%, #f0d060 40%, #e8c850 70%, #b8942e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.slide-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    max-width: 650px;
+    margin: 0 auto 32px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease 0.7s, transform 1s ease 0.7s;
+}
+
+.slide-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    padding: 16px 36px;
+    border-radius: 2px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.slide-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.15), transparent);
+    transition: left 0.6s ease;
+}
+
+.slide-cta:hover {
+    border-color: var(--cine-accent);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.2), inset 0 0 30px rgba(0, 255, 136, 0.03);
+    background: rgba(0, 255, 136, 0.05);
+    transform: translateY(-2px);
+}
+
+.slide-cta:hover::before {
+    left: 100%;
+}
+
+.slide-cta-icon {
+    font-size: 1.1rem;
+    transition: transform 0.4s ease;
+}
+
+.slide-cta:hover .slide-cta-icon {
+    transform: translateX(4px);
+}
+
+.cinematic-slide.active .slide-eyebrow,
+.cinematic-slide.active .slide-title,
+.cinematic-slide.active .slide-subtitle,
+.cinematic-slide.active .slide-cta {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cinematic-slide.active .slide-cta {
+    transition: opacity 1s ease 0.9s, transform 1s ease 0.9s, border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+
+/* ============================================
+    INDICATEURS DE SLIDE (Points)
+    ============================================ */
+.slide-indicators {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.slide-indicator {
+    width: 40px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+}
+
+.slide-indicator.active {
+    background: rgba(255, 255, 255, 0.5);
+    width: 60px;
+}
+
+.slide-indicator-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: var(--cine-accent);
+    animation: indicatorProgress 6s linear forwards;
+}
+
+@keyframes indicatorProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+.slide-indicator:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================
+    FLÈCHES DE NAVIGATION
+    ============================================ */
+.slide-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    outline: none;
+    padding: 0;
+}
+
+.slide-nav:hover {
+    background: rgba(0, 255, 136, 0.1);
+    border-color: var(--cine-accent);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+}
+
+.slide-nav-prev { left: 30px; }
+.slide-nav-next { right: 30px; }
+
+.slide-nav-icon {
+    transition: transform 0.4s ease;
+}
+
+.slide-nav-prev:hover .slide-nav-icon { transform: translateX(-4px); }
+.slide-nav-next:hover .slide-nav-icon { transform: translateX(4px); }
+
+/* ============================================
+    ANIMATION FLASH LUMIÈRE (Transitions)
+    ============================================ */
+.light-flash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    z-index: 8;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.light-flash.trigger {
+    opacity: 1;
+    transition: opacity 0s;
+    animation: flashFade 0.6s ease-out forwards;
+}
+
+@keyframes flashFade {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ============================================
+    GLITCH EFFECT (Subtile sur le titre)
+    ============================================ */
+@keyframes glitchText {
+    0%, 100% { text-shadow: none; }
+    2% { text-shadow: 2px 0 #ff0055, -2px 0 #00ff88; }
+    4% { text-shadow: -2px 0 #ff0055, 2px 0 #00ff88; }
+    6% { text-shadow: none; }
+}
+
+.cinematic-slide.active .slide-title.glitch-trigger {
+    animation: glitchText 0.3s ease;
+}
+
+/* ============================================
+    RESPONSIVE
+    ============================================ */
+@media (max-width: 1024px) {
+    .slide-nav { width: 40px; height: 40px; font-size: 1rem; }
+    .slide-nav-prev { left: 16px; }
+    .slide-nav-next { right: 16px; }
+    .letterbox-top, .letterbox-bottom { height: 40px; }
+    .slide-indicators { bottom: 40px; }
+}
+
+@media (max-width: 768px) {
+    .slide-title { font-size: clamp(1.8rem, 7vw, 2.8rem); }
+    .slide-subtitle { font-size: 0.9rem; }
+    .slide-cta { padding: 12px 24px; font-size: 0.8rem; }
+    .slide-nav { display: none; }
+    .slide-indicators { bottom: 30px; gap: 8px; }
+    .slide-indicator { width: 28px; }
+    .slide-indicator.active { width: 40px; }
+    .letterbox-top, .letterbox-bottom { height: 24px; }
+}
+
+@media (max-width: 480px) {
+    .slide-title { font-size: 1.6rem; letter-spacing: -0.5px; }
+    .slide-eyebrow { font-size: 0.65rem; letter-spacing: 2px; }
+    .slide-eyebrow::before, .slide-eyebrow::after { width: 16px; }
+    .slide-cta { padding: 10px 20px; font-size: 0.75rem; letter-spacing: 0.5px; }
+    .letterbox-top, .letterbox-bottom { height: 16px; }
+}

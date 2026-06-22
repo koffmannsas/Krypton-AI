@@ -1,46 +1,16 @@
 {
-  "name": "krypton-ai---high-end-digital-ecosystem",
+  "name": "krypton-ai-monorepo",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "frontend",
+    "backend"
   ],
   "scripts": {
-    "dev": "tsx server.ts",
-    "build": "vite build && esbuild server.ts --platform=node --format=esm --outdir=dist",
-    "start": "NODE_ENV=production node dist/server.js",
-    "lint": "tsc --noEmit"
+    "dev": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "start": "node scripts/serve.js"
   },
   "dependencies": {
-    "@google/genai": "^1.50.1",
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.6.0",
-    "clsx": "^2.1.1",
-    "express": "^5.2.1",
-    "firebase": "^12.11.0",
-    "firebase-admin": "^13.8.0",
-    "framer-motion": "^12.33.0",
-    "lucide-react": "^0.563.0",
-    "next": "^16.2.2",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-helmet-async": "^3.0.0",
-    "react-router-dom": "^7.14.2",
-    "recharts": "^3.8.1",
-    "tailwind-merge": "^3.5.0",
-    "three": "^0.184.0"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.6",
-    "@types/node": "^22.14.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.0.0",
-    "esbuild": "^0.28.0",
-    "tsx": "^4.21.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "motion": "^12.38.0"
   }
 }

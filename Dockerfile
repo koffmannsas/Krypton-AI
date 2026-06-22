@@ -1,32 +1,14 @@
-# Stage 1: Build
-FROM node:22-alpine AS builder
-
+FROM node:18 AS builder
 WORKDIR /app
-
-# Installation des dépendances de build
 COPY package*.json ./
-RUN npm install
-
-# Copie du code et build
 COPY . .
-RUN npm run build
+RUN npm install
+RUN npm run build --workspace=frontend
 
-# Stage 2: Production
-FROM node:22-alpine AS runner
+FROM nginx:alpine
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-WORKDIR /app
-
-# Configuration de l'environnement
-ENV NODE_ENV=production
-ENV PORT=3000
-
-# Copie des fichiers nécessaires depuis le stage 1
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
-
-# Exposer le port par défaut de l'infrastructure
-EXPOSE 3000
-
-# Lancement
-CMD ["node", "dist/server.js"]
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]

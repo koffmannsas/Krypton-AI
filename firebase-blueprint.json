@@ -147,9 +147,281 @@
         "order": { "type": "number" }
       },
       "required": ["name", "order"]
+    },
+    "FikoMemory": {
+      "title": "FikoMemory",
+      "description": "Fiko AI Memory Engine Context",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "businessGoals": { "type": "array", "items": { "type": "string" } },
+        "activeModules": { "type": "array", "items": { "type": "string" } },
+        "onboardingProgress": { "type": "number" },
+        "acquisitionChannels": { "type": "array", "items": { "type": "string" } },
+        "recentActions": { "type": "array", "items": { "type": "string" } },
+        "recommendations": { "type": "array", "items": { "type": "string" } },
+        "memoryLevel": { "type": "string" },
+        "lastInteraction": { "type": "string" },
+        "growthScore": { "type": "number" },
+        "timeline": { "type": "array" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "memoryLevel"]
+    },
+    "FikoDecision": {
+      "title": "FikoDecision",
+      "description": "Fiko Decision Engine recommendation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["micro_recommendation", "strategic_alert", "proactive_decision", "autonomous_preparation"] },
+        "priority": { "type": "string", "enum": ["urgent", "important", "optimization", "future"] },
+        "confidence": { "type": "number" },
+        "recommendation": { "type": "string" },
+        "impact": { "type": "string", "enum": ["strong", "medium", "low"] },
+        "urgency": { "type": "string", "enum": ["high", "medium", "low"] },
+        "status": { "type": "string", "enum": ["pending", "acknowledged", "actioned", "dismissed"] },
+        "createdAt": { "type": "timestamp" },
+        "acknowledgedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "type", "priority", "confidence", "recommendation", "status"]
+    },
+    "FikoAutonomousAction": {
+      "title": "FikoAutonomousAction",
+      "description": "Fiko Autonomous Action state",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["preparation", "configuration", "optimization", "predictive"] },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "estimatedImpact": { "type": "string" },
+        "estimatedTimeGain": { "type": "string" },
+        "status": { "type": "string", "enum": ["prepared", "executing", "completed", "dismissed"] },
+        "confidence": { "type": "number" },
+        "priority": { "type": "string", "enum": ["critical", "strategic", "optimization", "opportunity"] },
+        "generatedAt": { "type": "timestamp" },
+        "activatedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "type", "title", "description", "status", "confidence", "priority"]
+    },
+    "FikoStrategicMode": {
+      "title": "FikoStrategicMode",
+      "description": "Fiko Strategic Mode Configuration",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "activeMode": { "type": "string", "enum": ["expansion", "conversion", "authority", "automation", "domination"] },
+        "modeLevel": { "type": "number" },
+        "effectivenessScore": { "type": "number" },
+        "activatedAt": { "type": "timestamp" },
+        "recommendedByAI": { "type": "boolean" },
+        "strategicGoals": { "type": "array", "items": { "type": "string" } },
+        "performanceMetrics": { "type": "object" }
+      },
+      "required": ["userId", "activeMode", "modeLevel", "effectivenessScore"]
+    },
+    "FikoOrchestration": {
+      "title": "FikoOrchestration",
+      "description": "Fiko AI Orchestration Event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "orchestrationType": { "type": "string" },
+        "systemsAffected": { "type": "array", "items": { "type": "string" } },
+        "confidence": { "type": "number" },
+        "impact": { "type": "string", "enum": ["strong", "medium", "low"] },
+        "status": { "type": "string", "enum": ["pending", "executed", "failed"] },
+        "strategicMode": { "type": "string" },
+        "results": { "type": "object" },
+        "executedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "orchestrationType", "systemsAffected", "confidence", "impact", "status", "strategicMode", "executedAt"]
+    },
+    "FikoMarketPulse": {
+      "title": "FikoMarketPulse",
+      "description": "Fiko AI Market Pulse Signal",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "signalType": { "type": "string" },
+        "marketTrend": { "type": "string", "enum": ["rising", "falling", "stable"] },
+        "confidence": { "type": "number" },
+        "impact": { "type": "string", "enum": ["strong", "medium", "low"] },
+        "urgency": { "type": "string", "enum": ["high", "medium", "low"] },
+        "recommendedMode": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "signalType", "marketTrend", "confidence", "impact", "urgency", "recommendedMode", "createdAt"]
+    },
+    "FikoImpactSimulation": {
+      "title": "FikoImpactSimulation",
+      "description": "Fiko AI Impact Simulation Result",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "simulationType": { "type": "string", "enum": ["acquisition", "conversion", "seo", "automation", "strategic"] },
+        "projectedImpact": { "type": "number" },
+        "confidence": { "type": "number" },
+        "riskLevel": { "type": "string", "enum": ["high", "medium", "low"] },
+        "strategicMode": { "type": "string" },
+        "generatedAt": { "type": "timestamp" },
+        "validatedAt": { "type": "timestamp" },
+        "marketFactors": { "type": "object" }
+      },
+      "required": ["userId", "simulationType", "projectedImpact", "confidence", "riskLevel", "strategicMode", "generatedAt"]
+    },
+    "FikoRelationship": {
+      "title": "FikoRelationship",
+      "description": "Fiko AI Relationship State",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "relationshipLevel": { "type": "string", "enum": ["discovery", "synchronization", "trust", "contextual", "copilot", "symbiosis"] },
+        "communicationStyle": { "type": "string", "enum": ["executive", "growth", "guided", "enterprise"] },
+        "trustScore": { "type": "number" },
+        "dominantBehaviors": { "type": "array", "items": { "type": "string" } },
+        "strategicPreferences": { "type": "array", "items": { "type": "string" } },
+        "favoriteModes": { "type": "array", "items": { "type": "string" } },
+        "interactionHistory": { "type": "object" },
+        "synchronizationLevel": { "type": "number" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "relationshipLevel", "communicationStyle", "trustScore", "updatedAt"]
+    },
+    "FikoBehaviorPrediction": {
+      "title": "FikoBehaviorPrediction",
+      "description": "Fiko AI Behavioral Prediction",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "predictionType": { "type": "string", "enum": ["engagement", "growth", "conversion", "risk", "market"] },
+        "confidenceScore": { "type": "number" },
+        "impactLevel": { "type": "string", "enum": ["strong", "medium", "low"] },
+        "urgencyLevel": { "type": "string", "enum": ["high", "medium", "low"] },
+        "predictionMessage": { "type": "string" },
+        "recommendedAction": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "acknowledged", "completed"] },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "predictionType", "confidenceScore", "impactLevel", "urgencyLevel", "predictionMessage", "status", "createdAt"]
+    },
+    "FikoLearningEvent": {
+      "title": "FikoLearningEvent",
+      "description": "Fiko AI Learning Event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "sourceType": { "type": "string", "enum": ["prediction", "orchestration", "decision"] },
+        "sourceId": { "type": "string" },
+        "predictionValue": { "type": "number" },
+        "actualValue": { "type": "number" },
+        "accuracyScore": { "type": "number" },
+        "strategyAdjustment": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "sourceType", "sourceId", "accuracyScore", "createdAt"]
+    },
+    "FikoEconomicForecast": {
+      "title": "FikoEconomicForecast",
+      "description": "Fiko AI Economic Forecast",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "forecastType": { "type": "string", "enum": ["market_growth", "economic_risk", "opportunity", "revenue", "strategic"] },
+        "confidenceScore": { "type": "number" },
+        "projectedGrowth": { "type": "number" },
+        "economicRisk": { "type": "string", "enum": ["high", "medium", "low"] },
+        "opportunityLevel": { "type": "string", "enum": ["strong", "medium", "low"] },
+        "strategicRecommendation": { "type": "string" },
+        "marketSignals": { "type": "object" },
+        "generatedAt": { "type": "timestamp" },
+        "forecastWindow": { "type": "string", "enum": ["7d", "30d", "90d", "6m", "12m"] },
+        "status": { "type": "string", "enum": ["active", "outdated"] }
+      },
+      "required": ["userId", "forecastType", "confidenceScore", "projectedGrowth", "economicRisk", "opportunityLevel", "strategicRecommendation", "generatedAt", "forecastWindow", "status"]
+    },
+    "FikoAutonomousOperation": {
+      "title": "FikoAutonomousOperation",
+      "description": "Fiko Autonomous Business Operation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "operationType": { "type": "string", "enum": ["acquisition", "crm", "automation", "seo", "strategic"] },
+        "operationStatus": { "type": "string", "enum": ["prepared", "executing", "completed", "dismissed"] },
+        "confidenceScore": { "type": "number" },
+        "businessImpact": { "type": "string", "enum": ["high", "medium", "low"] },
+        "executionMode": { "type": "string", "enum": ["assisted", "semi_autonomous", "autonomous"] },
+        "systemsAffected": { "type": "array", "items": { "type": "string" } },
+        "triggeredBy": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "executedAt": { "type": "timestamp" },
+        "results": { "type": "object" }
+      },
+      "required": ["userId", "operationType", "operationStatus", "confidenceScore", "businessImpact", "executionMode", "triggeredBy", "createdAt"]
     }
   },
   "firestore": {
+    "fiko_autonomous_operations/{operationId}": {
+      "schema": { "$ref": "FikoAutonomousOperation" },
+      "description": "Fiko Autonomous Business Operations"
+    },
+    "fiko_economic_forecasts/{forecastId}": {
+      "schema": { "$ref": "FikoEconomicForecast" },
+      "description": "Fiko AI Economic Forecast State"
+    },
+    "fiko_learning_events/{eventId}": {
+      "schema": { "$ref": "FikoLearningEvent" },
+      "description": "Fiko AI Learning History"
+    },
+    "fiko_behavior_predictions/{predictionId}": {
+      "schema": { "$ref": "FikoBehaviorPrediction" },
+      "description": "Fiko AI Behavioral Prediction State"
+    },
+    "fiko_impact_simulations/{simulationId}": {
+      "schema": { "$ref": "FikoImpactSimulation" },
+      "description": "Fiko AI Impact Simulation State"
+    },
+    "fiko_orchestrations/{orchestrationId}": {
+      "schema": { "$ref": "FikoOrchestration" },
+      "description": "Fiko AI Orchestration State"
+    },
+    "fiko_relationships/{relationshipId}": {
+      "schema": { "$ref": "FikoRelationship" },
+      "description": "Fiko AI Relationship State"
+    },
+    "fiko_market_pulse/{pulseId}": {
+      "schema": { "$ref": "FikoMarketPulse" },
+      "description": "Fiko AI Market Pulse Analysis"
+    },
+    "fiko_strategic_modes/{modeId}": {
+      "schema": { "$ref": "FikoStrategicMode" },
+      "description": "Fiko Strategic Mode state"
+    },
+    "fiko_autonomous_actions/{actionId}": {
+      "schema": { "$ref": "FikoAutonomousAction" },
+      "description": "Fiko Autonomous Action list"
+    },
+    "fiko_decisions/{decisionId}": {
+      "schema": { "$ref": "FikoDecision" },
+      "description": "Fiko Decision Engine Data"
+    },
+    "fiko_memory/{memoryId}": {
+      "schema": { "$ref": "FikoMemory" },
+      "description": "Fiko AI Memory Engine State"
+    },
     "users/{userId}": {
       "schema": { "$ref": "User" },
       "description": "Users collection"

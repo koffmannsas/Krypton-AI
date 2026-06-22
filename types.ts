@@ -58,6 +58,7 @@ export enum Page {
   ADMIN_AUTH = "admin_auth",
   FIKO = "fiko",
   FIKO_AUDIT = "fiko_audit",
+  FIKO_CONNECT = "fiko_connect",
   VIVA_LEADS = "viva_leads",
   ACCESS_OFFER = "access_offer",
   TERRA_OFFER = "terra_offer",
@@ -75,6 +76,8 @@ export enum Page {
   PILLAR_SITE_WEB = "pillar_site_web",
   PILLAR_AGENTS_IA = "pillar_agents_ia",
   PILLAR_ACQUISITION = "pillar_acquisition",
+  PRIVACY = "privacy",
+  TERMS = "terms",
 }
 
 /* Added missing FikoFlowStep enum */

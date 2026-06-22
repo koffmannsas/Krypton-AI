@@ -23,7 +23,7 @@ export const ROUTES: Record<Page, RouteConfig> = {
   [Page.VIVA_LEADS]: {
     path: '/viva-leads',
     enum: Page.VIVA_LEADS,
-    title: 'VIVA LEADS | Extraction & Qualification de Leads Massive',
+    title: 'FIKO CONNECT | Extraction & Qualification de Leads Massive',
     description: 'Accédez à des milliers de leads ultra-qualifiés chaque mois grâce à notre moteur de scraping et d\'analyse prédictive.',
   },
   [Page.AGENTS]: {
@@ -109,6 +109,12 @@ export const ROUTES: Record<Page, RouteConfig> = {
     enum: Page.FIKO_AUDIT,
     title: 'Audit Fiko™ | Analyse de votre potentiel',
     description: 'Laissez Fiko™ analyser votre business et vous proposer une stratégie de croissance.',
+  },
+  [Page.FIKO_CONNECT]: {
+    path: '/fiko-connect',
+    enum: Page.FIKO_CONNECT,
+    title: 'Fiko Connect | Machine à Vendre WhatsApp',
+    description: 'Fiko Connect répond, relance et transforme vos prospects en clients automatiquement sur WhatsApp.',
   },
   [Page.BILLING]: {
     path: '/facturation',
@@ -205,5 +211,17 @@ export const ROUTES: Record<Page, RouteConfig> = {
     enum: Page.PILLAR_ACQUISITION,
     title: 'Génération de Leads Automatique | Le Futur du Marketing',
     description: 'Ne cherchez plus vos clients, laissez notre IA les attirer et les qualifier pour vous.',
+  },
+  [Page.PRIVACY]: {
+    path: '/privacy',
+    enum: Page.PRIVACY,
+    title: 'Politique de confidentialité | Krypton AI',
+    description: 'Politique de confidentialité de Koffmann Capital Group concernant les services Krypton AI et Fiko Connect.',
+  },
+  [Page.TERMS]: {
+    path: '/terms',
+    enum: Page.TERMS,
+    title: 'Conditions d\'utilisation | Krypton AI',
+    description: 'Conditions générales d\'utilisation des services Krypton AI.',
   },
 };

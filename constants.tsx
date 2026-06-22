@@ -224,7 +224,7 @@ export const LEADS: Lead[] = [
 export const NAV_LINKS = [
   { id: Page.HOME, label: "Accueil" },
   { id: Page.FIKO, label: "FIKO™" },
-  { id: Page.VIVA_LEADS, label: "VIVA LEADS" },
+  { id: Page.FIKO_CONNECT, label: "FIKO CONNECT" },
   { id: Page.AGENTS, label: "Nos Agents" },
   { id: Page.PRICING, label: "Tarifs" },
   { id: Page.BLOG, label: "Blog" },

@@ -1,0 +1,184 @@
+:root {
+    --fiko-blue: #1E3AFF;
+    --fiko-orange: #FF6B2C;
+    --fiko-red: #E10600;
+    --meta-blue: #0084FF;
+    --green-wa: #25D366;
+    --white: #FFFFFF;
+}
+
+/* ==================== BANNIÈRE ==================== */
+.banner-container {
+    position: relative;
+    width: 100%;
+    height: 56px;
+    border-radius: 12px;
+    overflow: hidden;
+    isolation: isolate;
+    display: flex;
+    box-shadow:
+        0 8px 32px rgba(0,0,0,0.4),
+        0 0 60px -10px rgba(255,107,44,0.2);
+    margin: 0 auto;
+}
+
+/* ==================== ZONE GAUCHE — META VERIFIED (FIXE, FOND BLEU META) ==================== */
+.meta-zone {
+    position: relative;
+    z-index: 5;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 18px;
+    background: var(--meta-blue);
+    border-right: 2px solid rgba(255,255,255,0.25);
+}
+.meta-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 18px rgba(255,255,255,0.2);
+}
+.meta-icon svg { width: 16px; height: 16px; fill: white; }
+.meta-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    white-space: nowrap;
+}
+.meta-text .meta-label {
+    font-size: 0.52rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+}
+.meta-text .meta-name {
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: 0.02em;
+}
+
+/* ==================== ZONE DROITE — TEXTE DÉFILANT ==================== */
+.marquee-zone {
+    position: relative;
+    z-index: 3;
+    flex: 1;
+    overflow: hidden;
+    background: linear-gradient(105deg,
+        #0A1FCC 0%,
+        #1E3AFF 20%,
+        #FF6B2C 55%,
+        #E10600 85%,
+        #B30500 100%);
+    background-size: 200% 100%;
+    animation: bg-shift 8s ease-in-out infinite;
+}
+@keyframes bg-shift {
+    0%,100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Motif géométrique */
+.marquee-zone::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.06;
+    background-image:
+        repeating-linear-gradient(45deg, transparent, transparent 6px, rgba(255,255,255,0.5) 6px, rgba(255,255,255,0.5) 7px),
+        repeating-linear-gradient(-45deg, transparent, transparent 6px, rgba(255,255,255,0.5) 6px, rgba(255,255,255,0.5) 7px);
+}
+
+/* Particules */
+.spark {
+    position: absolute; border-radius: 50%; pointer-events: none; z-index: 1;
+    background: white;
+    animation: spark-float 3s ease-in-out infinite;
+}
+.spark:nth-child(1) { width:2px;height:2px;top:15%;left:25%;animation-delay:0s; }
+.spark:nth-child(2) { width:1px;height:1px;top:55%;left:50%;animation-delay:-1s; }
+.spark:nth-child(3) { width:2px;height:2px;top:30%;left:70%;animation-delay:-2s; }
+.spark:nth-child(4) { width:1px;height:1px;top:65%;left:85%;animation-delay:-0.5s; }
+@keyframes spark-float {
+    0%,100% { opacity:0; transform:translateY(0) scale(0.5); }
+    30% { opacity:1; }
+    70% { opacity:0.3; transform:translateY(-8px) scale(1.3); }
+}
+
+/* Piste défilante */
+.marquee-track {
+    position: relative; z-index: 2;
+    height: 100%; display: flex; align-items: center;
+}
+.marquee-content {
+    display: flex; align-items: center; gap: 0;
+    white-space: nowrap;
+    animation: marquee-scroll 28s linear infinite;
+}
+@keyframes marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Éléments */
+.marquee-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 48px; flex-shrink: 0;
+}
+.marquee-text {
+    font-size: 0.8rem; font-weight: 700;
+    color: var(--white); letter-spacing: 0.02em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.marquee-text .highlight {
+    font-weight: 900; letter-spacing: 0.03em;
+    color: #FFD700;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+}
+.marquee-dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: rgba(255,255,255,0.5); flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(255,255,255,0.3);
+}
+.marquee-icon {
+    font-size: 0.9rem; flex-shrink: 0;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3));
+}
+
+/* Fondu droite */
+.fade-right {
+    position: absolute; top:0; bottom:0; right:0; width: 50px; z-index: 4;
+    pointer-events: none;
+    background: linear-gradient(to left, rgba(179,5,0,1) 0%, transparent 100%);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 700px) {
+    .banner-container { height: 48px; border-radius: 10px; }
+    .meta-zone { padding: 0 12px; gap: 7px; }
+    .meta-icon { width: 24px; height: 24px; border-radius: 5px; }
+    .meta-icon svg { width: 13px; height: 13px; }
+    .meta-text .meta-label { font-size: 0.45rem; }
+    .meta-text .meta-name { font-size: 0.54rem; }
+    .marquee-text { font-size: 0.66rem; }
+    .marquee-item { padding: 0 28px; }
+}
+@media (max-width: 420px) {
+    .banner-container { height: 42px; border-radius: 8px; }
+    .meta-zone { padding: 0 8px; gap: 5px; }
+    .meta-icon { width: 20px; height: 20px; border-radius: 4px; }
+    .meta-icon svg { width: 10px; height: 10px; }
+    .meta-text .meta-label { font-size: 0.4rem; }
+    .meta-text .meta-name { font-size: 0.48rem; }
+    .marquee-text { font-size: 0.58rem; }
+    .marquee-item { padding: 0 18px; gap: 6px; }
+    .fade-right { width: 28px; }
+}
