@@ -8,6 +8,8 @@ import {
   X,
   Loader2,
   Mic2,
+  Mic,
+  Volume2,
   Hexagon,
   Activity,
   Cpu,
@@ -20,6 +22,8 @@ import {
   Zap,
 } from "lucide-react";
 import { sendToFiko } from "../services/fikoAPI";
+import { db } from "../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 // 🎤 WAKE WORD SETUP
 const SpeechRecognition =
@@ -32,6 +36,33 @@ if (SpeechRecognition) {
   recognition.lang = "fr-FR";
   recognition.continuous = true;
   recognition.interimResults = true;
+}
+
+// 🎛️ 3D CANVAS ERROR BOUNDARY FOR ROBUST EMBED STABILITY
+class CanvasErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError(error: any) {
+    return { hasError: true };
+  }
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error("3D Canvas Error, switching to 2D holographic glow:", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="absolute inset-0 flex items-center justify-center bg-[#0B0B0F]">
+          <div className="absolute size-96 bg-[#FF2718]/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute size-64 bg-red-800/20 rounded-full blur-2xl animate-pulse" />
+          <div className="absolute size-48 rounded-full border border-[#FF2718]/20 animate-ping" />
+          <div className="relative size-32 bg-gradient-to-tr from-[#FF2718] to-red-600 rounded-full shadow-[0_0_80px_rgba(255,39,24,0.7)] animate-pulse" />
+        </div>
+      );
+    }
+    return this.props.children;
+  }
 }
 
 // 🧠 LIVING CORE COMPONENT (Moved outside for performance and context stability)
@@ -121,6 +152,15 @@ const VocalSalesOverlay = ({
   const [isListeningWake, setIsListeningWake] = useState(false);
   const [volume, setVolume] = useState(0);
   const [isConnected, setIsConnected] = useState(false);
+  const [useWebSpeechFallback, setUseWebSpeechFallback] = useState(true); // Default to Web Speech Fallback for 100% stability
+  const [vocalStatus, setVocalStatusState] = useState<"idle" | "listening" | "thinking" | "speaking">("idle");
+  const vocalStatusRef = useRef<"idle" | "listening" | "thinking" | "speaking">("idle");
+  const setVocalStatus = (status: "idle" | "listening" | "thinking" | "speaking") => {
+    vocalStatusRef.current = status;
+    setVocalStatusState(status);
+  };
+  const localRecRef = useRef<any>(null);
+  const isWebSynthesisSpeakingRef = useRef<boolean>(false);
   
   // Conversation Completion States
   const [hasDiagnosis, setHasDiagnosis] = useState(false);
@@ -187,6 +227,16 @@ const VocalSalesOverlay = ({
       document.body.style.overflow = "auto";
       isMountedRef.current = false;
 
+      try {
+        window.speechSynthesis.cancel();
+      } catch (e) {}
+
+      if (localRecRef.current) {
+        try {
+          localRecRef.current.stop();
+        } catch (e) {}
+      }
+
       if (recognition) {
         try {
           recognition.stop();
@@ -207,295 +257,299 @@ const VocalSalesOverlay = ({
     };
   }, []);
 
-  // 🔥 WAKE WORD
+  // 🔥 WAKE WORD DETECTION
   const startWakeWord = () => {
-    if (!recognition) return;
-    
-    // Check if already started or listening
+    if (!SpeechRecognition) return;
     if (isListeningWake) return;
 
     setIsListeningWake(true);
+    const wakeRec = new SpeechRecognition();
+    wakeRec.lang = "fr-FR";
+    wakeRec.continuous = true;
+    wakeRec.interimResults = true;
 
     try {
       console.log("Starting wake word recognition...");
-      recognition.start();
+      wakeRec.start();
     } catch (e: any) {
-      if (e.name !== 'InvalidStateError') {
-        console.error("Error starting wake word:", e);
-      }
+      console.error("Error starting wake word:", e);
     }
 
-    recognition.onresult = (event: any) => {
+    wakeRec.onresult = (event: any) => {
       const transcript = Array.from(event.results)
         .map((res: any) => res[0].transcript)
         .join(" ")
         .toLowerCase();
 
-      console.log("🎤 entendu:", transcript);
+      console.log("🎤 Wake word listener heard:", transcript);
 
-      const wakeWords = [
-        "ok",
-        "fiko",
-        "fico",
-        "figo",
-        "pico",
-        "chic",
-        "chico",
-        "fille",
-        "cool",
-      ];
+      const wakeWords = ["ok fiko", "ok fico", "ok figo", "fiko", "fico", "krypton", "démarre"];
       const isWake = wakeWords.some((word) => transcript.includes(word));
 
-      if (isWake && transcript.length > 2) {
-        recognition.stop();
+      if (isWake) {
+        wakeRec.stop();
         setIsListeningWake(false);
         setStep("activating");
         setTimeout(() => startVocalSession(), 1000);
       }
     };
 
-    recognition.onend = () => {
+    wakeRec.onend = () => {
       if (isMountedRef.current && stepRef.current === "pre_start") {
         try {
-          recognition.start();
+          wakeRec.start();
         } catch (e) {}
       }
     };
   };
 
-  // 🚀 SESSION VOCALE
-  const startVocalSession = async () => {
-    console.log("Starting vocal session...");
-    setStep("active");
-    setIsConnected(false);
+  // 🔊 WEB SPEECH SYNTHESIS (FIKO TEXT TO SPEECH)
+  const speakWithWebSpeech = (text: string) => {
+    if (typeof window === "undefined" || !('speechSynthesis' in window)) {
+      console.warn("Speech synthesis not supported in this browser.");
+      return;
+    }
 
+    // Cancel any ongoing speech and stop listening
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      isWebSynthesisSpeakingRef.current = true;
+      window.speechSynthesis.cancel();
+      if (localRecRef.current) {
+        localRecRef.current.stop();
+      }
+    } catch (e) {}
 
-      const audioContext = new AudioContext({ sampleRate: 16000 });
-      await audioContext.resume();
-      audioContextRef.current = audioContext;
+    // Clean text of technical markup tags like [DIAGNOSTIC] or [OFFRE]
+    const cleanText = text
+      .replace(/\[[A-Z_]+\]/g, "")
+      .replace(/\*/g, "")
+      .trim();
 
-      const ai = new GoogleGenAI({
-        apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.GEMINI_API_KEY || '',
-      });
+    if (!cleanText) {
+      isWebSynthesisSpeakingRef.current = false;
+      return;
+    }
 
-      let session: any;
-      session = await ai.live.connect({
-        model: "gemini-2.0-flash",
-        callbacks: {
-          onopen: () => {
-             console.log("Live session connected.");
-             setIsConnected(true);
-             
-             // Use the captured 'session' variable
-             const source = audioContext.createMediaStreamSource(stream);
-             const processor = audioContext.createScriptProcessor(4096, 1, 1);
-             processor.onaudioprocess = (e) => {
-               const input = e.inputBuffer.getChannelData(0);
-               const int16 = new Int16Array(input.length);
-               let sum = 0;
-               for (let i = 0; i < input.length; i++) {
-                 int16[i] = input[i] * 32768;
-                 sum += Math.abs(input[i]);
-               }
-               setVolume(sum / input.length);
-               const base64 = btoa(
-                 String.fromCharCode.apply(null, Array.from(new Uint8Array(int16.buffer))),
-               );
-               if (session) {
-                 session.sendRealtimeInput({
-                   audio: {
-                     data: base64,
-                     mimeType: "audio/pcm;rate=16000",
-                   },
-                 });
-               }
-             };
-             source.connect(processor);
-             processor.connect(audioContext.destination);
-             if (session) {
-               session.sendRealtimeInput({
-                 text: "Je vous observe depuis quelques secondes... Votre système actuel est passif. Dites-moi, que voulez-vous conquérir aujourd'hui ?",
-               });
-             }
-          },
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = "fr-FR";
 
-          onmessage: async (m: any) => {
-            // Fiko Message Capture
-            if (m.serverContent?.modelTurn) {
-              const parts = m.serverContent.modelTurn.parts;
-              if (parts && parts.length > 0) {
-                 const newText = parts.map((p: any) => p.text || "").join("");
-                 setFikoMessage(prev => prev + newText);
-              }
-            } else if (m.serverContent?.interrupted) {
-               setFikoMessage(""); // Clear msg if interrupted
-            } else if (m.serverContent?.turnComplete) {
-               // We might keep the last message on screen instead of clearing
-            }
+    // Find a solid French voice
+    const voices = window.speechSynthesis.getVoices();
+    const frVoice = voices.find(v => v.lang.startsWith("fr") || v.lang.includes("FR"));
+    if (frVoice) {
+      utterance.voice = frVoice;
+    }
 
-            // Transcription capture
-            if (m.serverContent?.inputTranscription) {
-              const text = m.serverContent.inputTranscription.text || "";
-              setTranscription(text);
-              setFikoMessage(""); // Clear Fiko message when user speaks
+    utterance.rate = 1.05; // Quick, direct, and authoritative sales pacing
+    utterance.pitch = 0.95; // Confident and grounded pitch
 
-              // Avoid duplicate calls for the same stable transcription
-              if (lastTranscriptionRef.current === text) return;
-              lastTranscriptionRef.current = text;
+    let speechInterval: any;
+    utterance.onstart = () => {
+      setVocalStatus("speaking");
+      let t = 0;
+      speechInterval = setInterval(() => {
+        t += 0.2;
+        // Pulse visualizer sphere while Fiko speaks
+        const mockVol = 0.25 + Math.sin(t) * 0.2 + (Math.random() * 0.1);
+        setVolume(mockVol);
+      }, 50);
+    };
 
-              let userId = localStorage.getItem("fiko_user");
-              if (!userId) {
-                userId = "visitor_" + Date.now();
-                localStorage.setItem("fiko_user", userId);
-              }
+    utterance.onend = () => {
+      clearInterval(speechInterval);
+      setVolume(0);
+      isWebSynthesisSpeakingRef.current = false;
 
-              try {
-                const res = await fetch(
-                  "https://fikochatv2-gx7rkah46a-uc.a.run.app/",
-                  {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      message: text,
-                      userId,
-                    }),
-                  },
-                );
+      // Automatically resume speech recognition after Fiko is done
+      if (stepRef.current === "active") {
+        startWebSpeechListening();
+      }
+    };
 
-                const data = await res.json();
-                console.log("🔥 SCORE:", data.score);
+    utterance.onerror = (err) => {
+      console.error("Web Speech synthesis error:", err);
+      clearInterval(speechInterval);
+      setVolume(0);
+      isWebSynthesisSpeakingRef.current = false;
 
-                const lower = text.toLowerCase();
-                if (
-                  lower.includes("prix") ||
-                  lower.includes("offre") ||
-                  lower.includes("acheter") ||
-                  lower.includes("payer")
-                ) {
-                  console.log("🔥 CLIENT ULTRA CHAUD");
-                  window.open("https://wa.me/+2250544427676", "_blank");
-                }
-              } catch (e) {
-                console.error("Fiko API Error:", e);
-              }
-            }
+      if (stepRef.current === "active") {
+        startWebSpeechListening();
+      }
+    };
 
-            // 🔥 interruption
-            if (m.serverContent?.interrupted) {
-              sourceNodesRef.current.forEach((s: AudioBufferSourceNode) => {
-                try {
-                  s.stop();
-                } catch (e) {}
-              });
+    window.speechSynthesis.speak(utterance);
+  };
 
-              sourceNodesRef.current = [];
+  // 🎤 WEB SPEECH RECOGNITION (SPEECH TO TEXT LOOP)
+  const startWebSpeechListening = () => {
+    if (!SpeechRecognition) {
+      console.warn("SpeechRecognition not supported in this browser.");
+      return;
+    }
 
-              if (audioContextRef.current) {
-                nextPlayTimeRef.current = audioContextRef.current.currentTime;
-              }
-            }
+    // Stop existing listener if present
+    if (localRecRef.current) {
+      try {
+        localRecRef.current.stop();
+      } catch (e) {}
+    }
 
-            // 🔊 AUDIO
-            const base64 =
-              m.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
+    // Never start listening while Fiko is actively speaking
+    if (isWebSynthesisSpeakingRef.current || window.speechSynthesis.speaking) {
+      console.log("Postponing listening, Fiko is speaking.");
+      return;
+    }
 
-            if (base64) {
-              try {
-                const binary = atob(base64);
-                const bytes = new Uint8Array(binary.length);
+    const localRec = new SpeechRecognition();
+    localRecRef.current = localRec;
+    localRec.lang = "fr-FR";
+    localRec.continuous = false; // Turn-by-turn conversational flow
+    localRec.interimResults = true;
 
-                for (let i = 0; i < binary.length; i++) {
-                  bytes[i] = binary.charCodeAt(i);
-                }
+    localRec.onstart = () => {
+      setVocalStatus("listening");
+      console.log("🎤 Fiko is now listening to user...");
+    };
 
-                const int16 = new Int16Array(bytes.buffer);
-                const float32 = new Float32Array(int16.length);
+    localRec.onresult = (event: any) => {
+      const interimTranscript = Array.from(event.results)
+        .map((res: any) => res[0].transcript)
+        .join(" ");
 
-                for (let i = 0; i < int16.length; i++) {
-                  float32[i] = int16[i] / 32768;
-                }
+      setTranscription(interimTranscript);
 
-                const buffer = audioContext.createBuffer(
-                  1,
-                  float32.length,
-                  24000,
-                );
-                buffer.getChannelData(0).set(float32);
+      const isFinal = event.results[event.results.length - 1].isFinal;
+      if (isFinal) {
+        const finalMessage = interimTranscript.trim();
+        if (finalMessage.length > 1) {
+          localRec.stop();
+          handleUserLocalResponse(finalMessage);
+        }
+      }
+    };
 
-                const source = audioContext.createBufferSource();
-                source.buffer = buffer;
-                source.connect(audioContext.destination);
+    localRec.onend = () => {
+      // Auto-restart if we didn't transition out of active, and not currently speaking
+      setTimeout(() => {
+        if (
+          stepRef.current === "active" &&
+          vocalStatusRef.current !== "thinking" &&
+          vocalStatusRef.current !== "idle" &&
+          vocalStatusRef.current !== "speaking" &&
+          !isWebSynthesisSpeakingRef.current &&
+          !window.speechSynthesis.speaking
+        ) {
+          try {
+            startWebSpeechListening();
+          } catch (e) {}
+        }
+      }, 300);
+    };
 
-                const now = audioContext.currentTime;
-
-                if (nextPlayTimeRef.current < now) {
-                  nextPlayTimeRef.current = now;
-                }
-
-                source.start(nextPlayTimeRef.current);
-                nextPlayTimeRef.current += buffer.duration;
-
-                sourceNodesRef.current.push(source);
-              } catch (err) {
-                console.error(err);
-              }
-            }
-          },
-        },
-
-        config: {
-          responseModalities: [Modality.AUDIO],
-
-          systemInstruction: `
-SYSTEM MODE: FIKO LIVING AI ENTITY
-
-OBJECTIF :
-Créer un assistant IA qui n’est pas perçu comme un chatbot, mais comme une entité vivante, intelligente, présente et active dans l’interface.
-
-🧠 CONCEPT GLOBAL :
-Fiko n’est PAS une interface. Fiko est :
-- une présence
-- une intelligence active
-- un système qui observe, comprend et agit
-
-L’utilisateur ne doit jamais avoir l’impression de parler à un bot, mais à une entité qui comprend son business et agit pour lui.
-
-🎬 CYCLE DE CONVERSION (MANDATAIRE) :
-1. DÉCOUVERTE : Scanne les ambitions et les blocages. Observe le comportement.
-2. [DIAGNOSTIC] : Formule un constat brut et honnête sur la faillibilité du système actuel.
-3. [PROJECTION] : Révèle le futur optimisé par Krypton. Fais-leur sentir la puissance.
-4. [OFFRE] : Propose l'activation de l'unité FIKO la plus adaptée (ACCESS, TERRA, MARS, KRYPTON, GALAXY).
-
-💬 STYLE DE DIALOGUE :
-- Bref, percutant, presque "télépathique".
-- Ton d'autorité visionnaire (expert ivoirien direct).
-- Utilise des métaphores de force, de croissance et d'armée IA.
-
-👤 CONTEXTE :
-Identifié : ${prospectName || "visiteur"}
-Porte initialisée : ${initialPorte || "Non spécifiée"}
-
-🚀 ACTIVATION :
-"Je vous observe depuis quelques secondes... Votre système actuel est passif. Dites-moi, que voulez-vous conquérir aujourd'hui ?"
-`,
-        },
-      });
-
-      sessionRef.current = session;
-    } catch (e: any) {
-      console.error(e);
-      if (e?.status === 429 || e?.toString().includes("RESOURCE_EXHAUSTED")) {
-        setQuotaError(true);
-      } else if (e.name === "NotAllowedError" || e.name === "PermissionDeniedError") {
+    localRec.onerror = (event: any) => {
+      if (event.error === "aborted" || event.error === "no-speech") {
+        console.log(`SpeechRecognition status event: ${event.error}`);
+        return;
+      }
+      console.error("SpeechRecognition error caught:", event.error);
+      if (event.error === "not-allowed") {
         setPermissionError(true);
       }
-      setStep("pre_start");
-      setIsConnected(false);
+    };
+
+    try {
+      localRec.start();
+    } catch (e) {
+      console.error("Failed to start speech recognition stream:", e);
     }
+  };
+
+  // 🧠 PROCESS USER VOICE INPUT (AI GATEWAY + PERSISTENT AUDIT LOGGING)
+  const handleUserLocalResponse = async (userMessageText: string) => {
+    setFikoMessage("...");
+    setVocalStatus("thinking");
+
+    const startTime = Date.now();
+    let userId = localStorage.getItem("fiko_user");
+    if (!userId) {
+      userId = "visitor_" + Date.now();
+      localStorage.setItem("fiko_user", userId);
+    }
+
+    try {
+      // Send message to our certifiable AI Gateway (orchestrating state & memory)
+      const res = await sendToFiko(userMessageText);
+      const responseTimeMs = Date.now() - startTime;
+
+      console.log("Fiko response processed by Sales Brain:", res);
+
+      // Extract recommended plan if state machine triggers an offer
+      let offerDetected = "Aucune";
+      if (res.reply.includes("[OFFRE]")) {
+        const match = res.reply.match(/\[OFFRE\]\s*([A-Z]+)/);
+        if (match && match[1]) {
+          offerDetected = match[1];
+        }
+      }
+
+      // Check conversion criteria
+      const isConverted =
+        res.currentState === "CLOSING" ||
+        res.currentState === "ACTIVATION" ||
+        userMessageText.toLowerCase().includes("prix") ||
+        userMessageText.toLowerCase().includes("payer") ||
+        userMessageText.toLowerCase().includes("acheter") ||
+        userMessageText.toLowerCase().includes("checkout");
+
+      // 🗄️ PROMPT AUDIT LOGGER & CONVERSION ANALYTICS (Durable Cloud Logging)
+      try {
+        await addDoc(collection(db, "fiko_audit_logs"), {
+          leadId: userId,
+          prospectName: prospectName || "Visiteur",
+          state: res.currentState,
+          modelUsed: res.modelUsed || "gemini-3.5-flash",
+          offerRecommended: offerDetected,
+          responseTimeMs,
+          lastUserMessage: userMessageText,
+          fikoReply: res.reply,
+          isConverted,
+          failureReason: res.currentState === "OBJECTION" ? "Objections actives de l'utilisateur" : "",
+          timestamp: serverTimestamp(),
+        });
+        console.log("Logged conversation turn to Firestore successfully.");
+      } catch (firestoreErr) {
+        console.error("Error writing conversation turn to Firestore:", firestoreErr);
+      }
+
+      setFikoMessage(res.reply);
+      speakWithWebSpeech(res.reply);
+    } catch (err) {
+      console.error("Fiko brain processing error:", err);
+      const fallbackReply = "Je configure mes liaisons réseau. Répétez s'il vous plaît ?";
+      setFikoMessage(fallbackReply);
+      speakWithWebSpeech(fallbackReply);
+    }
+  };
+
+  // 🚀 LAUNCH THE FIKO VOCAL SESSION
+  const startVocalSession = async () => {
+    console.log("Launching Fiko Voice Core session...");
+    setStep("active");
+    setIsConnected(true);
+    setUseWebSpeechFallback(true);
+
+    // Stop wake word listener
+    if (recognition) {
+      try {
+        recognition.stop();
+      } catch (e) {}
+    }
+
+    const greetingText = `Bonjour ${prospectName || "visiteur"}. Je suis Fiko, le cerveau commercial de Krypton AI. Je suis prêt. Que souhaitez-vous conquérir aujourd'hui ?`;
+    setFikoMessage(greetingText);
+    setTimeout(() => {
+      speakWithWebSpeech(greetingText);
+    }, 400);
   };
 
   return (
@@ -516,12 +570,28 @@ Porte initialisée : ${initialPorte || "Non spécifiée"}
               FIKO. Veuillez autoriser l'accès dans les paramètres de votre
               navigateur.
             </p>
-            <button
-              onClick={() => setPermissionError(false)}
-              className="bg-[#FF2718] text-white px-8 py-3 font-black text-xs uppercase tracking-[0.2em] hover:bg-red-700 transition-all"
-            >
-              Fermer
-            </button>
+            <div className="flex gap-4 justify-center">
+              <button
+                onClick={() => setPermissionError(false)}
+                className="bg-white/10 text-white px-5 py-3 font-black text-xs uppercase tracking-[0.2em] hover:bg-white/20 transition-all border border-white/15"
+              >
+                Fermer
+              </button>
+              <button
+                onClick={() => {
+                  setPermissionError(false);
+                  setUseWebSpeechFallback(true);
+                  setStep("active");
+                  setIsConnected(true);
+                  const welcomeText = "Je vous observe depuis quelques secondes... Votre système actuel est passif. Dites-moi, que voulez-vous conquérir aujourd'hui ?";
+                  setFikoMessage(welcomeText);
+                  speakWithWebSpeech(welcomeText);
+                }}
+                className="bg-[#FF2718] text-white px-5 py-3 font-black text-xs uppercase tracking-[0.2em] hover:bg-red-700 transition-all"
+              >
+                Continuer par écrit
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -601,14 +671,16 @@ Porte initialisée : ${initialPorte || "Non spécifiée"}
 
       {/* persistent 3D Canvas - Nuclear Stability */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <Canvas camera={{ position: [0, 0, 5] }}>
-          <color attach="background" args={['#000000']} />
-          <ambientLight intensity={1.5} color="#FF2718" />
-          <pointLight position={[10, 10, 10]} intensity={step === "active" ? 4 : 2} color="#FF2718" />
-          <pointLight position={[-10, -10, -10]} intensity={2} color="#FF0000" />
-          <LivingCore volume={volume} mousePos={mousePos} step={step} />
-          <Environment preset="night" />
-        </Canvas>
+        <CanvasErrorBoundary>
+          <Canvas camera={{ position: [0, 0, 5] }}>
+            <color attach="background" args={['#000000']} />
+            <ambientLight intensity={1.5} color="#FF2718" />
+            <pointLight position={[10, 10, 10]} intensity={step === "active" ? 4 : 2} color="#FF2718" />
+            <pointLight position={[-10, -10, -10]} intensity={2} color="#FF0000" />
+            <LivingCore volume={volume} mousePos={mousePos} step={step} />
+            <Environment preset="night" />
+          </Canvas>
+        </CanvasErrorBoundary>
       </div>
 
       <AnimatePresence mode="wait">
@@ -662,6 +734,19 @@ Porte initialisée : ${initialPorte || "Non spécifiée"}
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#FF2718] drop-shadow-[0_0_30px_rgba(255,39,24,0.4)]">OK FIKO</span>
                   </h3>
                 </div>
+
+                <button
+                  onClick={() => {
+                    setStep("activating");
+                    setTimeout(() => startVocalSession(), 1000);
+                  }}
+                  className="px-10 py-5 bg-gradient-to-r from-[#FF2718] to-red-800 hover:scale-105 active:scale-95 text-white font-black text-xs uppercase tracking-[0.3em] rounded-full shadow-[0_0_30px_rgba(255,39,24,0.4)] transition-all pointer-events-auto flex items-center gap-3 cursor-pointer"
+                >
+                  <Mic2 size={16} />
+                  <span>DÉMARRER FIKO VOCAL</span>
+                </button>
+
+                <div className="text-[10px] text-white/30 tracking-[0.2em] font-mono uppercase">OU</div>
 
                 <div className="relative group w-full max-w-md pointer-events-auto">
                    <input 
@@ -780,6 +865,56 @@ Porte initialisée : ${initialPorte || "Non spécifiée"}
 
             {/* Center Dialogue - Cinematic reading */}
             <div className="text-center max-w-5xl px-8 w-full flex-grow flex flex-col justify-center items-center relative z-10 pointer-events-none">
+              
+              {/* Dynamic Status Banner */}
+              <div className="mb-6 pointer-events-auto">
+                <AnimatePresence mode="wait">
+                  {vocalStatus === "listening" ? (
+                    <motion.div
+                      key="listening-status"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="flex items-center gap-2 bg-[#FF2718]/15 border border-[#FF2718]/30 px-4 py-1.5 rounded-full text-xs font-black text-[#FF2718] tracking-[0.2em] uppercase animate-pulse"
+                    >
+                      <span className="size-2 rounded-full bg-[#FF2718] animate-ping" />
+                      <span>FIKO ÉCOUTE...</span>
+                    </motion.div>
+                  ) : vocalStatus === "thinking" ? (
+                    <motion.div
+                      key="thinking-status"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="flex items-center gap-2 bg-amber-500/15 border border-amber-500/30 px-4 py-1.5 rounded-full text-xs font-black text-amber-500 tracking-[0.2em] uppercase"
+                    >
+                      <Loader2 className="animate-spin" size={14} />
+                      <span>ANALYSE DE VOTRE VISION...</span>
+                    </motion.div>
+                  ) : vocalStatus === "speaking" ? (
+                    <motion.div
+                      key="speaking-status"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="flex items-center gap-2 bg-indigo-500/15 border border-indigo-500/30 px-4 py-1.5 rounded-full text-xs font-black text-indigo-400 tracking-[0.2em] uppercase"
+                    >
+                      <Volume2 className="animate-bounce" size={14} />
+                      <span>FIKO RÉPOND...</span>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="idle-status"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full text-xs font-mono text-white/50 tracking-[0.2em] uppercase"
+                    >
+                      <span>FIKO EN VEILLE</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               <AnimatePresence mode="wait">
                  <motion.div 
@@ -826,10 +961,94 @@ Porte initialisée : ${initialPorte || "Non spécifiée"}
                    </motion.div>
                 )}
               </AnimatePresence>
+
+              {/* Interactive Physical Microphone Button */}
+              <div className="mt-12 pointer-events-auto flex flex-col items-center gap-3">
+                <button
+                  onClick={() => {
+                    if (vocalStatus === "listening") {
+                      if (localRecRef.current) {
+                        try { localRecRef.current.stop(); } catch (e) {}
+                      }
+                      setVocalStatus("idle");
+                    } else {
+                      try { window.speechSynthesis.cancel(); } catch (e) {}
+                      startWebSpeechListening();
+                    }
+                  }}
+                  className={`size-20 rounded-full flex items-center justify-center border transition-all duration-500 cursor-pointer ${
+                    vocalStatus === "listening"
+                      ? "bg-[#FF2718] border-[#FF2718] text-white shadow-[0_0_50px_rgba(255,39,24,0.7)] scale-110"
+                      : vocalStatus === "thinking"
+                      ? "bg-amber-600 border-amber-600 text-white animate-pulse"
+                      : vocalStatus === "speaking"
+                      ? "bg-indigo-600 border-indigo-600 text-white animate-pulse"
+                      : "bg-white/5 border-white/20 hover:border-[#FF2718] text-white hover:bg-white/10"
+                  }`}
+                >
+                  {vocalStatus === "listening" ? (
+                    <div className="flex items-center gap-1 justify-center">
+                      <span className="w-1 h-6 bg-white rounded-full animate-pulse"></span>
+                      <span className="w-1 h-10 bg-white rounded-full animate-pulse delay-75"></span>
+                      <span className="w-1 h-6 bg-white rounded-full animate-pulse delay-150"></span>
+                    </div>
+                  ) : vocalStatus === "thinking" ? (
+                    <Loader2 className="animate-spin text-white" size={32} />
+                  ) : vocalStatus === "speaking" ? (
+                    <Volume2 className="animate-bounce text-white" size={32} />
+                  ) : (
+                    <Mic size={32} />
+                  )}
+                </button>
+                <span className="text-[9px] uppercase font-mono tracking-[0.3em] text-white/40">
+                  {vocalStatus === "listening"
+                    ? "Écoute active • Cliquez pour couper"
+                    : vocalStatus === "thinking"
+                    ? "Fiko analyse votre voix..."
+                    : vocalStatus === "speaking"
+                    ? "Fiko parle • Cliquez pour couper"
+                    : "Micro désactivé • Cliquez pour parler"}
+                </span>
+              </div>
+
             </div>
             
             {/* CTA Final - Apparaît uniquement à la fin du closing */}
-            <div className="absolute bottom-12 lg:bottom-20 w-full flex justify-center px-6">
+            <div className="absolute bottom-6 lg:bottom-12 w-full flex flex-col items-center justify-center px-6 gap-4 z-50 pointer-events-auto">
+               {useWebSpeechFallback && (
+                 <form
+                   onSubmit={(e) => {
+                     e.preventDefault();
+                     const formData = new FormData(e.currentTarget);
+                     const val = formData.get("userMessage")?.toString()?.trim();
+                     if (val) {
+                       setTranscription(val);
+                       handleUserLocalResponse(val);
+                       e.currentTarget.reset();
+                     }
+                   }}
+                   className="w-full max-w-xl flex gap-3 items-center bg-white/5 border border-white/10 px-6 py-4 rounded-full hover:border-white/20 focus-within:border-[#FF2718] transition-all"
+                 >
+                   <input
+                     name="userMessage"
+                     type="text"
+                     placeholder="Écrivez votre message à Fiko ici..."
+                     className="flex-grow bg-transparent text-white placeholder:text-white/30 text-sm focus:outline-none px-2"
+                   />
+                   <button
+                     type="submit"
+                     className="bg-[#FF2718] hover:bg-red-700 text-white rounded-full p-2.5 flex items-center justify-center transition-all cursor-pointer"
+                   >
+                     <ArrowRight size={16} />
+                   </button>
+                 </form>
+               )}
+               
+               <div className="text-[10px] text-white/40 tracking-[0.2em] font-mono uppercase flex items-center gap-2 mb-2">
+                 <span className={`size-1.5 rounded-full ${isConnected ? 'bg-emerald-500 animate-pulse' : 'bg-[#FF2718]'}`} />
+                 {isConnected ? "Liaison vocale connectée" : "Connexion en cours..."}
+                 {useWebSpeechFallback && " (Mode Secours Local)"}
+               </div>
                <AnimatePresence>
                  {isConversationComplete && (
                     <motion.div

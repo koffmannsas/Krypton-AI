@@ -1,0 +1,67 @@
+export interface CaseStudy {
+  sector: string;
+  location: string;
+  clientName: string;
+  problem: string;
+  solution: string;
+  metricResult: string;
+  citation: string;
+}
+
+export interface FikoTrustRules {
+  caseStudies: CaseStudy[];
+  injectionTimings: {
+    stage: string;
+    triggerObjection: string;
+    directive: string;
+  }[];
+}
+
+export const fikoTrustRules: FikoTrustRules = {
+  caseStudies: [
+    {
+      sector: "Prêt-à-porter / E-commerce",
+      location: "Abidjan, Côte d'Ivoire",
+      clientName: "Boutique de Fatou",
+      problem: "Perte de 60% des prospects WhatsApp arrivant le soir après la fermeture à 19h.",
+      solution: "Intégration de Fiko Connect pour qualifier et prendre des précommandes 24h/24.",
+      metricResult: "Doublement des ventes mensuelles en seulement 3 semaines et 0 prospect perdu.",
+      citation: "C'est exactement ce que nous avons fait pour la Boutique de Fatou à Abidjan."
+    },
+    {
+      sector: "Transport & Logistique",
+      location: "Dakar, Sénégal",
+      clientName: "Sénégal Trans Logistique",
+      problem: "Surcharge du service client par des appels redondants sur les tarifs de livraison.",
+      solution: "Automatisation de la grille tarifaire et prise de commandes automatique via Fiko Voice.",
+      metricResult: "Temps de traitement divisé par 4 et hausse des commandes de 35%.",
+      citation: "C'est la même approche que nous avons déployée chez Sénégal Trans Logistique à Dakar."
+    },
+    {
+      sector: "Immobilier",
+      location: "Lomé, Togo",
+      clientName: "Horizon Lomé Immo",
+      problem: "Lenteur à recontacter les leads qualifiés, entraînant des ventes ratées au profit de concurrents plus rapides.",
+      solution: "Fiko a qualifié instantanément le budget et le type de bien recherché en moins de 3 minutes.",
+      metricResult: "Taux de transformation des visites immobilières augmenté de 50%.",
+      citation: "Comme pour Horizon Lomé Immo à Lomé, l'immédiateté de Fiko sécurise les dossiers chauds."
+    }
+  ],
+  injectionTimings: [
+    {
+      stage: "ANALYSIS",
+      triggerObjection: "Comment ça marche concrètement ?",
+      directive: "Expliquer brièvement puis citer un cas d'étude sectoriel proche pour illustrer de façon ultra-tangible."
+    },
+    {
+      stage: "PROJECTION",
+      triggerObjection: "Est-ce que ça va marcher pour mon activité ?",
+      directive: "Faire le parallèle avec une entreprise similaire de notre base de confiance et exposer le chiffre d'affaires supplémentaire généré."
+    },
+    {
+      stage: "OBJECTION",
+      triggerObjection: "C'est trop cher / Je n'ai pas les moyens.",
+      directive: "Injecter le ROI de la Boutique de Fatou pour prouver que Fiko est un investissement qui rapporte et s'amortit immédiatement."
+    }
+  ]
+};

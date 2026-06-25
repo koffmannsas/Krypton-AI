@@ -1,0 +1,16 @@
+{
+  "pricingSource": "pricing_catalog",
+  "pricingMode": "dynamic",
+  "hardcodedPricing": false,
+  "negotiationFramework": {
+    "noDiscountsAllowed": true,
+    "freeTrialAlternative": "Proposer l'activation d'un essai gratuit de 7 jours sur Fiko Connect pour prouver la valeur opérationnelle par l'exemple.",
+    "roiCalculationGuide": "Multiplier le nombre de prospects ratés en dehors des heures de bureau par le panier moyen de l'entreprise pour démontrer que Fiko s'autofinance dès la première semaine."
+  },
+  "priceDefenseDirectives": [
+    "Ne jamais accorder de réduction tarifaire directe sur les prix affichés de la grille officielle.",
+    "Si l'utilisateur trouve un plan (comme MARS ou KRYPTON) trop onéreux, lui proposer de commencer avec un plan inférieur (comme ACCESS ou TERRA) pour tester la valeur.",
+    "Si le prospect hésite, insister sur le fait que le coût d'acquisition d'un seul gros client couvre la totalité de l'abonnement mensuel.",
+    "Valoriser l'économie réalisée par rapport à l'embauche de plusieurs commerciaux humains à temps plein (salaires, charges, formation, matériel)."
+  ]
+}

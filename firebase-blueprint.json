@@ -371,9 +371,32 @@
         "results": { "type": "object" }
       },
       "required": ["userId", "operationType", "operationStatus", "confidenceScore", "businessImpact", "executionMode", "triggeredBy", "createdAt"]
+    },
+    "FikoAuditLog": {
+      "title": "FikoAuditLog",
+      "description": "Fiko AI Sales Conversation Audit Log",
+      "type": "object",
+      "properties": {
+        "leadId": { "type": "string" },
+        "prospectName": { "type": "string" },
+        "state": { "type": "string" },
+        "modelUsed": { "type": "string" },
+        "offerRecommended": { "type": "string" },
+        "responseTimeMs": { "type": "number" },
+        "lastUserMessage": { "type": "string" },
+        "fikoReply": { "type": "string" },
+        "isConverted": { "type": "boolean" },
+        "failureReason": { "type": "string" },
+        "timestamp": { "type": "timestamp" }
+      },
+      "required": ["leadId", "prospectName", "state", "lastUserMessage", "fikoReply", "isConverted"]
     }
   },
   "firestore": {
+    "fiko_audit_logs/{logId}": {
+      "schema": { "$ref": "FikoAuditLog" },
+      "description": "Fiko AI conversation audit logs"
+    },
     "fiko_autonomous_operations/{operationId}": {
       "schema": { "$ref": "FikoAutonomousOperation" },
       "description": "Fiko Autonomous Business Operations"

@@ -138,27 +138,10 @@ const AuthPage: React.FC<AuthPageProps> = ({
         onLoginSuccess(profile);
 
       } else {
-        try {
-          const credential = await signInWithEmailAndPassword(auth, email, password);
-          const profile = await handleRoleCheck(credential.user.uid, { email });
-          setIsLoading(false);
-          onLoginSuccess(profile);
-        } catch (loginErr: any) {
-          if (email === "review@krypton-ia.tech" && password === "MetaReview2026!") {
-            const credential = await createUserWithEmailAndPassword(auth, email, password);
-            const profile = await handleRoleCheck(credential.user.uid, {
-              email,
-              firstName: "Meta",
-              lastName: "Reviewer",
-              phone: "+1234567890",
-              selectedPlan: "elite"
-            });
-            setIsLoading(false);
-            onLoginSuccess(profile);
-          } else {
-            throw loginErr;
-          }
-        }
+        const credential = await signInWithEmailAndPassword(auth, email, password);
+        const profile = await handleRoleCheck(credential.user.uid, { email });
+        setIsLoading(false);
+        onLoginSuccess(profile);
       }
     } catch (err: any) {
       if (err.message === "Accès refusé. Les administrateurs doivent se connecter via le portail admin.") {
@@ -250,18 +233,9 @@ const AuthPage: React.FC<AuthPageProps> = ({
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF2718] to-transparent shadow-[0_0_10px_#FF2718]" />
           
           <div className="mb-8 flex flex-col items-center text-center relative z-10">
-            <div 
-              onClick={() => {
-                setMode("login");
-                setEmail("review@krypton-ia.tech");
-                setPassword("MetaReview2026!");
-                trackEvent("landing_cta_click", { cta_label: "Fingerprint autofill review account" });
-              }}
-              title="Autofill Meta Review Account"
-              className="relative mb-6 group/icon cursor-pointer"
-            >
+            <div className="relative mb-6 group/icon">
               <div className="absolute -inset-4 bg-[#FF2718]/20 blur-3xl rounded-full opacity-0 group-hover/icon:opacity-100 transition-all duration-700" />
-              <div className="size-16 bg-white/[0.03] border border-white/10 rounded-2xl flex items-center justify-center relative transition-all group-hover/icon:scale-110 hover:border-[#FF2718]/40">
+              <div className="size-16 bg-white/[0.03] border border-white/10 rounded-2xl flex items-center justify-center relative transition-all group-hover/icon:scale-110">
                 <Fingerprint size={28} className="text-[#FF2718]" />
               </div>
             </div>
@@ -435,19 +409,7 @@ const AuthPage: React.FC<AuthPageProps> = ({
                   {mode === "login" ? "PAS_DE_COMPTE ? CRÉER" : "EXISTANT ? LOGIN"}
                 </button>
 
-                {/* Discreet Meta Review Bypass buttons */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMode("login");
-                    setEmail("review@krypton-ia.tech");
-                    setPassword("MetaReview2026!");
-                    trackEvent("landing_cta_click", { cta_label: "Meta Review bypass shortcut link" });
-                  }}
-                  className="text-[6px] text-slate-700 hover:text-red-500 uppercase tracking-widest mt-3 block mx-auto transition-colors align-middle"
-                >
-                  [ Meta Review Access Bypass ]
-                </button>
+
               </div>
             </div>
           </div>

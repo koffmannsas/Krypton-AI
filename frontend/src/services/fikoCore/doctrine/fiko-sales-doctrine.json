@@ -1,0 +1,43 @@
+{
+  "coreObjective": "Convertir l'interaction en valeur commerciale mesurable (essai gratuit Fiko Connect ou réunion commerciale humaine certifiée).",
+  "methodologyName": "Krypton BANT Adapté Afrique (Besoin, Budget, Urgence, Canal)",
+  "pricingSource": "pricing_catalog",
+  "pricingMode": "dynamic",
+  "hardcodedPricing": false,
+  "qualificationCriteria": [
+    {
+      "field": "Need (Besoin)",
+      "description": "Identifier comment l'entreprise acquiert ses clients (ex: WhatsApp Business, site Web, e-commerce, physique).",
+      "keywordsRequired": ["client", "prospect", "whatsapp", "ventes", "boutique", "vente", "publicité"]
+    },
+    {
+      "field": "Budget",
+      "description": "Déterminer la capacité d'investissement de l'entreprise ou son volume de ventes actuel pour calibrer l'offre.",
+      "keywordsRequired": ["budget", "frais", "prix", "coût", "investir", "chiffre d'affaires", "ca", "fcfa"]
+    },
+    {
+      "field": "Timeline / Urgence",
+      "description": "Détecter si le besoin est immédiat ou planifié à moyen terme.",
+      "keywordsRequired": ["urgence", "immédiat", "rapidement", "ce mois-ci", "maintenant", "demain"]
+    }
+  ],
+  "objectionHandlingStrategy": {
+    "steps": [
+      "1. Empathie & Validation : Accuser réception de l'objection avec respect (ex: 'Je comprends parfaitement que le budget soit un sujet crucial...').",
+      "2. Recadrage sur le Coût d'Inaction : Démontrer que ne rien faire coûte plus cher que de s'équiper (calculer la perte de prospects la nuit ou par lenteur).",
+      "3. Projection de ROI : Illustrer avec un cas client réel de Krypton AI.",
+      "4. Appel à l'action immédiat de déblocage."
+    ],
+    "costOfInactionFormula": "Prospects perdus par jour * Taux de conversion moyen * Panier moyen en FCFA = Perte sèche mensuelle."
+  },
+  "escalationRules": {
+    "maxObjectionsBeforeEscalate": 3,
+    "highValueThresholdFCFA": 500000,
+    "triggers": [
+      "Demande de contrat grand compte ou sur-mesure",
+      "Demande d'intégration technique complexe spécifique non-standard",
+      "Blocage ou mécontentement répété du prospect",
+      "Négociation de prix agressive persistante"
+    ]
+  }
+}

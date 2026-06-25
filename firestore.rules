@@ -165,6 +165,16 @@ service cloud.firestore {
         && data.triggeredBy is string;
     }
 
+    function isValidFikoAuditLog(data) {
+      return data.leadId is string && data.leadId.size() <= 128
+        && data.prospectName is string && data.prospectName.size() <= 128
+        && data.state is string && data.state.size() <= 128
+        && data.lastUserMessage is string && data.lastUserMessage.size() <= 5000
+        && data.fikoReply is string && data.fikoReply.size() <= 10000
+        && data.isConverted is bool
+        && data.timestamp == request.time;
+    }
+
     // --- Rules ---
 
     match /users/{userId} {
@@ -295,6 +305,12 @@ service cloud.firestore {
       allow create: if isSignedIn() && isValidFikoMarketPulse(incoming());
       allow update: if isSignedIn() && (existing().userId == request.auth.uid || isAdmin()) && isValidFikoMarketPulse(incoming());
       allow delete: if isAdmin();
+    }
+
+    match /fiko_audit_logs/{logId} {
+      allow create: if isValidFikoAuditLog(incoming());
+      allow get, list: if isAdmin();
+      allow update, delete: if isAdmin();
     }
 
     match /ai_agents/{agentId} {
