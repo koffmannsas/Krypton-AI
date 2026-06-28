@@ -1,3 +1,5 @@
+import { LiveEventBus } from '../integration/event_bus.js';
+
 export interface Playbook {
   id: string;
   name: string;
@@ -8,16 +10,25 @@ export interface Playbook {
 
 /**
  * Playbook Engine™ (Module 07)
- * Executes governed, measurable playbooks for specific scenarios.
+ * Actively executes playbooks triggered by the Event Bus.
  */
 export class PlaybookEngine {
-  static getPlaybook(name: string): Playbook {
-    console.log(`📖 PLAYBOOK ENGINE: Loading playbook [${name}]`);
 
+  static initializeIntegration() {
+    LiveEventBus.subscribe('StateChanged', async (payload) => {
+       if (payload.data.newState === 'INACTIVE_7_DAYS') {
+          console.log(`📖 PLAYBOOK ENGINE: Triggering reactivation playbook for [${payload.leadId}]`);
+          // Execute steps
+          LiveEventBus.publish('PlaybookExecuted', { ...payload, data: { playbookId: 'pb_reactivation' }});
+       }
+    });
+  }
+
+  static getPlaybook(name: string): Playbook {
     return {
       id: `pb_${name.toLowerCase()}`,
       name,
-      triggerEvent: 'Lead_Inactif_7_Jours',
+      triggerEvent: 'INACTIVE_7_DAYS',
       steps: [
         'Envoyer message WhatsApp de prise de nouvelles',
         'Si réponse, qualifier le nouveau frein',

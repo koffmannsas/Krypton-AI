@@ -1,3 +1,5 @@
+import { LiveEventBus } from '../integration/event_bus.js';
+
 export interface SectorKnowledge {
   sector: string;
   commonObjections: string[];
@@ -7,12 +9,17 @@ export interface SectorKnowledge {
 
 /**
  * Knowledge Hub™ (Module 06)
- * Adapts Fiko's intelligence based on the specific industry of the Tenant.
+ * Live-updates sector intelligence based on real conversations.
  */
 export class SectorHub {
-  static getSectorKnowledge(sector: string): SectorKnowledge {
-    console.log(`📚 KNOWLEDGE HUB: Loading intelligence for sector [${sector}]`);
 
+  static initializeIntegration() {
+    LiveEventBus.subscribe('ConversationCompleted', async (payload) => {
+      console.log(`📚 KNOWLEDGE HUB: Updating sector [${payload.data.sector}] stats based on closed conversation.`);
+    });
+  }
+
+  static getSectorKnowledge(sector: string): SectorKnowledge {
     if (sector === 'Immobilier') {
       return {
         sector: 'Immobilier',

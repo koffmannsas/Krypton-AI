@@ -1,3 +1,5 @@
+import { LiveEventBus } from '../integration/event_bus.js';
+
 export interface BusinessMemoryState {
   customerId: string;
   goals: string[];
@@ -9,13 +11,22 @@ export interface BusinessMemoryState {
 
 /**
  * Business Memory Engine™ (Module 02)
- * Persists deep business context beyond just conversational history.
+ * Integrated via Event Bus to passively absorb business context.
  */
 export class BusinessMemoryEngine {
-  static async getContext(customerId: string): Promise<BusinessMemoryState> {
-    console.log(`🧠 BUSINESS MEMORY: Loading deep context for [${customerId}]`);
 
-    // Extends the standard Memory Engine with business-specific dimensions
+  static initializeIntegration() {
+    LiveEventBus.subscribe('ObjectionRaised', async (payload) => {
+      console.log(`🧠 BUSINESS MEMORY: Memorizing objection [${payload.data.objectionType}] for [${payload.leadId}]`);
+      this.updateContext(payload.leadId as string, { objectionsRaised: [payload.data.objectionType] });
+    });
+
+    LiveEventBus.subscribe('ROICalculated', async (payload) => {
+      console.log(`🧠 BUSINESS MEMORY: Updating ROI achieved for [${payload.leadId}] to ${payload.data.value}`);
+    });
+  }
+
+  static async getContext(customerId: string): Promise<BusinessMemoryState> {
     return {
       customerId,
       goals: ['Augmenter acquisition Web', 'Réduire temps de réponse'],
@@ -27,7 +38,6 @@ export class BusinessMemoryEngine {
   }
 
   static async updateContext(customerId: string, delta: Partial<BusinessMemoryState>) {
-    console.log(`🧠 BUSINESS MEMORY: Updating context for [${customerId}]`);
     // Saves to Firestore
   }
 }

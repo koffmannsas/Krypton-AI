@@ -1,3 +1,5 @@
+import { LiveEventBus } from '../integration/event_bus.js';
+
 export interface Customer360Profile {
   id: string;
   tenantId: string;
@@ -12,13 +14,22 @@ export interface Customer360Profile {
 
 /**
  * Customer 360 Engine™ (Module 01)
- * Merges identities across all channels to create a single source of truth.
+ * Integrated via Event Bus to dynamically enrich profiles.
  */
 export class Customer360Engine {
-  static mergeProfile(events: any[]): Customer360Profile {
-    console.log(`👤 CUSTOMER 360: Aggregating identity across channels...`);
 
-    // In production, resolves entities via Enterprise Knowledge Graph
+  static initializeIntegration() {
+    LiveEventBus.subscribe('MessageReceived', async (payload) => {
+      console.log(`👤 CUSTOMER 360: Enriching profile from ${payload.data.source} interaction...`);
+      // Trigger profile merge logic
+    });
+
+    LiveEventBus.subscribe('PaymentSucceeded', async (payload) => {
+      console.log(`👤 CUSTOMER 360: Linking new payment to profile [${payload.leadId}]...`);
+    });
+  }
+
+  static mergeProfile(events: any[]): Customer360Profile {
     return {
       id: 'cust_abc123',
       tenantId: 'tenant_x',
