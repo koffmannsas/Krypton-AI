@@ -56,7 +56,7 @@ const AccessOfferPage: React.FC<AccessOfferPageProps> = ({
           </p>
           <div className="mt-16 flex flex-col items-center gap-8">
             <p className="text-5xl font-black tracking-tighter text-white">
-              200 000 FCFA{" "}
+              200000{" "}
               <span className="text-2xl text-slate-500 font-medium tracking-normal">
                 – Licence 12 mois
               </span>
@@ -265,7 +265,7 @@ const AccessOfferPage: React.FC<AccessOfferPageProps> = ({
               onClick={() => onOpenFiko("ACCESS")}
               className="group bg-purple-600 hover:bg-purple-700 text-white px-12 py-6 rounded-sm font-black text-xs transition-all uppercase tracking-[0.4em] shadow-2xl shadow-purple-500/20 flex items-center justify-center gap-4 active:scale-95"
             >
-              Activer ACCESS – 200 000 FCFA
+              Activer ACCESS – 200000
             </button>
             <button
               onClick={() => onNavigate(Page.PRICING)}

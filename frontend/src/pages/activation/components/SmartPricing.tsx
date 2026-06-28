@@ -21,42 +21,42 @@ const PRICING_DATA: Record<string, GatePricingDetails> = {
   ACCESS: {
     name: "PORTE ACCESS",
     subtitle: "Démarrage standard",
-    originalPrice: "200 000 FCFA",
-    uniquePrice: "170 000 FCFA",
-    economy: "30 000 FCFA",
-    fractionne: "45 000 FCFA",
-    splitFirst: "100 000 FCFA",
-    splitSecond: "100 000 FCFA"
+    originalPrice: "200000",
+    uniquePrice: "170000",
+    economy: "30000",
+    fractionne: "45000",
+    splitFirst: "100000",
+    splitSecond: "100000"
   },
   TERRA: {
     name: "PORTE TERRA",
     subtitle: "L'Artisan Digital",
-    originalPrice: "700 000 FCFA",
-    uniquePrice: "595 000 FCFA",
-    economy: "105 000 FCFA",
-    fractionne: "145 800 FCFA",
-    splitFirst: "350 000 FCFA",
-    splitSecond: "350 000 FCFA"
+    originalPrice: "700000",
+    uniquePrice: "595000",
+    economy: "105000",
+    fractionne: "145800",
+    splitFirst: "350000",
+    splitSecond: "350000"
   },
   MARS: {
     name: "PORTE MARS",
     subtitle: "Le Conquérant",
-    originalPrice: "1 900 000 FCFA",
-    uniquePrice: "1 615 000 FCFA",
-    economy: "285 000 FCFA",
-    fractionne: "395 000 FCFA",
-    splitFirst: "950 000 FCFA",
-    splitSecond: "950 000 FCFA"
+    originalPrice: "1900000",
+    uniquePrice: "1615000",
+    economy: "285000",
+    fractionne: "395000",
+    splitFirst: "950000",
+    splitSecond: "950000"
   },
   KRYPTON: {
     name: "PORTE KRYPTON",
     subtitle: "Le Souverain",
-    originalPrice: "3 900 000 FCFA",
-    uniquePrice: "3 315 000 FCFA",
-    economy: "585 000 FCFA",
-    fractionne: "815 000 FCFA",
-    splitFirst: "1 950 000 FCFA",
-    splitSecond: "1 950 000 FCFA"
+    originalPrice: "3900000",
+    uniquePrice: "3315000",
+    economy: "585000",
+    fractionne: "815000",
+    splitFirst: "1 950000",
+    splitSecond: "1 950000"
   },
   GALAXY: {
     name: "PORTE GALAXY",

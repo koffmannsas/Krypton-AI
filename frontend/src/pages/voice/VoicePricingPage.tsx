@@ -31,7 +31,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
     {
       id: "TERRA",
       name: "FIKO VOICE TERRA",
-      price: "700 000 FCFA / an",
+      price: "700000 / an",
       minutes: "150 minutes / mois",
       features: [
         "Agent vocal IA personnalisé",
@@ -49,7 +49,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
     {
       id: "MARS",
       name: "FIKO VOICE MARS",
-      price: "1 900 000 FCFA / an",
+      price: "1900000 / an",
       minutes: "600 minutes / mois",
       features: [
         "Agent vocal avancé sectoriel",
@@ -68,7 +68,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
     {
       id: "KRYPTON",
       name: "FIKO VOICE KRYPTON",
-      price: "3 900 000 FCFA / an",
+      price: "3900000 / an",
       minutes: "1 000 minutes / mois",
       features: [
         "Agent vocal multi-contextuel",
@@ -78,7 +78,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
         "Logs et audit IA",
       ],
       rules:
-        "1000 min incluses. Dépassement: 1200 FCFA/min. Maintenance IA post-6 mois : 10%/mois.",
+        "1000 min incluses. Dépassement: 1200/min. Maintenance IA post-6 mois : 10%/mois.",
       target: "Banques, grandes entreprises, institutions, groupes.",
       color: "#3b82f6",
       icon: <Crown />,
@@ -86,9 +86,9 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
   ];
 
   const minutePacks = [
-    { name: "PACK 100", minutes: "100 min", price: "150 000 FCFA" },
-    { name: "PACK 300", minutes: "300 min", price: "350 000 FCFA" },
-    { name: "PACK 1 000", minutes: "1 000 min", price: "900 000 FCFA" },
+    { name: "PACK 100", minutes: "100 min", price: "150000" },
+    { name: "PACK 300", minutes: "300 min", price: "350000" },
+    { name: "PACK 1 000", minutes: "1 000 min", price: "900000" },
   ];
 
   return (
