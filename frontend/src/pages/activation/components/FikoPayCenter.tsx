@@ -18,71 +18,8 @@ interface GatePricingDetails {
   splitSecond: string;
 }
 
-const PRICING_DATA: Record<string, GatePricingDetails> = {
-  ACCESS: {
-    name: "PORTE ACCESS",
-    subtitle: "Démarrage standard",
-    originalPrice: "200000",
-    uniquePrice: "170000",
-    economy: "30000",
-    fractionne: "45000",
-    splitFirst: "100000",
-    splitSecond: "100000"
-  },
-  TERRA: {
-    name: "PORTE TERRA",
-    subtitle: "L'Artisan Digital",
-    originalPrice: "700000",
-    uniquePrice: "595000",
-    economy: "105000",
-    fractionne: "145800",
-    splitFirst: "350000",
-    splitSecond: "350000"
-  },
-  MARS: {
-    name: "PORTE MARS",
-    subtitle: "Le Conquérant",
-    originalPrice: "1900000",
-    uniquePrice: "1615000",
-    economy: "285000",
-    fractionne: "395000",
-    splitFirst: "950000",
-    splitSecond: "950000"
-  },
-  KRYPTON: {
-    name: "PORTE KRYPTON",
-    subtitle: "Le Souverain",
-    originalPrice: "3900000",
-    uniquePrice: "3315000",
-    economy: "585000",
-    fractionne: "815000",
-    splitFirst: "1 950000",
-    splitSecond: "1 950000"
-  },
-  GALAXY: {
-    name: "PORTE GALAXY",
-    subtitle: "L'Architecte",
-    originalPrice: "SUR DEVIS",
-    uniquePrice: "SUR DEVIS",
-    economy: "N/A",
-    fractionne: "SUR DEVIS",
-    splitFirst: "SUR DEVIS",
-    splitSecond: "SUR DEVIS"
-  }
-};
 
-const getPricingDetails = (gate: string): GatePricingDetails => {
-  const normalized = gate.toUpperCase().trim();
-  if (PRICING_DATA[normalized]) {
-    return PRICING_DATA[normalized];
-  }
-  return {
-    name: `PORTE ${normalized}`,
-    subtitle: "Configuration Sur Mesure",
-    originalPrice: "SUR DEVIS",
-    uniquePrice: "SUR DEVIS",
-    economy: "N/A",
-    fractionne: "SUR DEVIS",
+import { getPricingDetails } from "@krypton/pricing";
     splitFirst: "SUR DEVIS",
     splitSecond: "SUR DEVIS"
   };

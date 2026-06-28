@@ -31,7 +31,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
     {
       id: "TERRA",
       name: "FIKO VOICE TERRA",
-      price: "700000 / an",
+      price: "700 000 FCFA / an",
       minutes: "150 minutes / mois",
       features: [
         "Agent vocal IA personnalisé",
@@ -49,7 +49,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
     {
       id: "MARS",
       name: "FIKO VOICE MARS",
-      price: "1900000 / an",
+      price: "1 900 000 FCFA / an",
       minutes: "600 minutes / mois",
       features: [
         "Agent vocal avancé sectoriel",
@@ -68,7 +68,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
     {
       id: "KRYPTON",
       name: "FIKO VOICE KRYPTON",
-      price: "3900000 / an",
+      price: "3 900 000 FCFA / an",
       minutes: "1 000 minutes / mois",
       features: [
         "Agent vocal multi-contextuel",
@@ -78,7 +78,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
         "Logs et audit IA",
       ],
       rules:
-        "1000 min incluses. Dépassement: 1200/min. Maintenance IA post-6 mois : 10%/mois.",
+        "1000 min incluses. Dépassement: {VOICE_PRICING_CATALOG.additionalMinute} FCFA/min. Maintenance IA post-6 mois : 10%/mois.",
       target: "Banques, grandes entreprises, institutions, groupes.",
       color: "#3b82f6",
       icon: <Crown />,
@@ -86,15 +86,15 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
   ];
 
   const minutePacks = [
-    { name: "PACK 100", minutes: "100 min", price: "150000" },
-    { name: "PACK 300", minutes: "300 min", price: "350000" },
-    { name: "PACK 1 000", minutes: "1 000 min", price: "900000" },
+    { name: "PACK 100", minutes: "100 min", price: "150 000 FCFA" },
+    { name: "PACK 300", minutes: "300 min", price: "350 000 FCFA" },
+    { name: "PACK 1 000", minutes: "1 000 min", price: "900 000 FCFA" },
   ];
 
   return (
     <div className="relative bg-[#0B0B0F] overflow-hidden min-h-screen pb-40">
       <div className="absolute inset-0 hex-bg opacity-[0.03] pointer-events-none"></div>
-      <div className="absolute top-0 left-0 w-[1200px] h-[1200px] bg-[#FF2718]/5 blur-[250px] rounded-full -translate-y-1/2 -translate-x-1/3 pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-[{VOICE_PRICING_CATALOG.additionalMinute}px] h-[{VOICE_PRICING_CATALOG.additionalMinute}px] bg-[#FF2718]/5 blur-[250px] rounded-full -translate-y-1/2 -translate-x-1/3 pointer-events-none"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 pt-40 pb-20 relative z-10">
         <motion.div
