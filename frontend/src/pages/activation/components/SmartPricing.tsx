@@ -17,8 +17,71 @@ interface GatePricingDetails {
   splitSecond: string;
 }
 
+const PRICING_DATA: Record<string, GatePricingDetails> = {
+  ACCESS: {
+    name: "PORTE ACCESS",
+    subtitle: "Démarrage standard",
+    originalPrice: "200 000 FCFA",
+    uniquePrice: "170 000 FCFA",
+    economy: "30 000 FCFA",
+    fractionne: "45 000 FCFA",
+    splitFirst: "100 000 FCFA",
+    splitSecond: "100 000 FCFA"
+  },
+  TERRA: {
+    name: "PORTE TERRA",
+    subtitle: "L'Artisan Digital",
+    originalPrice: "700 000 FCFA",
+    uniquePrice: "595 000 FCFA",
+    economy: "105 000 FCFA",
+    fractionne: "145 800 FCFA",
+    splitFirst: "350 000 FCFA",
+    splitSecond: "350 000 FCFA"
+  },
+  MARS: {
+    name: "PORTE MARS",
+    subtitle: "Le Conquérant",
+    originalPrice: "1 900 000 FCFA",
+    uniquePrice: "1 615 000 FCFA",
+    economy: "285 000 FCFA",
+    fractionne: "395 000 FCFA",
+    splitFirst: "950 000 FCFA",
+    splitSecond: "950 000 FCFA"
+  },
+  KRYPTON: {
+    name: "PORTE KRYPTON",
+    subtitle: "Le Souverain",
+    originalPrice: "3 900 000 FCFA",
+    uniquePrice: "3 315 000 FCFA",
+    economy: "585 000 FCFA",
+    fractionne: "815 000 FCFA",
+    splitFirst: "1 950 000 FCFA",
+    splitSecond: "1 950 000 FCFA"
+  },
+  GALAXY: {
+    name: "PORTE GALAXY",
+    subtitle: "L'Architecte",
+    originalPrice: "SUR DEVIS",
+    uniquePrice: "SUR DEVIS",
+    economy: "N/A",
+    fractionne: "SUR DEVIS",
+    splitFirst: "SUR DEVIS",
+    splitSecond: "SUR DEVIS"
+  }
+};
 
-import { getPricingDetails } from "@krypton/pricing";
+const getPricingDetails = (gate: string): GatePricingDetails => {
+  const normalized = gate.toUpperCase().trim();
+  if (PRICING_DATA[normalized]) {
+    return PRICING_DATA[normalized];
+  }
+  return {
+    name: `PORTE ${normalized}`,
+    subtitle: "Configuration Sur Mesure",
+    originalPrice: "SUR DEVIS",
+    uniquePrice: "SUR DEVIS",
+    economy: "N/A",
+    fractionne: "SUR DEVIS",
     splitFirst: "SUR DEVIS",
     splitSecond: "SUR DEVIS"
   };

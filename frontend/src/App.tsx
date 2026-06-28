@@ -19,6 +19,7 @@ import { soundEngine } from "./utils/SoundEngine";
 import { visitorMemory } from "./utils/VisitorMemory";
 import { MASTER_AGENTS } from "./constants";
 
+import { PricingProvider } from "@krypton/pricing";
 import SEO from "./components/SEO";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
