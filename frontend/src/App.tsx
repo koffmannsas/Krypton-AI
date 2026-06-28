@@ -303,6 +303,7 @@ const App: React.FC = () => {
   };
 
   return (
+    <PricingProvider>
     <CosmicProvider>
       <div className="min-h-screen bg-black text-white flex flex-col relative">
         <CosmicBackground />
@@ -482,6 +483,7 @@ const App: React.FC = () => {
         )}
       </div>
     </CosmicProvider>
+    </PricingProvider>
   );
 };
 
