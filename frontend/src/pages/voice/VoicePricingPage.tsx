@@ -1,5 +1,6 @@
 import React from "react";
 import { Page } from "../../types";
+import { usePricingContext } from "@krypton/pricing";
 import { motion } from "framer-motion";
 import {
   Mic,
@@ -27,11 +28,13 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
   onNavigate,
   onOpenFiko,
 }) => {
+  const { format, client } = usePricingContext();
+  const voicePricing = client.getVoicePricing();
   const plans = [
     {
       id: "TERRA",
       name: "FIKO VOICE TERRA",
-      price: "700 000 FCFA / an",
+      price: `${format(voicePricing.standardAnnual)} / an`,
       minutes: "150 minutes / mois",
       features: [
         "Agent vocal IA personnalisé",
@@ -49,7 +52,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
     {
       id: "MARS",
       name: "FIKO VOICE MARS",
-      price: "1 900 000 FCFA / an",
+      price: `${format(voicePricing.proAnnual)} / an`,
       minutes: "600 minutes / mois",
       features: [
         "Agent vocal avancé sectoriel",
@@ -68,7 +71,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
     {
       id: "KRYPTON",
       name: "FIKO VOICE KRYPTON",
-      price: "3 900 000 FCFA / an",
+      price: `${format(voicePricing.enterpriseAnnual)} / an`,
       minutes: "1 000 minutes / mois",
       features: [
         "Agent vocal multi-contextuel",
@@ -78,7 +81,7 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
         "Logs et audit IA",
       ],
       rules:
-        "1000 min incluses. Dépassement: 1200 FCFA/min. Maintenance IA post-6 mois : 10%/mois.",
+        `1000 min incluses. Dépassement: ${format(voicePricing.additionalMinute)}/min. Maintenance IA post-6 mois : 10%/mois.`,
       target: "Banques, grandes entreprises, institutions, groupes.",
       color: "#3b82f6",
       icon: <Crown />,
@@ -86,9 +89,9 @@ const VoicePricingPage: React.FC<VoicePricingPageProps> = ({
   ];
 
   const minutePacks = [
-    { name: "PACK 100", minutes: "100 min", price: "150 000 FCFA" },
-    { name: "PACK 300", minutes: "300 min", price: "350 000 FCFA" },
-    { name: "PACK 1 000", minutes: "1 000 min", price: "900 000 FCFA" },
+    { name: "PACK 100", minutes: "100 min", price: format(voicePricing.packs[0].price) },
+    { name: "PACK 300", minutes: "300 min", price: format(voicePricing.packs[1].price) },
+    { name: "PACK 1 000", minutes: "1 000 min", price: format(voicePricing.packs[2].price) },
   ];
 
   return (

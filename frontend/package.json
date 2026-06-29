@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@krypton/pricing": "file:../packages/pricing",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.0",
     "clsx": "^2.1.1",
